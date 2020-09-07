@@ -59,8 +59,13 @@ class ViewController: UIViewController {
     
     private func start() {
         let startTime = Date()
-        let result = bruteForce(startString: "0000", endString: "ZZZZ")
-        stop(password: result ?? "Error", startTime: startTime)
+        let queue = DispatchQueue.global(qos: .userInitiated)
+        queue.async {
+            let result = self.bruteForce(startString: "0000", endString: "ZZZZ")
+            DispatchQueue.main.async {
+                self.stop(password: result ?? "Error", startTime: startTime)
+            }
+        }
     }
     
     // Возвращает подобранный пароль
