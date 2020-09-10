@@ -32,7 +32,7 @@ public struct Bread {
 
 ///Класс для хранилища хлеба. Хранилище типа LIFO
 class BreadStorage {
-    let condvar = NSCondition()
+    private let condvar = NSCondition()
     
     private var array: [Bread] = []
     
@@ -63,16 +63,33 @@ class BreadStorage {
         print("Bread added")
     }
     
+    ///Функция проверки - пусто ли хранилище
+    func isEmty() -> Bool {
+        return array.isEmpty
+    }
 }
+
+private let mainStorage = BreadStorage()
+
 //MARK: - Threads
 
 ///Сабкласс для производящего потока
 class OrgThread: Thread {
-    let storage = BreadStorage()
+    ///Передача хранилища через инициализатор
+    var storage: BreadStorage
+    
+    required init(storage: BreadStorage) {
+        self.storage = storage
+    }
     
     ///Таймер, который каждые две секунды добавляет хлеб в хранилище
     private lazy var timer: Timer = {
-        let timer = Timer(timeInterval: 2, repeats: true, block: {_ in
+        let timer = Timer(timeInterval: 2, repeats: true, block: {(timer) in
+            ///Когда первый поток закончит работу, таймер уничтожиться
+            guard !self.isFinished else {
+                timer.invalidate()
+                return
+            }
             self.storage.push(Bread.make())})
         return timer
     }()
@@ -86,16 +103,26 @@ class OrgThread: Thread {
     }
 }
 
+
+
 ///Сабкласс для рабочего потока
 class WorkThread: Thread {
+    ///Передача хранилища через инициализатор
+    var storage: BreadStorage
+    
+    required init(storage: BreadStorage) {
+        self.storage = storage
+    }
+    
     ///Таймер, который каждую секунду пробует "испечь хлеб"
     private lazy var timer: Timer = {
-       let timer = Timer(timeInterval: 1, repeats: true, block: {_ in
-            firstThread.storage.pop()
-        guard !firstThread.isFinished else {
-            
+       let timer = Timer(timeInterval: 1, repeats: true, block: {(timer) in
+        ///Когда первый поток закончит работу, таймер уничтожиться
+        guard !firstThread.isFinished && self.storage.isEmty() else {
+            timer.invalidate()
             return
         }
+        self.storage.pop()
         })
         return timer
     }()
@@ -104,14 +131,14 @@ class WorkThread: Thread {
         ///RunLoop для потока
         let runloop = RunLoop.current
         runloop.add(timer, forMode: .default)
-        ///Запускаем RunLoop на 20 секунд
-        runloop.run(until: Date(timeIntervalSinceNow: 20))
+        ///Запускаем RunLoop
+        runloop.run()
     }
 }
 
 //Код, который создает экземпляры потоков и заупскает их
-let firstThread = OrgThread()
-let secondThread = WorkThread()
+let firstThread = OrgThread(storage: mainStorage)
+let secondThread = WorkThread(storage: mainStorage)
 firstThread.start()
 secondThread.start()
 
