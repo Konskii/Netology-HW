@@ -34,16 +34,17 @@ public struct Bread {
 class BreadStorage {
     private let condvar = NSCondition()
     
+    ///Количество раз, когда был создан хлеб
+    public var runCount = 0
+    
     private var array: [Bread] = []
     
     ///Функция, убирающая хлеб
     func pop() {
         condvar.lock()
         guard !array.isEmpty else {
-            print("Waiting for a bread..")
             condvar.wait()
             array.removeFirst()
-            print("Bread removed")
             condvar.unlock()
             condvar.signal()
             return
@@ -51,8 +52,8 @@ class BreadStorage {
         array.removeFirst()
         condvar.unlock()
         condvar.signal()
-        print("Bread removed")
     }
+    
     
     ///Функция, добавляющая хлеб
     func push(_ element: Bread) {
@@ -60,12 +61,16 @@ class BreadStorage {
         array.append(element)
         condvar.unlock()
         condvar.signal()
-        print("Bread added")
     }
     
     ///Функция проверки - пусто ли хранилище
     func isEmty() -> Bool {
         return array.isEmpty
+    }
+    
+    ///Фнукция, возвращающая количество хлеба в хранилище
+    func count() -> Int {
+        return array.count
     }
 }
 
@@ -84,13 +89,19 @@ class OrgThread: Thread {
     
     ///Таймер, который каждые две секунды добавляет хлеб в хранилище
     private lazy var timer: Timer = {
-        let timer = Timer(timeInterval: 2, repeats: true, block: {(timer) in
+        let timer = Timer(timeInterval: 2, repeats: true, block: { (timer) in
             ///Когда первый поток закончит работу, таймер уничтожиться
-            guard !self.isFinished else {
+            if self.storage.runCount == 10 {
                 timer.invalidate()
+                self.cancel()
                 return
             }
-            self.storage.push(Bread.make())})
+            
+            let bread = Bread.make()
+            self.storage.push(bread)
+            self.storage.runCount += 1
+            return
+        })
         return timer
     }()
     
@@ -114,25 +125,10 @@ class WorkThread: Thread {
         self.storage = storage
     }
     
-    ///Таймер, который каждую секунду пробует "испечь хлеб"
-    private lazy var timer: Timer = {
-       let timer = Timer(timeInterval: 1, repeats: true, block: {(timer) in
-        ///Когда первый поток закончит работу, таймер уничтожиться
-        guard !firstThread.isFinished && self.storage.isEmty() else {
-            timer.invalidate()
-            return
-        }
-        self.storage.pop()
-        })
-        return timer
-    }()
-    
     override func main() {
-        ///RunLoop для потока
-        let runloop = RunLoop.current
-        runloop.add(timer, forMode: .default)
-        ///Запускаем RunLoop
-        runloop.run()
+        while firstThread.isExecuting && storage.count() != 10 {
+            storage.pop()
+        }
     }
 }
 
@@ -141,5 +137,3 @@ let firstThread = OrgThread(storage: mainStorage)
 let secondThread = WorkThread(storage: mainStorage)
 firstThread.start()
 secondThread.start()
-
-
