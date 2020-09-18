@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     private let maxTextLength = Consts.maxTextFieldTextLength
     private var password = ""
     
+    private let queue = OperationQueue()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         indicator.isHidden = true
@@ -73,7 +75,7 @@ class ViewController: UIViewController {
         let inputPassword = password
         var startIndexArray = [Int]()
         var endIndexArray = [Int]()
-        let maxIndexArray = characterArray.count
+        let maxIndex = characterArray.count
         
         // Создает массивы индексов из входных строк
         for char in startString {
@@ -107,7 +109,7 @@ class ViewController: UIViewController {
                 //Например было [0, 0, 0, 5] а станет [0, 0, 0, 6]. Если же мы уже проверили последний индекс, например [0, 0, 0, 61], то нужно сбросить его в 0, а "старший" индекс увеличить на 1. При этом далее в цикле проверяется переполение "старшего" индекса тем же алгоритмом.
                 //Таким образом [0, 0, 0, 61] станет [0, 0, 1, 0]. И поиск продолжится дальше:  [0, 0, 1, 1],  [0, 0, 1, 2],  [0, 0, 1, 3] и т.д.
                 for index in (0 ..< currentIndexArray.count).reversed() {
-                    guard currentIndexArray[index] < maxIndexArray - 1 else {
+                    guard currentIndexArray[index] < maxIndex - 1 else {
                         currentIndexArray[index] = 0
                         continue
                     }

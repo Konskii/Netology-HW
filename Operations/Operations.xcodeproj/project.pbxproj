@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC36444B2514C01600CD9CEF /* BruteFroce Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36444A2514C01600CD9CEF /* BruteFroce Operation.swift */; };
+		AC36444D2514C3DB00CD9CEF /* VCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36444C2514C3DB00CD9CEF /* VCExtension.swift */; };
 		ACD28C3D2513858A0093099A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD28C2F2513858A0093099A /* Constants.swift */; };
 		ACD28C3E2513858A0093099A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD28C302513858A0093099A /* ViewController.swift */; };
 		ACD28C3F2513858A0093099A /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD28C312513858A0093099A /* Alert.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AC36444A2514C01600CD9CEF /* BruteFroce Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BruteFroce Operation.swift"; sourceTree = "<group>"; };
+		AC36444C2514C3DB00CD9CEF /* VCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCExtension.swift; sourceTree = "<group>"; };
 		ACD28BE72513816C0093099A /* Operations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Operations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACD28BF82513816D0093099A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACD28C2F2513858A0093099A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 				ACD28C322513858A0093099A /* Main.storyboard */,
 				ACD28C342513858A0093099A /* AppDelegate.swift */,
 				ACD28C352513858A0093099A /* Password generator.swift */,
+				AC36444A2514C01600CD9CEF /* BruteFroce Operation.swift */,
+				AC36444C2514C3DB00CD9CEF /* VCExtension.swift */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -174,6 +180,8 @@
 				ACD28C412513858A0093099A /* AppDelegate.swift in Sources */,
 				ACD28C3F2513858A0093099A /* Alert.swift in Sources */,
 				ACD28C422513858A0093099A /* Password generator.swift in Sources */,
+				AC36444B2514C01600CD9CEF /* BruteFroce Operation.swift in Sources */,
+				AC36444D2514C3DB00CD9CEF /* VCExtension.swift in Sources */,
 				ACD28C3E2513858A0093099A /* ViewController.swift in Sources */,
 				ACD28C3D2513858A0093099A /* Constants.swift in Sources */,
 			);
@@ -323,7 +331,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 627VX4YTF5;
 				INFOPLIST_FILE = Operations/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -341,7 +351,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 627VX4YTF5;
 				INFOPLIST_FILE = Operations/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
