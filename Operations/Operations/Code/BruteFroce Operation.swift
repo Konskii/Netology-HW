@@ -7,52 +7,69 @@
 
 import Foundation
 class BruteForceOperation: Operation {
-    ///Пароль, с котороым будет сравниваться результат брутфорса.
-    private var password: String
-    ///Найденный пароль
-    var foundPass: String?
-    var startIndex: [Int]
-    var endIndex: [Int]
-    let maxIndex = Int()
-    var currentIndex: [Int]
     
-    ///Массив знаков
-    let characters = Consts.characterArray
+    private let inputPassword: String
+    private let maxIndex = Consts.characterArray.count
+    private let characterArray = Consts.characterArray
     
-    required init(currentPassword: String, startIndex: [Int], endIndex: [Int]) {
-        self.startIndex = startIndex
-        self.endIndex = endIndex
-        self.password = currentPassword
-        self.currentIndex = startIndex
+    private(set) var foundPass: String?
+    private var startIndexArray = [Int]()
+    private var endIndexArray = [Int]()
+    private var startString = ""
+    private var endString = ""
+    
+    required init(startIndex: Int, endIndex: Int, password: String) {
+        for _ in 0..<Consts.maxTextFieldTextLength {
+            self.startString += characterArray[startIndex]
+            self.endString += characterArray[endIndex]
+        }
+        self.inputPassword = password
     }
     
-    
     override func main() {
-        if isCancelled {
-            return
+        //Перед запуском проверяем завершена ли операция
+//        if isCancelled {
+//            return
+//        }
+        // Создает массивы индексов из входных строк
+        for char in startString {
+            for (index, value) in characterArray.enumerated() where value == "\(char)" {
+                startIndexArray.append(index)
+            }
+        }
+        for char in endString {
+            for (index, value) in characterArray.enumerated() where value == "\(char)" {
+                endIndexArray.append(index)
+            }
         }
         
+        var currentIndexArray = startIndexArray
+        
         while true {
-            ///Генерируемый пароль
-            let pass = characters[startIndex[0]] + characters[startIndex[1]] + characters[startIndex[2]] + characters[startIndex[3]]
+            var currentPass = ""
             
-            ///Проверка на то, сходится ли пароль
-            if password == pass {
-                foundPass = pass
+            // Формируем строку проверки пароля из элементов массива символов
+            for i in 0..<Consts.maxTextFieldTextLength {
+                currentPass += characterArray[currentIndexArray[i]]
+            }
+            
+            // Выходим из цикла если пароль найден
+            if inputPassword == currentPass {
+                foundPass = currentPass
+                break
             } else {
-                ///Если пароль не сходится, то проверяем не дошли ли мы до конца индексов
-                if currentIndex.elementsEqual(endIndex) {
-                    cancel()
+                //Если пароль не найден, то проверяем не дошли ли мы до конца индексов
+                if currentIndexArray.elementsEqual(endIndexArray) {
                     break
                 }
-                
-                ///Если все ок, то увеличваем индекс, с конца. Если индекс который мы хотим увеличить равен maxIndex, то увеличиваем слева стоящий от него, а его самого возвращаем к startIndex[3]
-                for index in (0 ..< currentIndex.count).reversed() {
-                    guard currentIndex[index] < maxIndex - 1 else {
-                        currentIndex[index] = 0
+                //Если все ок, то прибавляем +1 к индексу, а если индекс максимальный,
+                //то увеличиваем следующий после него на 1, а сам индекс приравниваем к нулю
+                for index in (0 ..< currentIndexArray.count).reversed() {
+                    guard currentIndexArray[index] < maxIndex - 1 else {
+                        currentIndexArray[index] = 0
                         continue
                     }
-                    currentIndex[index] += 1
+                    currentIndexArray[index] += 1
                     break
                 }
             }
