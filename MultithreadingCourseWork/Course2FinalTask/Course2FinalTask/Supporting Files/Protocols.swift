@@ -27,8 +27,13 @@ protocol usersProtocol: class {
     func showVC(data: dataToShowVC?, post: Post.Identifier?)
 }
 
+///Протокол, который используется для перезагрузки ячейки в ленте
 protocol reloadingProtocol: class {
     func reload(index: IndexPath)
+}
+
+protocol followProtocol: class {
+    func follow(who id: User.Identifier, index: IndexPath)
 }
 
 struct dataToShowVC {

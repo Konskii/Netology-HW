@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     //MARK: - Variables
     
     private var userID = DataProviders.shared.usersDataProvider.currentUser().id
+    private var users = DataProviders.shared.usersDataProvider
     private lazy var user: User = { DataProviders.shared.usersDataProvider.user(with: userID)! }()
     private lazy var images: [UIImage] = {
         guard let posts = DataProviders.shared.postsDataProvider.findPosts(by: self.userID) else { fatalError("User '\(user.fullName)' doesn't have posts")}
@@ -98,6 +99,8 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfileHeader
+            view.indexPath = indexPath
+            view.followDelegate = self
             view.data = user
             view.usersDelegate = self
             return view
@@ -107,7 +110,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     }
 }
 
-extension ProfileViewController: usersProtocol {
+extension ProfileViewController: usersProtocol, followProtocol {
     func showVC(data: dataToShowVC?, post: Post.Identifier?) {
         if let info = data {
             switch info.followersOrNot {
@@ -125,5 +128,10 @@ extension ProfileViewController: usersProtocol {
                 navigationController?.pushViewController(vc, animated: true)
             }
         }
+    }
+    
+    func follow(who id: User.Identifier, index: IndexPath) {
+        _ = users.follow(id)
+        collectionView.reloadData()
     }
 }
