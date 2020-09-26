@@ -36,6 +36,9 @@ protocol followProtocol: class {
     func follow(who id: User.Identifier, index: IndexPath)
 }
 
+protocol cellPrototol: likeProtocol, likeDislikeProtocol, userProtocol, usersProtocol, reloadingProtocol { }
+
+
 struct dataToShowVC {
     var user: User
     var followersOrNot: Bool

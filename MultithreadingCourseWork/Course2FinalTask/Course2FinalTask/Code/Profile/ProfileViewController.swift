@@ -14,18 +14,18 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     
     convenience init(userIdToShow: User.Identifier) {
         self.init()
-        self.userID = userIdToShow
+//        self.userID = userIdToShow
     }
     
     //MARK: - Variables
     
-    private var userID = DataProviders.shared.usersDataProvider.currentUser().id
-    private var users = DataProviders.shared.usersDataProvider
-    private lazy var user: User = { DataProviders.shared.usersDataProvider.user(with: userID)! }()
-    private lazy var images: [UIImage] = {
-        guard let posts = DataProviders.shared.postsDataProvider.findPosts(by: self.userID) else { fatalError("User '\(user.fullName)' doesn't have posts")}
-        return posts.compactMap({$0.image})
-    }()
+//    private var userID = DataProviders.shared.usersDataProvider.currentUser().id
+//    private var users = DataProviders.shared.usersDataProvider
+//    private lazy var user: User = { DataProviders.shared.usersDataProvider.user(with: userID)! }()
+//    private lazy var images: [UIImage] = {
+//        guard let posts = DataProviders.shared.postsDataProvider.findPosts(by: self.userID) else { fatalError("User '\(user.fullName)' doesn't have posts")}
+//        return posts.compactMap({$0.image})
+//    }()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -76,20 +76,21 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = user.username
+//        title = user.username
         setupLayout()
     }
     
     //MARK: - Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let posts = DataProviders.shared.postsDataProvider.findPosts(by: userID) else { fatalError("User '\(user.fullName)' doesn't have posts") }
-        return posts.count
+//        guard let posts = DataProviders.shared.postsDataProvider.findPosts(by: userID) else { fatalError("User '\(user.fullName)' doesn't have posts") }
+//        return posts.count
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileCell else { fatalError("Not ProfileCell") }
-        cell.data = images[indexPath.row]
+//        cell.data = images[indexPath.row]
         return cell
     }
     
@@ -100,9 +101,9 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         case UICollectionView.elementKindSectionHeader:
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfileHeader
             view.indexPath = indexPath
-            view.followDelegate = self
-            view.data = user
-            view.usersDelegate = self
+//            view.followDelegate = self
+//            view.data = user
+//            view.usersDelegate = self
             return view
         default:
             fatalError("Not Header")
@@ -110,28 +111,28 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     }
 }
 
-extension ProfileViewController: usersProtocol, followProtocol {
-    func showVC(data: dataToShowVC?, post: Post.Identifier?) {
-        if let info = data {
-            switch info.followersOrNot {
-            case true:
-                guard let followers = DataProviders.shared.usersDataProvider.usersFollowingUser(with: user.id) else { return }
-                let vc = UsersListTableView()
-                
-                vc.usersArray = followers
-                navigationController?.pushViewController(vc, animated: true)
-            case false:
-                guard let following = DataProviders.shared.usersDataProvider.usersFollowedByUser(with: user.id) else { return }
-                let vc = UsersListTableView()
-                
-                vc.usersArray = following
-                navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
-    
-    func follow(who id: User.Identifier, index: IndexPath) {
-        _ = users.follow(id)
-        collectionView.reloadData()
-    }
-}
+//extension ProfileViewController: usersProtocol, followProtocol {
+//    func showVC(data: dataToShowVC?, post: Post.Identifier?) {
+//        if let info = data {
+//            switch info.followersOrNot {
+//            case true:
+//                guard let followers = DataProviders.shared.usersDataProvider.usersFollowingUser(with: user.id) else { return }
+//                let vc = UsersListTableView()
+//
+//                vc.usersArray = followers
+//                navigationController?.pushViewController(vc, animated: true)
+//            case false:
+//                guard let following = DataProviders.shared.usersDataProvider.usersFollowedByUser(with: user.id) else { return }
+//                let vc = UsersListTableView()
+//
+//                vc.usersArray = following
+//                navigationController?.pushViewController(vc, animated: true)
+//            }
+//        }
+//    }
+//
+//    func follow(who id: User.Identifier, index: IndexPath) {
+//        _ = users.follow(id)
+//        collectionView.reloadData()
+//    }
+//}

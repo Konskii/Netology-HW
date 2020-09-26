@@ -14,15 +14,7 @@ class FeedCell: UICollectionViewCell {
     
     var indexPath: IndexPath?
     
-    weak var reloadingDelegate: reloadingProtocol?
-    
-    weak var likeDelegate: likeProtocol?
-    
-    weak var usersDelegate: usersProtocol?
-    
-    weak var likeDislikeDelegate: likeDislikeProtocol?
-    
-    weak var userDelegate: userProtocol?
+    weak var cellDelegate: cellPrototol?
     
     //MARK: - UI Elements
     
@@ -128,6 +120,9 @@ class FeedCell: UICollectionViewCell {
             df.timeStyle = .medium
             df.dateStyle = .medium
             
+//            print("IndexPath: \(indexPath!.row)")
+//            print("PostId: \(data!.id.rawValue)")
+            
             postImageView.image = data?.image
             authorImageView.image = data?.authorAvatar
             authorNameLabel.text = data?.authorUsername
@@ -150,22 +145,22 @@ class FeedCell: UICollectionViewCell {
         guard let index = indexPath else { fatalError("ERROR 2") }
 
         playAnimation()
-        likeDelegate?.like(postIdTolike: id)
-        reloadingDelegate?.reload(index: index)
+        cellDelegate?.like(postIdTolike: id)
+        cellDelegate?.reload(index: index)
     }
     ///функция которая вызывается при нажатии на кнопку лайка
     @objc func smallLikeButtonTapped() {
         guard let id = data?.id else { fatalError("ERROR 2") }
-        likeDislikeDelegate?.likeDislike(postId: id)
+        cellDelegate?.likeDislike(postId: id)
     }
     ///функция которая вызывается при нажатии на лейбл с количеством лайков
     @objc func likesLabelTapped() {
-        usersDelegate?.showVC(data: nil, post: data?.id)
+        cellDelegate?.showVC(data: nil, post: data?.id)
     }
     ///функция которая вызывается при нажатии на аватар пользователя
     @objc func authorAvatarTapped() {
         guard let id = data?.author else { fatalError("ERROR 2") }
-        userDelegate?.showUser(authorID: id)
+        cellDelegate?.showUser(authorID: id)
     }
     
     //MARK: - Life Cycle
