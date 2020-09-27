@@ -34,7 +34,9 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        feed()
+        DispatchQueue.global(qos: .utility).async {
+            self.feed()
+        }
     }
     
     var feedArray: [Post] = []
@@ -57,6 +59,7 @@ class FeedViewController: UIViewController {
         posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: {(optionalPosts) in
             guard let unwrappedPosts = optionalPosts else { return }
             self.feedArray = unwrappedPosts
+            print("feed loaded successfull")
         })
     }
 }
@@ -66,7 +69,7 @@ extension FeedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var result: Int?
         let queue = DispatchQueue.global()
-        
+
         posts.feed(queue: queue) {(op: [Post]?) -> Void in
             guard let posts = op else { return }
             result = posts.count
@@ -80,72 +83,45 @@ extension FeedViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? FeedCell else { fatalError("ERROR 1") }
-        cell.indexPath = indexPath
-        cell.data = feedArray[indexPath.row]
-        cell.cellDelegate = self
+        DispatchQueue.main.async {
+            if !self.feedArray.isEmpty {
+                cell.data = self.feedArray[indexPath.row]
+            } else {
+                return
+            }
+            cell.indexPath = indexPath
+            cell.cellDelegate = self
+        }
         return cell
     }
 }
 //MARK: - Delegates
 extension FeedViewController: cellPrototol {
     func reload(index: IndexPath) {
-        collectionView.reloadItems(at: [index])
+        feed()
+        self.collectionView.reloadItems(at: [index])
     }
 
     func like(postIdTolike id: Post.Identifier) {
-        _ = posts.likePost(with: id, queue: DispatchQueue.global(qos: .userInteractive)) {(post)  in
+        posts.likePost(with: id, queue: DispatchQueue.global()) {(post) in
             if post != nil {
-                print("succes like")
+                print("succesLike to \(String(describing: post?.id))")
             } else {
-                print("unsucces like")
+                print("no such post with id: \(String(describing: post?.id))")
             }
         }
     }
 
     func likeDislike(postId id: Post.Identifier) {
-        posts.post(with: id, queue: DispatchQueue.global(), handler: {(post) in
-            guard let unwrappedPost = post else { print("no such post"); return }
-            DispatchQueue.main.async {
-                if unwrappedPost.currentUserLikesThisPost {
-                    _ = self.posts.unlikePost(with: id, queue: DispatchQueue.global()) {(post) in
-                        if post != nil {
-                            print("succes dislike")
-                        } else {
-                            print("unsucces dislike")
-                        }
-                    }
-                    self.collectionView.reloadData()
-                } else {
-                    _ = self.posts.likePost(with: id, queue: DispatchQueue.global(qos: .userInteractive)) {(post)  in
-                        if post != nil {
-                            print("succes like")
-                        } else {
-                            print("unsucces like")
-                        }
-                    }
-                    self.collectionView.reloadData()
-                }
-            }
-        })
         
-//        guard let post = posts.post(with: id, queue: DispatchQueue.global(), handler: {(post) in}) else { fatalError("ERROR 4")}
     }
 
     func showVC(data: dataToShowVC?, post: Post.Identifier?) {
-        guard let postID = post, data == nil else { return }
-        let vc = UsersListTableView()
-        var usersArray: [User] = []
-
-//        for id in posts.usersLikedPost(with: postID)! { usersArray.append(users.user(with: id)!) }
-
-        vc.usersArray = usersArray
-        vc.title = "Likes"
-        navigationController?.pushViewController(vc, animated: true)
+        
     }
 
     func showUser(authorID: User.Identifier) {
-        let vc = ProfileViewController(userIdToShow: authorID)
-        navigationController?.pushViewController(vc, animated: true)
+        
     }
 
 }

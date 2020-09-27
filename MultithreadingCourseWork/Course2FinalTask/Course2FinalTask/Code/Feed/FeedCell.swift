@@ -143,10 +143,11 @@ class FeedCell: UICollectionViewCell {
     @objc func postImageTapped() {
         guard let id = data?.id else { fatalError("ERROR 2") }
         guard let index = indexPath else { fatalError("ERROR 2") }
-
-        playAnimation()
-        cellDelegate?.like(postIdTolike: id)
-        cellDelegate?.reload(index: index)
+        DispatchQueue.main.async {
+            self.playAnimation()
+            self.cellDelegate?.like(postIdTolike: id)
+            self.cellDelegate?.reload(index: index)
+        }
     }
     ///функция которая вызывается при нажатии на кнопку лайка
     @objc func smallLikeButtonTapped() {
