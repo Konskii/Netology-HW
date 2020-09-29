@@ -27,6 +27,8 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
 //        return posts.compactMap({$0.image})
 //    }()
     
+    
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let size = self.view.bounds.width / 3

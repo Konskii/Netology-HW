@@ -105,7 +105,7 @@ extension FeedViewController: cellPrototol {
     func like(postIdTolike id: Post.Identifier) {
         posts.likePost(with: id, queue: DispatchQueue.global()) {(post) in
             if post != nil {
-                print("succesLike to \(String(describing: post?.id))")
+                print("succes Like to \(String(describing: post?.id))")
             } else {
                 print("no such post with id: \(String(describing: post?.id))")
             }
@@ -113,11 +113,53 @@ extension FeedViewController: cellPrototol {
     }
 
     func likeDislike(postId id: Post.Identifier) {
-        
+        posts.post(with: id, queue: DispatchQueue.global()) {(post) in
+            guard let unwrappedPost = post else {
+                print("no such post with id: \(String(describing: post?.id))")
+                return
+            }
+            if unwrappedPost.currentUserLikesThisPost {
+                self.posts.unlikePost(with: unwrappedPost.id, queue: DispatchQueue.global()) {(post) in
+                    if post != nil {
+                        print("succes Unlike to \(String(describing: post?.id))")
+                        DispatchQueue.main.async {
+                            self.feed()
+                            self.collectionView.reloadData()
+                        }
+                    } else {
+                        print("no such post with id: \(String(describing: post?.id))")
+                    }
+                }
+            } else {
+                self.posts.likePost(with: unwrappedPost.id, queue: DispatchQueue.global()) {(post) in
+                    if post != nil {
+                        print("succes like to \(String(describing: post?.id))")
+                        DispatchQueue.main.async {
+                            self.feed()
+                            self.collectionView.reloadData()
+                        }
+                    } else {
+                        print("no such post with id: \(String(describing: post?.id))")
+                    }
+                }
+            }
+        }
     }
 
     func showVC(data: dataToShowVC?, post: Post.Identifier?) {
-        
+        guard let postID = post, data == nil else { return }
+        posts.usersLikedPost(with: postID, queue: DispatchQueue.global()) {(users) in
+            guard let unwrappedUsers = users else {
+                print("no such post with id: \(String(describing: post))")
+                return
+            }
+            DispatchQueue.main.async {
+                let vc = UsersListTableView()
+                vc.usersArray = unwrappedUsers
+                vc.title = "Likes"
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
 
     func showUser(authorID: User.Identifier) {

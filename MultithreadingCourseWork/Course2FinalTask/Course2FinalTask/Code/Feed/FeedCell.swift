@@ -120,9 +120,6 @@ class FeedCell: UICollectionViewCell {
             df.timeStyle = .medium
             df.dateStyle = .medium
             
-//            print("IndexPath: \(indexPath!.row)")
-//            print("PostId: \(data!.id.rawValue)")
-            
             postImageView.image = data?.image
             authorImageView.image = data?.authorAvatar
             authorNameLabel.text = data?.authorUsername
