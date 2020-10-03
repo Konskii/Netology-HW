@@ -136,6 +136,7 @@ class FeedCell: UICollectionViewCell {
     }
     
     //MARK: - User Interaction
+    
     ///функция которая вызывается при двойном тапе на картинку поста
     @objc func postImageTapped() {
         guard let id = data?.id else { fatalError("ERROR 2") }
@@ -161,7 +162,8 @@ class FeedCell: UICollectionViewCell {
         cellDelegate?.showUser(authorID: id)
     }
     
-    //MARK: - Life Cycle
+    //MARK: - Inits
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraints()
@@ -169,6 +171,8 @@ class FeedCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - Methods
     
     func setupConstraints() {
         contentView.addSubview(authorImageView)
@@ -216,9 +220,7 @@ class FeedCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate(constraints)
     }
-}
-
-extension FeedCell {
+    
     func playAnimation() {
         let animation = CAKeyframeAnimation(keyPath: #keyPath(CALayer.opacity))
         animation.duration = 0.6
@@ -228,4 +230,5 @@ extension FeedCell {
         likeImageView.layer.add(animation, forKey: "showHide")
     }
 }
+
 

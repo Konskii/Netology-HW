@@ -10,25 +10,26 @@ import UIKit
 import DataProvider
 
 class ProfileViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    //MARK: - Making Controller Reusable
     
-    convenience init(userIdToShow: User.Identifier) {
+    //MARK: - Inits
+    convenience init(_ id: User.Identifier) {
         self.init()
-//        self.userID = userIdToShow
+        userID = id
     }
     
     //MARK: - Variables
     
-//    private var userID = DataProviders.shared.usersDataProvider.currentUser().id
-//    private var users = DataProviders.shared.usersDataProvider
-//    private lazy var user: User = { DataProviders.shared.usersDataProvider.user(with: userID)! }()
-//    private lazy var images: [UIImage] = {
-//        guard let posts = DataProviders.shared.postsDataProvider.findPosts(by: self.userID) else { fatalError("User '\(user.fullName)' doesn't have posts")}
-//        return posts.compactMap({$0.image})
-//    }()
+    ///Переменная с информацией и методами постов
+    private lazy var posts = DataProviders.shared.postsDataProvider
     
+    ///Переменная с информацией и методами пользователей
+    private lazy var users = DataProviders.shared.usersDataProvider
     
+    private var user: User?
+    private var images: [UIImage]?
+    private var userID: User.Identifier?
     
+    ///CollectionView с которым мы будем работать
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let size = self.view.bounds.width / 3
@@ -74,67 +75,59 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         NSLayoutConstraint.activate(constraints)
     }
     
+    func getData() {
+        if let customUserID = userID {
+            users.user(with: customUserID, queue: DispatchQueue.global()) { (user) in
+                
+            }
+        } else {
+            users.currentUser(queue: DispatchQueue.global()) { (user) in
+                guard let currentUser = user else { fatalError("Current user doesn't exist") }
+                self.user = currentUser
+                print("currentData added")
+            }
+        }
+    }
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        title = user.username
         setupLayout()
+        getData()
     }
     
-    //MARK: - Data Source
+    //MARK: - CollectionView Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        guard let posts = DataProviders.shared.postsDataProvider.findPosts(by: userID) else { fatalError("User '\(user.fullName)' doesn't have posts") }
-//        return posts.count
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileCell else { fatalError("Not ProfileCell") }
-//        cell.data = images[indexPath.row]
+        
         return cell
     }
     
-    //MARK: - Configuring header
+    //MARK: - Working with supplementary view(header)
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfileHeader
-            view.indexPath = indexPath
-//            view.followDelegate = self
-//            view.data = user
-//            view.usersDelegate = self
+            guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileHeader else { return UICollectionReusableView() }
+            DispatchQueue.main.async {
+                while true {
+                    if let userData = self.user {
+                        view.data = userData
+                        print("user added to header")
+                        break
+                    }
+                }
+            }
+            
             return view
         default:
             fatalError("Not Header")
         }
     }
 }
-
-//extension ProfileViewController: usersProtocol, followProtocol {
-//    func showVC(data: dataToShowVC?, post: Post.Identifier?) {
-//        if let info = data {
-//            switch info.followersOrNot {
-//            case true:
-//                guard let followers = DataProviders.shared.usersDataProvider.usersFollowingUser(with: user.id) else { return }
-//                let vc = UsersListTableView()
-//
-//                vc.usersArray = followers
-//                navigationController?.pushViewController(vc, animated: true)
-//            case false:
-//                guard let following = DataProviders.shared.usersDataProvider.usersFollowedByUser(with: user.id) else { return }
-//                let vc = UsersListTableView()
-//
-//                vc.usersArray = following
-//                navigationController?.pushViewController(vc, animated: true)
-//            }
-//        }
-//    }
-//
-//    func follow(who id: User.Identifier, index: IndexPath) {
-//        _ = users.follow(id)
-//        collectionView.reloadData()
-//    }
-//}

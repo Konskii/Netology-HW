@@ -11,14 +11,15 @@ import DataProvider
 
 class ProfileHeader: UICollectionReusableView {
     //MARK: - Delegates
+    
     weak var usersDelegate: usersProtocol?
     
-    weak var followDelegate: followProtocol?
+    //MARK: - UI Elements
     
     ///Аватарка пользователя
     private lazy var userAvatarImage: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .green
+        view.layer.borderWidth = 1
         view.clipsToBounds = true
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 35
@@ -29,7 +30,7 @@ class ProfileHeader: UICollectionReusableView {
     ///Имя пользователя
     private lazy var userNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "userNameLabel"
+        label.text = "User"
         label.font = .systemFont(ofSize: 14)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +44,7 @@ class ProfileHeader: UICollectionReusableView {
         
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(gs)
-        label.text = "userFollowersLabel"
+        label.text = "Followers: 0"
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -57,13 +58,12 @@ class ProfileHeader: UICollectionReusableView {
         
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(gs)
-        label.text = "userFollowingLabel"
+        label.text = "Following: 0"
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    var indexPath: IndexPath?
 
     
     ///Кнопка "Follow\Unfollow"
@@ -76,9 +76,14 @@ class ProfileHeader: UICollectionReusableView {
         button.backgroundColor = .init(red: 0, green: 150, blue: 255, alpha: 1)
         button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         button.setTitle("Follow", for: .normal)
+        button.layer.opacity = 0
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    //MARK: - Configuring header
+    
+    var isCurrent = true
     
     var data: User? {
         didSet {
@@ -88,6 +93,10 @@ class ProfileHeader: UICollectionReusableView {
             userFollowingLabel.text = "Following: \(data!.followsCount)"
             if data!.currentUserFollowsThisUser {
                 followAndUnfollowButton.setTitle("Unfollow", for: .normal)
+            }
+            userAvatarImage.layer.borderWidth = 0
+            if isCurrent == false {
+                followAndUnfollowButton.layer.opacity = 1
             }
         }
     }
@@ -106,10 +115,9 @@ class ProfileHeader: UICollectionReusableView {
         usersDelegate?.showVC(data: data, post: nil)
     }
     @objc func followAndUnfollowButtonTapped() {
-        guard let id = data?.id else { fatalError("User isn't set") }
-        followDelegate?.follow(who: id, index: indexPath!)
-        reloadInputViews()
     }
+    
+    //MARK: - Inits
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,6 +129,8 @@ class ProfileHeader: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - Methods
     
     func setupLayout() {
         addSubview(userAvatarImage)
@@ -146,7 +156,6 @@ class ProfileHeader: UICollectionReusableView {
             
             followAndUnfollowButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -6),
             followAndUnfollowButton.topAnchor.constraint(equalTo: topAnchor, constant: 6)
-//            followAndUnfollowButton.widthAnchor.constraint(equalToConstant: 80)
         ]
         
         NSLayoutConstraint.activate(constraints)

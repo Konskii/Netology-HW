@@ -64,7 +64,7 @@ class FeedViewController: UIViewController {
     }
 }
 
-//MARK: - Data Source
+//MARK: - CollectionView Data Source
 extension FeedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var result: Int?

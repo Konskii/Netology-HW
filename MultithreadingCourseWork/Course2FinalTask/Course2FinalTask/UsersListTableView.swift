@@ -40,7 +40,7 @@ class UsersListTableView: UIViewController {
     }
 }
 
-//MARK: - Data Source
+//MARK: - TableView Data Source
 extension UsersListTableView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,11 +57,11 @@ extension UsersListTableView: UITableViewDataSource {
     }
     
 }
-//MARK: - Table View Delegate
+//MARK: - TableView Delegate
 extension UsersListTableView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ProfileViewController(userIdToShow: usersArray[indexPath.row].id)
+        let vc = ProfileViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
     

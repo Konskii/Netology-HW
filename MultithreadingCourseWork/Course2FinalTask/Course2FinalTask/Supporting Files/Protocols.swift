@@ -32,10 +32,6 @@ protocol reloadingProtocol: class {
     func reload(index: IndexPath)
 }
 
-protocol followProtocol: class {
-    func follow(who id: User.Identifier, index: IndexPath)
-}
-
 protocol cellPrototol: likeProtocol, likeDislikeProtocol, userProtocol, usersProtocol, reloadingProtocol { }
 
 
