@@ -75,7 +75,6 @@ class ProfileHeader: UICollectionReusableView {
         button.addGestureRecognizer(gs)
         button.backgroundColor = .init(red: 0, green: 150, blue: 255, alpha: 1)
         button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
-        button.setTitle("Follow", for: .normal)
         button.layer.opacity = 0
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -87,13 +86,17 @@ class ProfileHeader: UICollectionReusableView {
     
     var data: User? {
         didSet {
-            userAvatarImage.image = data?.avatar
-            userNameLabel.text = data?.fullName
-            userFollowersLabel.text = "Followers: \(data!.followedByCount)"
-            userFollowingLabel.text = "Following: \(data!.followsCount)"
-            if data!.currentUserFollowsThisUser {
+            guard let unwrappedData = data else { return }
+            
+            userAvatarImage.image = unwrappedData.avatar
+            userNameLabel.text = unwrappedData.fullName
+            userFollowersLabel.text = "Followers: \(unwrappedData.followedByCount)"
+            userFollowingLabel.text = "Following: \(unwrappedData.followsCount)"
+            
+            if unwrappedData.currentUserFollowsThisUser {
                 followAndUnfollowButton.setTitle("Unfollow", for: .normal)
             }
+            
             userAvatarImage.layer.borderWidth = 0
             if isCurrent == false {
                 followAndUnfollowButton.layer.opacity = 1

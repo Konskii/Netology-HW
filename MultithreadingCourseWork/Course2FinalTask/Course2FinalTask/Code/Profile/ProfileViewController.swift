@@ -28,6 +28,8 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     private var user: User?
     private var images: [UIImage]?
     private var userID: User.Identifier?
+    private var currentUserID: User.Identifier?
+    
     
     ///CollectionView с которым мы будем работать
     private lazy var collectionView: UICollectionView = {
@@ -52,17 +54,11 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         
         return view
     }()
-    
-    private let imageView: UIImageView = {
-        let view = UIImageView()
-        view.adjustsImageSizeForAccessibilityContentSizeCategory = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+
     
     //MARK: - Methods
     
-    func setupLayout() {
+    private func setupLayout() {
         view.addSubview(collectionView)
         
         let constraints = [
@@ -75,17 +71,33 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         NSLayoutConstraint.activate(constraints)
     }
     
-    func getData() {
+    ///Функция получающая пользователя асинхронно. После получения обновляет экран
+    private func getData() {
         if let customUserID = userID {
             users.user(with: customUserID, queue: DispatchQueue.global()) { (user) in
-                
+                guard let customUser = user else { fatalError("Custom user doesn't exist") }
+                DispatchQueue.main.async {
+                    self.user = customUser
+                    self.collectionView.reloadData()
+                }
+                print("currentData added")
             }
         } else {
             users.currentUser(queue: DispatchQueue.global()) { (user) in
                 guard let currentUser = user else { fatalError("Current user doesn't exist") }
-                self.user = currentUser
+                DispatchQueue.main.async {
+                    self.user = currentUser
+                    self.collectionView.reloadData()
+                }
                 print("currentData added")
             }
+        }
+    }
+    
+    private func getCurrentUserId() {
+        users.currentUser(queue: DispatchQueue.global()) { (user) in
+            guard let currentUser = user else { fatalError() }
+            self.currentUserID = currentUser.id
         }
     }
     
@@ -93,6 +105,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getCurrentUserId()
         setupLayout()
         getData()
     }
@@ -115,16 +128,15 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileHeader else { return UICollectionReusableView() }
-            DispatchQueue.main.async {
-                while true {
-                    if let userData = self.user {
-                        view.data = userData
-                        print("user added to header")
-                        break
-                    }
+            if let unwrappedCurrentID = currentUserID, let unwrappedUserID = userID {
+                if unwrappedUserID == unwrappedCurrentID {
+                    view.isCurrent = true
+                } else {
+                    view.isCurrent = false
                 }
             }
             
+            view.data = user
             return view
         default:
             fatalError("Not Header")

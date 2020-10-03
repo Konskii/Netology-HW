@@ -33,10 +33,8 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        feed()
         setupLayout()
-        DispatchQueue.global(qos: .utility).async {
-            self.feed()
-        }
     }
     
     var feedArray: [Post] = []
@@ -58,7 +56,10 @@ class FeedViewController: UIViewController {
     func feed() {
         posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: {(optionalPosts) in
             guard let unwrappedPosts = optionalPosts else { return }
-            self.feedArray = unwrappedPosts
+            DispatchQueue.main.async {
+                self.feedArray = unwrappedPosts
+                self.collectionView.reloadData()
+            }
             print("feed loaded successfull")
         })
     }
@@ -67,18 +68,19 @@ class FeedViewController: UIViewController {
 //MARK: - CollectionView Data Source
 extension FeedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var result: Int?
-        let queue = DispatchQueue.global()
-
-        posts.feed(queue: queue) {(op: [Post]?) -> Void in
-            guard let posts = op else { return }
-            result = posts.count
-        }
-        while true {
-            if let postsCount = result {
-                return postsCount
-            }
-        }
+//        var result: Int?
+//        let queue = DispatchQueue.global()
+//
+//        posts.feed(queue: queue) {(op: [Post]?) -> Void in
+//            guard let posts = op else { return }
+//            result = posts.count
+//        }
+//        while true {
+//            if let postsCount = result {
+//                return postsCount
+//            }
+//        }
+        return feedArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -163,7 +165,9 @@ extension FeedViewController: cellPrototol {
     }
 
     func showUser(authorID: User.Identifier) {
-        
+        let vc = ProfileViewController(authorID)
+        vc.title = "\(authorID.rawValue)"
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 }
