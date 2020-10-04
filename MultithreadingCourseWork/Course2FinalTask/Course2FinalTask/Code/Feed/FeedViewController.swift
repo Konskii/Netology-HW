@@ -33,18 +33,11 @@ class FeedViewController: UIViewController {
     
     private var feedArray: [Post] = []
     
-    private lazy var blockView: UIView = {
-        let parentView = UIView()
-        let indicator = UIActivityIndicatorView()
-        
-        indicator.frame = parentView.frame
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        parentView.backgroundColor = .black
-        parentView.alpha = 0.7
-        
-        parentView.addSubview(indicator)
-        parentView.translatesAutoresizingMaskIntoConstraints = false
-        return parentView
+    private lazy var blockView: BlockView = {
+        let view = BlockView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setup()
+        return view
     }()
     
     override func viewDidLoad() {
@@ -75,11 +68,13 @@ class FeedViewController: UIViewController {
     
     ///Функция которая асинхронно получает ленту
     func feed() {
+        blockView.show()
         posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: {(optionalPosts) in
             guard let unwrappedPosts = optionalPosts else { return }
             DispatchQueue.main.async {
                 self.feedArray = unwrappedPosts
                 self.collectionView.reloadData()
+                self.blockView.hide()
             }
             print("feed loaded successfull")
         })

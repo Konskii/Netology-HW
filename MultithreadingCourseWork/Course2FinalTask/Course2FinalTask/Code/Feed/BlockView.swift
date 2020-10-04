@@ -22,4 +22,36 @@ class BlockView: UIView {
 //        parentView.translatesAutoresizingMaskIntoConstraints = false
 //        return parentView
 //    }()
+    
+    let indicator = UIActivityIndicatorView()
+    
+    func setup() {
+        indicator.style = .gray
+        indicator.frame = frame
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(indicator)
+        
+        backgroundColor = .black
+        alpha = 0.7
+        
+        let constraints = [
+            indicator.trailingAnchor.constraint(equalTo: trailingAnchor),
+            indicator.leadingAnchor.constraint(equalTo:leadingAnchor),
+            indicator.topAnchor.constraint(equalTo: topAnchor),
+            indicator.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    func show() {
+        indicator.startAnimating()
+        isHidden = false
+    }
+    
+    func hide() {
+        indicator.stopAnimating()
+        isHidden = true
+    }
+    
 }
