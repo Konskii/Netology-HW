@@ -31,22 +31,43 @@ class FeedViewController: UIViewController {
         return view
     }()
     
+    private var feedArray: [Post] = []
+    
+    private lazy var blockView: UIView = {
+        let parentView = UIView()
+        let indicator = UIActivityIndicatorView()
+        
+        indicator.frame = parentView.frame
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        parentView.backgroundColor = .black
+        parentView.alpha = 0.7
+        
+        parentView.addSubview(indicator)
+        parentView.translatesAutoresizingMaskIntoConstraints = false
+        return parentView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         feed()
         setupLayout()
     }
     
-    var feedArray: [Post] = []
-    
+    ///FORCE UNWRAPPING !!!
     func setupLayout() {
         view.addSubview(collectionView)
+        tabBarController!.view.addSubview(blockView)
         
         let constraints = [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            blockView.topAnchor.constraint(equalTo: tabBarController!.view.topAnchor),
+            blockView.leadingAnchor.constraint(equalTo: tabBarController!.view.leadingAnchor),
+            blockView.trailingAnchor.constraint(equalTo: tabBarController!.view.trailingAnchor),
+            blockView.bottomAnchor.constraint(equalTo: tabBarController!.view.bottomAnchor),
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -68,18 +89,6 @@ class FeedViewController: UIViewController {
 //MARK: - CollectionView Data Source
 extension FeedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        var result: Int?
-//        let queue = DispatchQueue.global()
-//
-//        posts.feed(queue: queue) {(op: [Post]?) -> Void in
-//            guard let posts = op else { return }
-//            result = posts.count
-//        }
-//        while true {
-//            if let postsCount = result {
-//                return postsCount
-//            }
-//        }
         return feedArray.count
     }
     
@@ -126,7 +135,7 @@ extension FeedViewController: cellPrototol {
                         print("succes Unlike to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
                             self.feed()
-                            self.collectionView.reloadData()
+//                            self.collectionView.reloadData()
                         }
                     } else {
                         print("no such post with id: \(String(describing: post?.id))")
@@ -138,7 +147,7 @@ extension FeedViewController: cellPrototol {
                         print("succes like to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
                             self.feed()
-                            self.collectionView.reloadData()
+//                            self.collectionView.reloadData()
                         }
                     } else {
                         print("no such post with id: \(String(describing: post?.id))")

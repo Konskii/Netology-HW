@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C1C681E2529EA6D00CA7097 /* BlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1C681D2529EA6D00CA7097 /* BlockView.swift */; };
 		74B79258202B3254006BCB41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B79257202B3254006BCB41 /* AppDelegate.swift */; };
 		74B7925F202B3254006BCB41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74B7925E202B3254006BCB41 /* Assets.xcassets */; };
 		AC72B42824ED09BB001FF9F1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC72B42724ED09BB001FF9F1 /* FeedViewController.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5C1C681D2529EA6D00CA7097 /* BlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BlockView.swift; path = Course2FinalTask/Code/Feed/BlockView.swift; sourceTree = SOURCE_ROOT; };
 		74B79254202B3254006BCB41 /* MultithreadingCourseWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadingCourseWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74B79257202B3254006BCB41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74B7925E202B3254006BCB41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		74B7927D202B3434006BCB41 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5C1C681D2529EA6D00CA7097 /* BlockView.swift */,
 				74B79257202B3254006BCB41 /* AppDelegate.swift */,
 				AC72B42D24ED2C23001FF9F1 /* Protocols.swift */,
 				74B79263202B3254006BCB41 /* Info.plist */,
@@ -226,6 +229,7 @@
 				AC72B42C24ED0C2C001FF9F1 /* FeedCell.swift in Sources */,
 				AC72B42E24ED2C23001FF9F1 /* Protocols.swift in Sources */,
 				AC7E395B24ED7575002E30BB /* UsersListTableView.swift in Sources */,
+				5C1C681E2529EA6D00CA7097 /* BlockView.swift in Sources */,
 				ACDAA5CE24EEAE160051664A /* ProfileCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
