@@ -8,48 +8,52 @@
 
 import UIKit
 class BlockView: UIView {
-    //Вот это - сюда
-//    private lazy var blockView: UIView = {
-//        let parentView = UIView()
-//        let indicator = UIActivityIndicatorView()
-//
-//        indicator.frame = parentView.frame
-//        indicator.translatesAutoresizingMaskIntoConstraints = false
-//        parentView.backgroundColor = .black
-//        parentView.alpha = 0.7
-//
-//        parentView.addSubview(indicator)
-//        parentView.translatesAutoresizingMaskIntoConstraints = false
-//        return parentView
-//    }()
     
     let indicator = UIActivityIndicatorView()
     
-    func setup() {
-        indicator.style = .gray
-        indicator.frame = frame
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureIndicator() {
+        indicator.style = .white
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(indicator)
-        
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func configureSelf() {
         backgroundColor = .black
         alpha = 0.7
+    }
+    
+    private func setupConstraints() {
+        addSubview(indicator)
         
         let constraints = [
-            indicator.trailingAnchor.constraint(equalTo: trailingAnchor),
-            indicator.leadingAnchor.constraint(equalTo:leadingAnchor),
-            indicator.topAnchor.constraint(equalTo: topAnchor),
-            indicator.bottomAnchor.constraint(equalTo: bottomAnchor)
+            indicator.centerYAnchor.constraint(equalTo: centerYAnchor),
+            indicator.centerXAnchor.constraint(equalTo: centerXAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)
     }
     
-    func show() {
+    private func setup() {
+        configureSelf()
+        configureIndicator()
+        setupConstraints()
+    }
+    
+    public func show() {
         indicator.startAnimating()
         isHidden = false
     }
     
-    func hide() {
+    public func hide() {
         indicator.stopAnimating()
         isHidden = true
     }

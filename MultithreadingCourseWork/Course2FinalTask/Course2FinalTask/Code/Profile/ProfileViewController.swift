@@ -54,18 +54,30 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         
         return view
     }()
+    
+    private lazy var blockView: BlockView = {
+        var view = BlockView()
+        return view
+    }()
 
     
     //MARK: - Methods
     
     private func setupLayout() {
+        guard let tb = tabBarController else { fatalError("Not embbed with tabBarController") }
         view.addSubview(collectionView)
+        tb.view.addSubview(blockView)
         
         let constraints = [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
+            blockView.topAnchor.constraint(equalTo: tb.view.topAnchor),
+            blockView.leadingAnchor.constraint(equalTo: tb.view.leadingAnchor),
+            blockView.trailingAnchor.constraint(equalTo: tb.view.trailingAnchor),
+            blockView.bottomAnchor.constraint(equalTo: tb.view.bottomAnchor),
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -73,12 +85,14 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     
     ///Функция получающая пользователя асинхронно. После получения обновляет экран
     private func getData() {
+        blockView.show()
         if let customUserID = userID {
             users.user(with: customUserID, queue: DispatchQueue.global()) { (user) in
                 guard let customUser = user else { fatalError("Custom user doesn't exist") }
                 DispatchQueue.main.async {
                     self.user = customUser
                     self.collectionView.reloadData()
+                    self.blockView.hide()
                 }
                 print("currentData added")
             }
@@ -88,6 +102,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
                 DispatchQueue.main.async {
                     self.user = currentUser
                     self.collectionView.reloadData()
+                    self.blockView.hide()
                 }
                 print("currentData added")
             }

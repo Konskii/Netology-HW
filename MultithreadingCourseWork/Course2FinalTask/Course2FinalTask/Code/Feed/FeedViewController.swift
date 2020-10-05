@@ -35,21 +35,22 @@ class FeedViewController: UIViewController {
     
     private lazy var blockView: BlockView = {
         let view = BlockView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setup()
         return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        feed()
         setupLayout()
+        feed()
     }
+    
+    //MARK: - Methods
     
     ///FORCE UNWRAPPING !!!
     func setupLayout() {
+        guard let tb = tabBarController else { fatalError("Not embbed with tabBarController") }
         view.addSubview(collectionView)
-        tabBarController!.view.addSubview(blockView)
+        tb.view.addSubview(blockView)
         
         let constraints = [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -57,10 +58,10 @@ class FeedViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            blockView.topAnchor.constraint(equalTo: tabBarController!.view.topAnchor),
-            blockView.leadingAnchor.constraint(equalTo: tabBarController!.view.leadingAnchor),
-            blockView.trailingAnchor.constraint(equalTo: tabBarController!.view.trailingAnchor),
-            blockView.bottomAnchor.constraint(equalTo: tabBarController!.view.bottomAnchor),
+            blockView.topAnchor.constraint(equalTo: tb.view.topAnchor),
+            blockView.leadingAnchor.constraint(equalTo: tb.view.leadingAnchor),
+            blockView.trailingAnchor.constraint(equalTo: tb.view.trailingAnchor),
+            blockView.bottomAnchor.constraint(equalTo: tb.view.bottomAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -69,7 +70,7 @@ class FeedViewController: UIViewController {
     ///Функция которая асинхронно получает ленту
     func feed() {
         blockView.show()
-        posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: {(optionalPosts) in
+        posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: { (optionalPosts) in
             guard let unwrappedPosts = optionalPosts else { return }
             DispatchQueue.main.async {
                 self.feedArray = unwrappedPosts
@@ -130,7 +131,6 @@ extension FeedViewController: cellPrototol {
                         print("succes Unlike to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
                             self.feed()
-//                            self.collectionView.reloadData()
                         }
                     } else {
                         print("no such post with id: \(String(describing: post?.id))")
@@ -142,7 +142,6 @@ extension FeedViewController: cellPrototol {
                         print("succes like to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
                             self.feed()
-//                            self.collectionView.reloadData()
                         }
                     } else {
                         print("no such post with id: \(String(describing: post?.id))")

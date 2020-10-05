@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5tU-XR-16D">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5tU-XR-16D">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
         <!--Profile-->
         <scene sceneID="cx9-It-wtH">
             <objects>
-                <viewController title="Profile" id="HZz-Xe-qTp" customClass="ProfileViewController" customModule="Course2FinalTask" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Profile" id="HZz-Xe-qTp" customClass="ProfileViewController" customModule="MultithreadingCourseWork" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iqJ-7u-hhe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,10 +24,27 @@
             </objects>
             <point key="canvasLocation" x="847.82608695652175" y="70.982142857142847"/>
         </scene>
+        <!--New-->
+        <scene sceneID="2Bc-FY-XWs">
+            <objects>
+                <viewController title="New" id="2eE-ou-vRK" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ATt-8t-430">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="qUa-cx-nF9"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="axt-kN-ZAm"/>
+                    <navigationItem key="navigationItem" id="tY4-zg-qLS"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ILo-Rj-GdZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="848" y="751"/>
+        </scene>
         <!--Feed-->
         <scene sceneID="ycK-LD-gX5">
             <objects>
-                <viewController storyboardIdentifier="FeedViewController" title="Feed" id="JUz-4c-To9" customClass="FeedViewController" customModule="Course2FinalTask" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedViewController" title="Feed" id="JUz-4c-To9" customClass="FeedViewController" customModule="MultithreadingCourseWork" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ik1-a0-Iyi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -44,6 +61,7 @@
         <scene sceneID="xdi-nI-bSe">
             <objects>
                 <tabBarController id="5tU-XR-16D" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ti1-Gd-LYz"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ScT-VM-r26">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -52,6 +70,7 @@
                     <connections>
                         <segue destination="Gi1-1x-mcC" kind="relationship" relationship="viewControllers" id="oDy-9X-bSD"/>
                         <segue destination="FuE-bF-zTZ" kind="relationship" relationship="viewControllers" id="eIa-zp-LmV"/>
+                        <segue destination="2eE-ou-vRK" kind="relationship" relationship="viewControllers" id="adR-zu-Yne"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bE2-fo-hgs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -96,7 +115,28 @@
             </objects>
             <point key="canvasLocation" x="-62.318840579710148" y="70.982142857142847"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Yfj-yd-CxL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="R1X-nl-NHX" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6ix-2W-Gp3">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2eE-ou-vRK" kind="relationship" relationship="rootViewController" id="kAM-uw-nWZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MiG-uu-eZQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-62" y="751"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="adR-zu-Yne"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="feed" width="25" height="25"/>
         <image name="profile" width="25" height="25"/>
