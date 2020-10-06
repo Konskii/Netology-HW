@@ -15,6 +15,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     convenience init(_ id: User.Identifier) {
         self.init()
         userID = id
+        isCurrent = false
     }
     
     //MARK: - Variables
@@ -25,10 +26,23 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     ///Переменная с информацией и методами пользователей
     private lazy var users = DataProviders.shared.usersDataProvider
     
+    ///Пользователь, в нем все данные для хедера
     private var user: User?
+    
+    ///Массив фото(постов) пользователя
     private var images: [UIImage]?
+    
+    ///Эта переменная хранит id, и если ее значение не nil, то значит в контроллер передали кастомно пользователя
     private var userID: User.Identifier?
+    
+    //ID current user'а
     private var currentUserID: User.Identifier?
+    
+    ///Чтобы данные не обновлялись два раза при создании vc создадим переменную, указывающую - обновило ли первый раз данные при запуске
+    private var isUpdated = false
+    
+    ///Свйоство которое указывает какой пользоваетль должен быть отображен - current или нет
+    private var isCurrent = true
     
     
     ///CollectionView с которым мы будем работать
@@ -55,6 +69,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         return view
     }()
     
+    ///Блокирующее вью, которое появляется при долгой работе с данными
     private lazy var blockView: BlockView = {
         var view = BlockView()
         return view
@@ -63,6 +78,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     
     //MARK: - Methods
     
+    ///Установка констрейнтов
     private func setupLayout() {
         guard let tb = tabBarController else { fatalError("Not embbed with tabBarController") }
         view.addSubview(collectionView)
@@ -89,18 +105,28 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         if let customUserID = userID {
             users.user(with: customUserID, queue: DispatchQueue.global()) { (user) in
                 guard let customUser = user else { fatalError("Custom user doesn't exist") }
+                
+                self.getUserPosts(id: customUser.id)
+                self.isUpdated = true
+                self.user = customUser
+                
                 DispatchQueue.main.async {
-                    self.user = customUser
+                    self.title = customUser.username
                     self.collectionView.reloadData()
                     self.blockView.hide()
                 }
-                print("currentData added")
+                print("customData added")
             }
         } else {
             users.currentUser(queue: DispatchQueue.global()) { (user) in
                 guard let currentUser = user else { fatalError("Current user doesn't exist") }
+                
+                self.getUserPosts(id: currentUser.id)
+                self.isUpdated = true
+                self.user = currentUser
+                
                 DispatchQueue.main.async {
-                    self.user = currentUser
+                    self.title = currentUser.username
                     self.collectionView.reloadData()
                     self.blockView.hide()
                 }
@@ -109,10 +135,23 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
     
+    func getUserPosts(id: User.Identifier) {
+        posts.findPosts(by: id, queue: DispatchQueue.global()) { (posts) in
+            guard let unwrappedPosts = posts else { fatalError("error while getting posts") }
+            self.images = unwrappedPosts.map({$0.image})
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    ///Функция присваивающая значение переменной currentUserID
     private func getCurrentUserId() {
-        users.currentUser(queue: DispatchQueue.global()) { (user) in
-            guard let currentUser = user else { fatalError() }
-            self.currentUserID = currentUser.id
+        if isCurrent {
+            users.currentUser(queue: DispatchQueue.global()) { (user) in
+                guard let currentUser = user else { fatalError("Current user doesn't exist") }
+                self.currentUserID = currentUser.id
+            }
         }
     }
     
@@ -120,9 +159,15 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getCurrentUserId()
         setupLayout()
+        getCurrentUserId()
         getData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if isUpdated {
+            getData()
+        }
     }
     
     //MARK: - CollectionView Data Source
@@ -143,13 +188,6 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileHeader else { return UICollectionReusableView() }
-            if let unwrappedCurrentID = currentUserID, let unwrappedUserID = userID {
-                if unwrappedUserID == unwrappedCurrentID {
-                    view.isCurrent = true
-                } else {
-                    view.isCurrent = false
-                }
-            }
             
             view.data = user
             return view

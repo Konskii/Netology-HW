@@ -61,7 +61,7 @@ extension UsersListTableView: UITableViewDataSource {
 extension UsersListTableView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ProfileViewController()
+        let vc = ProfileViewController(usersArray[indexPath.row].id)
         navigationController?.pushViewController(vc, animated: true)
     }
     

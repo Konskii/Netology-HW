@@ -9,6 +9,8 @@
 import DataProvider
 ///Протокол, который используется для оповещения контроллера о том, что нужно поставить лайк посту и обновить данные в ячейке
 protocol likeProtocol: class {
+    /// - Parameters:
+    ///   - postIdTolike: id поста на которой нужно поставить лайк
     func like(postIdTolike id: Post.Identifier)
 }
 

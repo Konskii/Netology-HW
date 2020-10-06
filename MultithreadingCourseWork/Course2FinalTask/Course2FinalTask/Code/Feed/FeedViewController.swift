@@ -17,37 +17,44 @@ class FeedViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize.width = self.view.bounds.width
         layout.itemSize.height = 530
+        layout.itemSize.width = self.view.bounds.width
+        
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.dataSource = self
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.register(FeedCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
         if #available(iOS 13.0, *) {
             view.backgroundColor = .systemBackground
         } else {
             view.backgroundColor = .white
         }
-        view.translatesAutoresizingMaskIntoConstraints = false
+        
         return view
     }()
     
+    ///Массив ленты
     private var feedArray: [Post] = []
     
+    ///Блокирующее вью, которое появляется при долгой работе с данными
     private lazy var blockView: BlockView = {
         let view = BlockView()
         return view
     }()
     
+    //MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLayout()
+        setupConstraints()
         feed()
     }
     
     //MARK: - Methods
     
-    ///FORCE UNWRAPPING !!!
-    func setupLayout() {
+    ///Установка констрейнтов
+    func setupConstraints() {
         guard let tb = tabBarController else { fatalError("Not embbed with tabBarController") }
         view.addSubview(collectionView)
         tb.view.addSubview(blockView)
@@ -110,7 +117,7 @@ extension FeedViewController: cellPrototol {
     }
 
     func like(postIdTolike id: Post.Identifier) {
-        posts.likePost(with: id, queue: DispatchQueue.global()) {(post) in
+        posts.likePost(with: id, queue: DispatchQueue.global()) { (post) in
             if post != nil {
                 print("succes Like to \(String(describing: post?.id))")
             } else {
@@ -120,13 +127,13 @@ extension FeedViewController: cellPrototol {
     }
 
     func likeDislike(postId id: Post.Identifier) {
-        posts.post(with: id, queue: DispatchQueue.global()) {(post) in
+        posts.post(with: id, queue: DispatchQueue.global()) { (post) in
             guard let unwrappedPost = post else {
                 print("no such post with id: \(String(describing: post?.id))")
                 return
             }
             if unwrappedPost.currentUserLikesThisPost {
-                self.posts.unlikePost(with: unwrappedPost.id, queue: DispatchQueue.global()) {(post) in
+                self.posts.unlikePost(with: unwrappedPost.id, queue: DispatchQueue.global()) { (post) in
                     if post != nil {
                         print("succes Unlike to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
@@ -137,7 +144,7 @@ extension FeedViewController: cellPrototol {
                     }
                 }
             } else {
-                self.posts.likePost(with: unwrappedPost.id, queue: DispatchQueue.global()) {(post) in
+                self.posts.likePost(with: unwrappedPost.id, queue: DispatchQueue.global()) { (post) in
                     if post != nil {
                         print("succes like to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
@@ -153,7 +160,7 @@ extension FeedViewController: cellPrototol {
 
     func showVC(data: dataToShowVC?, post: Post.Identifier?) {
         guard let postID = post, data == nil else { return }
-        posts.usersLikedPost(with: postID, queue: DispatchQueue.global()) {(users) in
+        posts.usersLikedPost(with: postID, queue: DispatchQueue.global()) { (users) in
             guard let unwrappedUsers = users else {
                 print("no such post with id: \(String(describing: post))")
                 return
