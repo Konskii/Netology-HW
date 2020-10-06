@@ -12,7 +12,7 @@ import DataProvider
 class ProfileHeader: UICollectionReusableView {
     //MARK: - Delegates
     
-    weak var usersDelegate: usersProtocol?
+    weak var headerProtocol: headerProtocol?
     
     //MARK: - UI Elements
     
@@ -95,10 +95,12 @@ class ProfileHeader: UICollectionReusableView {
             
             if unwrappedData.currentUserFollowsThisUser {
                 followAndUnfollowButton.setTitle("Unfollow", for: .normal)
+            } else {
+                followAndUnfollowButton.setTitle("Follow", for: .normal)
             }
             
             userAvatarImage.layer.borderWidth = 0
-            if isCurrent == false {
+            if isCurrent == true {
                 followAndUnfollowButton.layer.opacity = 1
             }
         }
@@ -109,15 +111,21 @@ class ProfileHeader: UICollectionReusableView {
     @objc func followersTapped() {
         guard let user = data else { fatalError("User isn't set") }
         let data = dataToShowVC(user: user, followersOrNot: true)
-        usersDelegate?.showVC(data: data, post: nil)
+        headerProtocol?.showVC(data: data, post: nil)
     }
     
     @objc func followingTapped() {
         guard let user = data else { fatalError("User isn't set") }
         let data = dataToShowVC(user: user, followersOrNot: false)
-        usersDelegate?.showVC(data: data, post: nil)
+        headerProtocol?.showVC(data: data, post: nil)
     }
     @objc func followAndUnfollowButtonTapped() {
+        guard let user = data else { fatalError("User isn't set") }
+        if user.currentUserFollowsThisUser {
+            headerProtocol?.unfollow(id: user.id)
+        } else {
+            headerProtocol?.follow(id: user.id)
+        }
     }
     
     //MARK: - Inits

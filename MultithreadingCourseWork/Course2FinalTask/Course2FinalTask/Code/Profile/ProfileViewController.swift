@@ -99,7 +99,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         NSLayoutConstraint.activate(constraints)
     }
     
-    ///Функция получающая пользователя асинхронно. После получения обновляет экран
+    ///Функция получающая пользователя асинхронно. После получения обновляет данные
     private func getData() {
         blockView.show()
         if let customUserID = userID {
@@ -135,6 +135,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
     
+    ///Функция получающая посты(фото) пользователя аснихронно. После выполнения обновляет данные
     func getUserPosts(id: User.Identifier) {
         posts.findPosts(by: id, queue: DispatchQueue.global()) { (posts) in
             guard let unwrappedPosts = posts else { fatalError("error while getting posts") }
@@ -190,7 +191,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileHeader else { return UICollectionReusableView() }
-            view.usersDelegate = self
+            view.headerProtocol = self
             view.data = user
             return view
         default:
@@ -199,7 +200,28 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     }
 }
 
-extension ProfileViewController: usersProtocol {
+extension ProfileViewController: headerProtocol {
+    func follow(id: User.Identifier) {
+        users.follow(id, queue: DispatchQueue.global()) { (user) in
+            guard user != nil else { fatalError("Error while getting info about user to follow or user to follow is current user") }
+            DispatchQueue.main.async {
+                self.getData()
+            }
+        }
+    }
+    
+    func unfollow(id: User.Identifier) {
+        users.unfollow(id, queue: DispatchQueue.global()) { (user) in
+            guard user != nil else { fatalError("Error while getting info about user to unfollow or user to unfollow is current user") }
+            DispatchQueue.main.async {
+                self.getData()
+            }
+        }
+    }
+    
+    func reload(index: IndexPath) {
+    }
+    
     func showVC(data: dataToShowVC?, post: Post.Identifier?) {
         blockView.show()
         guard let info = data else { return }

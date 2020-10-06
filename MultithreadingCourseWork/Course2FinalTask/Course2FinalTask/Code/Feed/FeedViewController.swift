@@ -15,6 +15,9 @@ class FeedViewController: UIViewController {
     private lazy var posts = DataProviders.shared.postsDataProvider
     private lazy var users = DataProviders.shared.usersDataProvider
     
+    ///Чтобы данные не обновлялись два раза при создании vc создадим переменную, указывающую - обновило ли первый раз данные при запуске
+    private var isUpdated = false
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize.height = 530
@@ -48,7 +51,13 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
-        feed()
+        feed(hide: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if isUpdated {
+            feed(hide: false)
+        }
     }
     
     //MARK: - Methods
@@ -75,10 +84,13 @@ class FeedViewController: UIViewController {
     }
     
     ///Функция которая асинхронно получает ленту
-    func feed() {
-        blockView.show()
+    func feed(hide: Bool) {
+        if hide {
+            blockView.show()
+        }
         posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: { (optionalPosts) in
             guard let unwrappedPosts = optionalPosts else { return }
+            self.isUpdated = true
             DispatchQueue.main.async {
                 self.feedArray = unwrappedPosts
                 self.collectionView.reloadData()
@@ -112,7 +124,7 @@ extension FeedViewController: UICollectionViewDataSource {
 //MARK: - Delegates
 extension FeedViewController: cellPrototol {
     func reload(index: IndexPath) {
-        feed()
+        feed(hide: true)
         self.collectionView.reloadItems(at: [index])
     }
 
@@ -137,7 +149,7 @@ extension FeedViewController: cellPrototol {
                     if post != nil {
                         print("succes Unlike to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
-                            self.feed()
+                            self.feed(hide: true)
                         }
                     } else {
                         print("no such post with id: \(String(describing: post?.id))")
@@ -148,7 +160,7 @@ extension FeedViewController: cellPrototol {
                     if post != nil {
                         print("succes like to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
-                            self.feed()
+                            self.feed(hide: true)
                         }
                     } else {
                         print("no such post with id: \(String(describing: post?.id))")

@@ -39,7 +39,20 @@ protocol reloadingProtocol: class {
     func reload(index: IndexPath)
 }
 
+protocol followProtocol {
+    /// - Parameters
+    /// - id: id пользователя на которого должен подписаться current
+    func follow(id: User.Identifier)
+}
+
+protocol unfollowProtocol {
+    /// - Parameters
+    /// - id: id пользователя от которого должен отписаться current
+    func unfollow(id: User.Identifier)
+}
+
 protocol cellPrototol: likeProtocol, likeDislikeProtocol, userProtocol, usersProtocol, reloadingProtocol { }
+protocol headerProtocol: followProtocol, unfollowProtocol, usersProtocol, reloadingProtocol { }
 
 
 struct dataToShowVC {
