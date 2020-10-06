@@ -173,12 +173,14 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     //MARK: - CollectionView Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        guard let unwrappedImages = images else { return 1 }
+        return unwrappedImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileCell else { fatalError("Not ProfileCell") }
-        
+        guard let unwrappedImages = images else { return cell }
+        cell.data = unwrappedImages[indexPath.row]
         return cell
     }
     
@@ -188,11 +190,33 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileHeader else { return UICollectionReusableView() }
-            
+            view.usersDelegate = self
             view.data = user
             return view
         default:
             fatalError("Not Header")
+        }
+    }
+}
+
+extension ProfileViewController: usersProtocol {
+    func showVC(data: dataToShowVC?, post: Post.Identifier?) {
+        blockView.show()
+        guard let info = data else { return }
+        switch info.followersOrNot {
+        case true:
+            let vc = UsersListTableView()
+            navigationController?.pushViewController(vc, animated: true)
+            users.usersFollowingUser(with: info.user.id, queue: DispatchQueue.global()) { (users) in
+                guard let followers = users else { fatalError("Error while getting followers") }
+                vc.usersArray = followers
+                DispatchQueue.main.async {
+                    vc.reloadData()
+                    self.blockView.hide()
+                }
+            }
+        default:
+            return
         }
     }
 }

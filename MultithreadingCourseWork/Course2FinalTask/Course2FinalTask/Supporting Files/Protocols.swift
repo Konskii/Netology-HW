@@ -26,6 +26,11 @@ protocol userProtocol: class {
 
 ///Протокол, который используется для оповещения контроллера о том, что нужно отобразить новый контроллер со списком пользователей
 protocol usersProtocol: class {
+    ///data передается в случае когда нужно показать подписчиков\подписки,
+    ///post передается когда нужно показать список лайков
+    /// - Parameters
+    ///  - data: экземпляр с данными типа dataToShowVC
+    ///  - post: id поста
     func showVC(data: dataToShowVC?, post: Post.Identifier?)
 }
 

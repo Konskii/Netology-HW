@@ -26,7 +26,7 @@ class UsersListTableView: UIViewController {
         setupConstraints()
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         view.addSubview(tableView)
         
         let constraints = [
@@ -37,6 +37,10 @@ class UsersListTableView: UIViewController {
         ]
         
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    public func reloadData() {
+        tableView.reloadData()
     }
 }
 
