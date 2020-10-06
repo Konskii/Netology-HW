@@ -203,20 +203,30 @@ extension ProfileViewController: usersProtocol {
     func showVC(data: dataToShowVC?, post: Post.Identifier?) {
         blockView.show()
         guard let info = data else { return }
+        let vc = UsersListTableView()
+        navigationController?.pushViewController(vc, animated: true)
+        
         switch info.followersOrNot {
         case true:
-            let vc = UsersListTableView()
-            navigationController?.pushViewController(vc, animated: true)
             users.usersFollowingUser(with: info.user.id, queue: DispatchQueue.global()) { (users) in
                 guard let followers = users else { fatalError("Error while getting followers") }
                 vc.usersArray = followers
+                
                 DispatchQueue.main.async {
                     vc.reloadData()
                     self.blockView.hide()
                 }
             }
-        default:
-            return
+        case false:
+            users.usersFollowedByUser(with: info.user.id, queue: DispatchQueue.global()) { (users) in
+                guard let following = users else { fatalError("Error while getting followers") }
+                vc.usersArray = following
+                
+                DispatchQueue.main.async {
+                    vc.reloadData()
+                    self.blockView.hide()
+                }
+            }
         }
     }
 }
