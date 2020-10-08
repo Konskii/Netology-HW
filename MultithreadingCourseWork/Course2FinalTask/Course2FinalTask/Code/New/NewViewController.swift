@@ -28,7 +28,6 @@ class NewViewController: UIViewController, UICollectionViewDataSource, UICollect
             view.backgroundColor = .white
         }
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .green
         return view
     }()
     

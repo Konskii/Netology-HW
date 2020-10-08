@@ -21,6 +21,8 @@
 		AC7E395B24ED7575002E30BB /* UsersListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7E395A24ED7575002E30BB /* UsersListTableView.swift */; };
 		AC808C20251DDA1600B9E3AE /* DataProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC808C1F251DDA1600B9E3AE /* DataProvider.framework */; };
 		AC808C21251DDA1600B9E3AE /* DataProvider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC808C1F251DDA1600B9E3AE /* DataProvider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ACD16E86252F3712004BDA21 /* FiltersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD16E85252F3712004BDA21 /* FiltersCell.swift */; };
+		ACD16E88252F3CE1004BDA21 /* PublishingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD16E87252F3CE1004BDA21 /* PublishingViewController.swift */; };
 		ACD7F52C24EFD832009E3C87 /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD7F52B24EFD832009E3C87 /* ProfileHeader.swift */; };
 		ACDAA5CC24EEAD5A0051664A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDAA5CB24EEAD5A0051664A /* ProfileViewController.swift */; };
 		ACDAA5CE24EEAE160051664A /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDAA5CD24EEAE160051664A /* ImageCell.swift */; };
@@ -56,6 +58,8 @@
 		AC72B42D24ED2C23001FF9F1 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		AC7E395A24ED7575002E30BB /* UsersListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListTableView.swift; sourceTree = "<group>"; };
 		AC808C1F251DDA1600B9E3AE /* DataProvider.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DataProvider.framework; sourceTree = "<group>"; };
+		ACD16E85252F3712004BDA21 /* FiltersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersCell.swift; sourceTree = "<group>"; };
+		ACD16E87252F3CE1004BDA21 /* PublishingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishingViewController.swift; sourceTree = "<group>"; };
 		ACD7F52B24EFD832009E3C87 /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
 		ACDAA5CB24EEAD5A0051664A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		ACDAA5CD24EEAE160051664A /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 			children = (
 				AC431F08252DD28100CC9989 /* NewViewController.swift */,
 				AC431F0C252DD73500CC9989 /* FilteringViewController.swift */,
+				ACD16E85252F3712004BDA21 /* FiltersCell.swift */,
+				ACD16E87252F3CE1004BDA21 /* PublishingViewController.swift */,
 				AC6595DA252E238D00FFB3FB /* FilterImageOperation.swift */,
 			);
 			path = New;
@@ -253,7 +259,9 @@
 				5C1C681E2529EA6D00CA7097 /* BlockView.swift in Sources */,
 				5CA7F3D1252CA9030071F03F /* Alert.swift in Sources */,
 				ACDAA5CE24EEAE160051664A /* ImageCell.swift in Sources */,
+				ACD16E86252F3712004BDA21 /* FiltersCell.swift in Sources */,
 				AC6595DB252E238D00FFB3FB /* FilterImageOperation.swift in Sources */,
+				ACD16E88252F3CE1004BDA21 /* PublishingViewController.swift in Sources */,
 				AC431F0D252DD73500CC9989 /* FilteringViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

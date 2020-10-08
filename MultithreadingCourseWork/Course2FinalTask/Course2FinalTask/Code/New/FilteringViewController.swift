@@ -10,6 +10,7 @@ import UIKit
 import DataProvider
 
 class FilteringViewController: UIViewController {
+    
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -20,12 +21,13 @@ class FilteringViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let size = self.view.bounds.width / 5
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = size
+        layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = size
-        layout.itemSize = CGSize(width: size, height: size)
+        layout.estimatedItemSize = CGSize(width: 120, height: 75)
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.register(ImageCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        view.register(FiltersCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        view.backgroundColor = .white
         view.dataSource = self
         view.delegate = self
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -35,9 +37,9 @@ class FilteringViewController: UIViewController {
     
     private var thumbnailImage: UIImage?
     
-    private let filtersNames = ["CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone"]
-    
     private var filterdPhotos: [UIImage?] = []
+    
+    private let filtersNames = ["CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone"]
     
     private let queue = OperationQueue()
     
@@ -78,14 +80,13 @@ class FilteringViewController: UIViewController {
     
     private func filter() {
         for (index, filter) in filtersNames.enumerated() {
-            filterdPhotos.insert(UIImage(named: "indicator"), at:   index)
+            filterdPhotos.insert(UIImage(named: "indicator"), at: index)
             let operation = FilterImageOperation(image: thumbnailImage, filterName: filter)
             
             operation.completionBlock = {
                 DispatchQueue.main.async {
                     self.filterdPhotos.remove(at: index)
                     self.filterdPhotos.insert(operation.outputImage, at: index)
-                    print("added image")
                     self.collectionView.reloadData()
                 }
             }
@@ -101,12 +102,22 @@ extension FilteringViewController: UICollectionViewDataSource, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImageCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? FiltersCell else { return UICollectionViewCell() }
         if !filterdPhotos.isEmpty {
-            cell.data = filterdPhotos[indexPath.row]
+            cell.data = filtersCellData(image: filterdPhotos[indexPath.row], filterName: filtersNames[indexPath.row])
         }
         return cell
     }
-
-
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = PublishingViewController()
+        let operation = FilterImageOperation(image: imageView.image, filterName: filtersNames[indexPath.row])
+        operation.completionBlock = {
+            DispatchQueue.main.async {
+                vc.setImage(image: operation.outputImage)
+            }
+        }
+        queue.addOperation(operation)
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

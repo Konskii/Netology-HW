@@ -64,4 +64,13 @@ struct dataToShowVC {
     }
 }
 
+struct filtersCellData {
+    var image: UIImage?
+    var filterName: String
+    init(image: UIImage?, filterName: String) {
+        self.image = image
+        self.filterName = filterName
+    }
+}
+
 

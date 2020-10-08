@@ -40,6 +40,5 @@ class FilterImageOperation: Operation {
         guard let cgOutputImage = context.createCGImage(ciFilteredImage, from: ciFilteredImage.extent) else { return }
 
         outputImage = UIImage(cgImage: cgOutputImage)
-        print("filtered image with \(filterNameUnwrapped)")
     }
 }
