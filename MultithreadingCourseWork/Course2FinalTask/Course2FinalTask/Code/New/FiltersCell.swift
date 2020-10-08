@@ -8,12 +8,17 @@
 
 import UIKit
 class FiltersCell: UICollectionViewCell {
+    
+    //MARK: - UI Elements
+    
+    ///Отфильтрованная картинка
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
+    ///Название фильтра
     private lazy var filterNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17)
@@ -21,6 +26,8 @@ class FiltersCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    //MARK: - Configuring cell data
     
     var data: filtersCellData? {
         didSet {
@@ -30,6 +37,8 @@ class FiltersCell: UICollectionViewCell {
         }
     }
     
+    //MARK: - Inits
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraints()
@@ -38,6 +47,8 @@ class FiltersCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - Methods
     
     private func setupConstraints() {
         contentView.addSubview(imageView)

@@ -63,7 +63,7 @@ class FeedViewController: UIViewController {
     //MARK: - Methods
     
     ///Установка констрейнтов
-    func setupConstraints() {
+    private func setupConstraints() {
         guard let tb = tabBarController else { fatalError("Not embbed with tabBarController") }
         view.addSubview(collectionView)
         tb.view.addSubview(blockView)
@@ -84,12 +84,12 @@ class FeedViewController: UIViewController {
     }
     
     ///Функция которая асинхронно получает ленту
-    func feed(hide: Bool) {
+    private func feed(hide: Bool) {
         if hide {
             blockView.show()
         }
         posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: { (optionalPosts) in
-            guard let unwrappedPosts = optionalPosts else { return }
+            guard let unwrappedPosts = optionalPosts else { Alert.showBasic(vc: self); return }
             self.isUpdated = true
             DispatchQueue.main.async {
                 self.feedArray = unwrappedPosts
@@ -133,17 +133,14 @@ extension FeedViewController: cellPrototol {
             if post != nil {
                 print("succes Like to \(String(describing: post?.id))")
             } else {
-                print("no such post with id: \(String(describing: post?.id))")
+                 Alert.showBasic(vc: self); return
             }
         }
     }
 
     func likeDislike(postId id: Post.Identifier) {
         posts.post(with: id, queue: DispatchQueue.global()) { (post) in
-            guard let unwrappedPost = post else {
-                print("no such post with id: \(String(describing: post?.id))")
-                return
-            }
+            guard let unwrappedPost = post else {  Alert.showBasic(vc: self); return  }
             if unwrappedPost.currentUserLikesThisPost {
                 self.posts.unlikePost(with: unwrappedPost.id, queue: DispatchQueue.global()) { (post) in
                     if post != nil {
@@ -152,7 +149,7 @@ extension FeedViewController: cellPrototol {
                             self.feed(hide: true)
                         }
                     } else {
-                        print("no such post with id: \(String(describing: post?.id))")
+                         Alert.showBasic(vc: self); return
                     }
                 }
             } else {
@@ -163,7 +160,7 @@ extension FeedViewController: cellPrototol {
                             self.feed(hide: true)
                         }
                     } else {
-                        print("no such post with id: \(String(describing: post?.id))")
+                         Alert.showBasic(vc: self); return
                     }
                 }
             }
@@ -173,10 +170,7 @@ extension FeedViewController: cellPrototol {
     func showVC(data: dataToShowVC?, post: Post.Identifier?) {
         guard let postID = post, data == nil else { return }
         posts.usersLikedPost(with: postID, queue: DispatchQueue.global()) { (users) in
-            guard let unwrappedUsers = users else {
-                print("no such post with id: \(String(describing: post))")
-                return
-            }
+            guard let unwrappedUsers = users else {  Alert.showBasic(vc: self); return  }
             DispatchQueue.main.async {
                 let vc = UsersListTableView()
                 vc.usersArray = unwrappedUsers

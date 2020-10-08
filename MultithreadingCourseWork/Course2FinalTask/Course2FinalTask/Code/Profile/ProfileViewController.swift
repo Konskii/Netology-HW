@@ -44,6 +44,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     ///Свйоство которое указывает какой пользоваетль должен быть отображен - current или нет
     private var isCurrent = true
     
+    //MARK: - UI Elements
     
     ///CollectionView с которым мы будем работать
     private lazy var collectionView: UICollectionView = {
@@ -104,7 +105,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         blockView.show()
         if let customUserID = userID {
             users.user(with: customUserID, queue: DispatchQueue.global()) { (user) in
-                guard let customUser = user else { fatalError("Custom user doesn't exist") }
+                guard let customUser = user else {  Alert.showBasic(vc: self); return  }
                 
                 self.getUserPosts(id: customUser.id)
                 self.isUpdated = true
@@ -119,7 +120,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
             }
         } else {
             users.currentUser(queue: DispatchQueue.global()) { (user) in
-                guard let currentUser = user else { fatalError("Current user doesn't exist") }
+                guard let currentUser = user else {  Alert.showBasic(vc: self); return  }
                 
                 self.getUserPosts(id: currentUser.id)
                 self.isUpdated = true
@@ -136,9 +137,11 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     ///Функция получающая посты(фото) пользователя аснихронно. После выполнения обновляет данные
+    /// - Parameters
+    /// - id: id пользователя посты которого нужно получить и доабваить в массив с ними
     func getUserPosts(id: User.Identifier) {
         posts.findPosts(by: id, queue: DispatchQueue.global()) { (posts) in
-            guard let unwrappedPosts = posts else { fatalError("error while getting posts") }
+            guard let unwrappedPosts = posts else {  Alert.showBasic(vc: self); return  }
             self.images = unwrappedPosts.map({$0.image})
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -150,7 +153,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     private func getCurrentUserId() {
         if isCurrent {
             users.currentUser(queue: DispatchQueue.global()) { (user) in
-                guard let currentUser = user else { fatalError("Current user doesn't exist") }
+                guard let currentUser = user else {  Alert.showBasic(vc: self); return  }
                 self.currentUserID = currentUser.id
             }
         }
@@ -203,7 +206,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
 extension ProfileViewController: headerProtocol {
     func follow(id: User.Identifier) {
         users.follow(id, queue: DispatchQueue.global()) { (user) in
-            guard user != nil else { fatalError("Error while getting info about user to follow or user to follow is current user") }
+            guard user != nil else {  Alert.showBasic(vc: self); return  }
             DispatchQueue.main.async {
                 self.getData()
             }
@@ -212,7 +215,7 @@ extension ProfileViewController: headerProtocol {
     
     func unfollow(id: User.Identifier) {
         users.unfollow(id, queue: DispatchQueue.global()) { (user) in
-            guard user != nil else { fatalError("Error while getting info about user to unfollow or user to unfollow is current user") }
+            guard user != nil else {  Alert.showBasic(vc: self); return  }
             DispatchQueue.main.async {
                 self.getData()
             }
@@ -231,7 +234,7 @@ extension ProfileViewController: headerProtocol {
         switch info.followersOrNot {
         case true:
             users.usersFollowingUser(with: info.user.id, queue: DispatchQueue.global()) { (users) in
-                guard let followers = users else { fatalError("Error while getting followers") }
+                guard let followers = users else {  Alert.showBasic(vc: self); return  }
                 vc.usersArray = followers
                 
                 DispatchQueue.main.async {
@@ -241,7 +244,7 @@ extension ProfileViewController: headerProtocol {
             }
         case false:
             users.usersFollowedByUser(with: info.user.id, queue: DispatchQueue.global()) { (users) in
-                guard let following = users else { fatalError("Error while getting followers") }
+                guard let following = users else {  Alert.showBasic(vc: self); return  }
                 vc.usersArray = following
                 
                 DispatchQueue.main.async {

@@ -129,6 +129,7 @@
 				5CA7F3D0252CA9030071F03F /* Alert.swift */,
 				74B79257202B3254006BCB41 /* AppDelegate.swift */,
 				5C1C681D2529EA6D00CA7097 /* BlockView.swift */,
+				AC6595DA252E238D00FFB3FB /* FilterImageOperation.swift */,
 				AC72B42D24ED2C23001FF9F1 /* Protocols.swift */,
 				ACDAA5CD24EEAE160051664A /* ImageCell.swift */,
 				AC7E395A24ED7575002E30BB /* UsersListTableView.swift */,
@@ -144,7 +145,6 @@
 				AC431F0C252DD73500CC9989 /* FilteringViewController.swift */,
 				ACD16E85252F3712004BDA21 /* FiltersCell.swift */,
 				ACD16E87252F3CE1004BDA21 /* PublishingViewController.swift */,
-				AC6595DA252E238D00FFB3FB /* FilterImageOperation.swift */,
 			);
 			path = New;
 			sourceTree = "<group>";

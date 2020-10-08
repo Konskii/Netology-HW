@@ -9,14 +9,18 @@
 import UIKit
 import DataProvider
 
-class FilteringViewController: UIViewController {
+class FilteringViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    //MARK: - UI Elements
+    
+    ///Большое изображение
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
+    ///Collection View
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let size = self.view.bounds.width / 5
@@ -35,13 +39,22 @@ class FilteringViewController: UIViewController {
         return view
     }()
     
+    
+    //MARK: - Variables
+    ///Картинка в низком разрешении
     private var thumbnailImage: UIImage?
     
+    ///Массив с фотографиями с фильтрами
     private var filterdPhotos: [UIImage?] = []
     
-    private let filtersNames = ["CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone"]
+    //MARK: - Constants
     
+    ///Массив с названиями фильтров
+    private let filtersNames = ["CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone"]
+
     private let queue = OperationQueue()
+    
+    //MARK: - Configuring vc data
     
     var data: UIImage? {
         didSet {
@@ -49,11 +62,15 @@ class FilteringViewController: UIViewController {
         }
     }
     
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
         filter()
     }
+    
+    //MARK: - Methods
     
     private func setupConstraints() {
         view.addSubview(imageView)
@@ -74,10 +91,14 @@ class FilteringViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
     
+    ///Функция для выставления картинки в низком разрешении для предпросмотра фильтров
+    /// - Parameters
+    /// - image: thumbnail image(картинка в низком разрешении)
     public func setThumbnail(image: UIImage) {
         self.thumbnailImage = image
     }
     
+    ///Функция которая накладывает фильтры из списка на изображение
     private func filter() {
         for (index, filter) in filtersNames.enumerated() {
             filterdPhotos.insert(UIImage(named: "indicator"), at: index)
@@ -95,8 +116,8 @@ class FilteringViewController: UIViewController {
         }
     }
     
-}
-extension FilteringViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    //MARK: - CollectionView Data Source
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filtersNames.count
     }
@@ -108,6 +129,8 @@ extension FilteringViewController: UICollectionViewDataSource, UICollectionViewD
         }
         return cell
     }
+    
+    //MARK: - CollectionView Delegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = PublishingViewController()

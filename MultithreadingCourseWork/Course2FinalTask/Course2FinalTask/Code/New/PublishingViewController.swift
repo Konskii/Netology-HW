@@ -11,6 +11,9 @@ import DataProvider
 
 class PublishingViewController: UIViewController {
     
+    //MARK: - UI Elements
+    
+    ///Предпросмотр с картинкой которая будет в посте
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -19,6 +22,7 @@ class PublishingViewController: UIViewController {
         return view
     }()
     
+    ///Лейбл с текстом "Add description"
     private lazy var addDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Add description"
@@ -29,12 +33,15 @@ class PublishingViewController: UIViewController {
         return label
     }()
     
+    ///Текстфилд куда вводится описание
     private lazy var descriptionTextField: UITextField = {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
         field.backgroundColor = .red
         return field
     }()
+    
+    //MARK: - Methods
     
     private func setupConstraints() {
         
@@ -63,6 +70,8 @@ class PublishingViewController: UIViewController {
         imageView.image = image
     }
     
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -71,6 +80,9 @@ class PublishingViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
         view.addGestureRecognizer(tap)
     }
+    
+    
+    //MARK: - User Interaction
     
     @objc func tapHandler() {
         view.endEditing(true)

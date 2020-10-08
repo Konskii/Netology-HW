@@ -16,11 +16,15 @@ protocol likeProtocol: class {
 
 ///Протокол, который используется для оповещения контроллера о том, что нужно либо лайкнуть пост, либо дизлайкнуть и обновить данные в ячейке
 protocol likeDislikeProtocol: class {
+    /// - Parameters:
+    /// - postID: id поста на который нужно поставить или убрать лайк
     func likeDislike(postId id: Post.Identifier)
 }
 
 ///Протокол, который используется для оповещения контроллера о том, что нужно показать user'а, по аватарке которого нажал пользователь
 protocol userProtocol: class {
+    /// - Parameters:
+    /// - authorID: id пользователя которого нужно показать
     func showUser(authorID: User.Identifier)
 }
 
@@ -28,7 +32,7 @@ protocol userProtocol: class {
 protocol usersProtocol: class {
     ///data передается в случае когда нужно показать подписчиков\подписки,
     ///post передается когда нужно показать список лайков
-    /// - Parameters
+    /// - Parameters:
     ///  - data: экземпляр с данными типа dataToShowVC
     ///  - post: id поста
     func showVC(data: dataToShowVC?, post: Post.Identifier?)
@@ -40,14 +44,14 @@ protocol reloadingProtocol: class {
 }
 
 protocol followProtocol {
-    /// - Parameters
+    /// - Parameters:
     /// - id: id пользователя на которого должен подписаться current
     func follow(id: User.Identifier)
 }
 
 protocol unfollowProtocol {
     /// - Parameters
-    /// - id: id пользователя от которого должен отписаться current
+    ///  - id: id пользователя от которого должен отписаться current
     func unfollow(id: User.Identifier)
 }
 
