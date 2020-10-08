@@ -1,5 +1,5 @@
 //
-//  ProfileCell.swift
+//  ImageCell.swift
 //  Course2FinalTask
 //
 //  Created by Артем Скрипкин on 20.08.2020.
@@ -9,7 +9,7 @@
 import UIKit
 import DataProvider
 
-class ProfileCell: UICollectionViewCell {
+class ImageCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +31,7 @@ class ProfileCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         contentView.addSubview(imageView)
         let constraints = [
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),

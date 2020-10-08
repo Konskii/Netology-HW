@@ -55,7 +55,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         layout.headerReferenceSize.height = 86
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.register(ProfileCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        view.register(ImageCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         view.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseIdentifier)
         view.dataSource = self
         view.delegate = self
@@ -85,15 +85,15 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         tb.view.addSubview(blockView)
         
         let constraints = [
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             blockView.topAnchor.constraint(equalTo: tb.view.topAnchor),
             blockView.leadingAnchor.constraint(equalTo: tb.view.leadingAnchor),
             blockView.trailingAnchor.constraint(equalTo: tb.view.trailingAnchor),
-            blockView.bottomAnchor.constraint(equalTo: tb.view.bottomAnchor),
+            blockView.bottomAnchor.constraint(equalTo: tb.view.bottomAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -179,7 +179,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileCell else { fatalError("Not ProfileCell") }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImageCell else { fatalError("Not ProfileCell") }
         guard let unwrappedImages = images else { return cell }
         cell.data = unwrappedImages[indexPath.row]
         return cell
