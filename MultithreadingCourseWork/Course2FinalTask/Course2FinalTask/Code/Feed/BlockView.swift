@@ -14,6 +14,7 @@ class BlockView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
+        hide()
     }
     
     required init?(coder: NSCoder) {

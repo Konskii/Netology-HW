@@ -116,18 +116,19 @@ class FeedCell: UICollectionViewCell {
     ///Пост, который должен отобразиться
     var data: Post? {
         didSet {
+            guard let unwrappedData = data else { return }
             let df = DateFormatter()
             df.timeStyle = .medium
             df.dateStyle = .medium
             
-            postImageView.image = data?.image
-            authorImageView.image = data?.authorAvatar
-            authorNameLabel.text = data?.authorUsername
-            publishedTimeLabel.text = df.string(from: data!.createdTime)
-            likesCountLabel.text = "Likes: \(data!.likedByCount)"
-            postDescriptionLabel.text = data?.description
+            postImageView.image = unwrappedData.image
+            authorImageView.image = unwrappedData.authorAvatar
+            authorNameLabel.text = unwrappedData.authorUsername
+            publishedTimeLabel.text = df.string(from: unwrappedData.createdTime)
+            likesCountLabel.text = "Likes: \(unwrappedData.likedByCount)"
+            postDescriptionLabel.text = unwrappedData.description
             
-            if data!.currentUserLikesThisPost {
+            if unwrappedData.currentUserLikesThisPost {
                 smallLikeButton.tintColor = .blue
             } else {
                 smallLikeButton.tintColor = .lightGray

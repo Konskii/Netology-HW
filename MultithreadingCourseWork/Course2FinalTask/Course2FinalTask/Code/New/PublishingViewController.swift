@@ -29,25 +29,34 @@ class PublishingViewController: UIViewController {
         label.font = .systemFont(ofSize: 17)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .red
         return label
     }()
     
     ///Текстфилд куда вводится описание
     private lazy var descriptionTextField: UITextField = {
         let field = UITextField()
+        field.backgroundColor = .lightGray
+        field.layer.cornerRadius = 6
+        field.layer.borderWidth = 1
         field.translatesAutoresizingMaskIntoConstraints = false
-        field.backgroundColor = .red
         return field
+    }()
+    
+    ///Блокирующее вью, которое появляется при долгой работе с данными
+    private lazy var blockView: BlockView = {
+        let view = BlockView()
+        return view
     }()
     
     //MARK: - Methods
     
     private func setupConstraints() {
+        guard let tb = tabBarController else { fatalError("Not embbed with tabBarController") }
         
         view.addSubview(imageView)
         view.addSubview(addDescriptionLabel)
         view.addSubview(descriptionTextField)
+        tb.view.addSubview(blockView)
         
         let constraints = [
             imageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 16),
@@ -61,11 +70,17 @@ class PublishingViewController: UIViewController {
             descriptionTextField.topAnchor.constraint(equalTo: addDescriptionLabel.bottomAnchor, constant: 8),
             descriptionTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             descriptionTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            blockView.topAnchor.constraint(equalTo: tb.view.topAnchor),
+            blockView.leadingAnchor.constraint(equalTo: tb.view.leadingAnchor),
+            blockView.trailingAnchor.constraint(equalTo: tb.view.trailingAnchor),
+            blockView.bottomAnchor.constraint(equalTo: tb.view.bottomAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)
     }
     
+    ///Функция чтобы установить изображение
     public func setImage(image: UIImage?) {
         imageView.image = image
     }
@@ -76,7 +91,7 @@ class PublishingViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupConstraints()
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(nextFunc))
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
         view.addGestureRecognizer(tap)
     }
@@ -89,6 +104,15 @@ class PublishingViewController: UIViewController {
     }
     
     @objc func nextFunc() {
+        guard let image = imageView.image else { Alert.showBasic(vc: self); return }
+        blockView.show()
+        DataProviders.shared.postsDataProvider.newPost(with: image, description: descriptionTextField.text!, queue: DispatchQueue.global()) { (post) in
+            guard post != nil else { Alert.showBasic(vc: self); return }
+            DispatchQueue.main.async {
+                self.blockView.hide()
+                self.tabBarController?.selectedIndex = 0
+            }
+        }
         
     }
 }

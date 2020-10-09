@@ -139,6 +139,7 @@ extension FeedViewController: cellPrototol {
     }
 
     func likeDislike(postId id: Post.Identifier) {
+        blockView.show()
         posts.post(with: id, queue: DispatchQueue.global()) { (post) in
             guard let unwrappedPost = post else {  Alert.showBasic(vc: self); return  }
             if unwrappedPost.currentUserLikesThisPost {
@@ -146,9 +147,10 @@ extension FeedViewController: cellPrototol {
                     if post != nil {
                         print("succes Unlike to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
-                            self.feed(hide: true)
+                            self.feed(hide: false)
                         }
                     } else {
+                         self.blockView.hide()
                          Alert.showBasic(vc: self); return
                     }
                 }
@@ -157,9 +159,10 @@ extension FeedViewController: cellPrototol {
                     if post != nil {
                         print("succes like to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
-                            self.feed(hide: true)
+                            self.feed(hide: false)
                         }
                     } else {
+                         self.blockView.hide()
                          Alert.showBasic(vc: self); return
                     }
                 }
