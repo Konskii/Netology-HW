@@ -51,12 +51,12 @@ class PublishingViewController: UIViewController {
     //MARK: - Methods
     
     private func setupConstraints() {
-        guard let tb = tabBarController else { fatalError("Not embbed with tabBarController") }
+        guard let unwrappedTabBarController = tabBarController else { fatalError("Not embbed with tabBarController") }
         
         view.addSubview(imageView)
         view.addSubview(addDescriptionLabel)
         view.addSubview(descriptionTextField)
-        tb.view.addSubview(blockView)
+        unwrappedTabBarController.view.addSubview(blockView)
         
         let constraints = [
             imageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 16),
@@ -71,10 +71,10 @@ class PublishingViewController: UIViewController {
             descriptionTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             descriptionTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            blockView.topAnchor.constraint(equalTo: tb.view.topAnchor),
-            blockView.leadingAnchor.constraint(equalTo: tb.view.leadingAnchor),
-            blockView.trailingAnchor.constraint(equalTo: tb.view.trailingAnchor),
-            blockView.bottomAnchor.constraint(equalTo: tb.view.bottomAnchor)
+            blockView.topAnchor.constraint(equalTo: unwrappedTabBarController.view.topAnchor),
+            blockView.leadingAnchor.constraint(equalTo: unwrappedTabBarController.view.leadingAnchor),
+            blockView.trailingAnchor.constraint(equalTo: unwrappedTabBarController.view.trailingAnchor),
+            blockView.bottomAnchor.constraint(equalTo: unwrappedTabBarController.view.bottomAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)

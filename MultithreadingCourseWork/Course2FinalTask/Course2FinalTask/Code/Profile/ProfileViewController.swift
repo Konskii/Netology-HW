@@ -196,6 +196,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
             guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileHeader else { return UICollectionReusableView() }
             view.headerProtocol = self
             view.data = user
+            view.isCurrent = isCurrent
             return view
         default:
             fatalError("Not Header")

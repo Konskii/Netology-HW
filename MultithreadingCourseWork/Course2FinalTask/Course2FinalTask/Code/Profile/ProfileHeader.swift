@@ -40,10 +40,10 @@ class ProfileHeader: UICollectionReusableView {
     ///Подписчики пользователя (кто на него подписан)
     private lazy var userFollowersLabel: UILabel = {
         let label = UILabel()
-        let gs = UITapGestureRecognizer(target: self, action: #selector(followersTapped))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(followersTapped))
         
         label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(gs)
+        label.addGestureRecognizer(tap)
         label.text = "Followers: 0"
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .black
@@ -54,10 +54,10 @@ class ProfileHeader: UICollectionReusableView {
     ///Подписки пользователя (на кого он сам подписан)
     private lazy var userFollowingLabel: UILabel = {
         let label = UILabel()
-        let gs = UITapGestureRecognizer(target: self, action: #selector(followingTapped))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(followingTapped))
         
         label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(gs)
+        label.addGestureRecognizer(tap)
         label.text = "Following: 0"
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .black
@@ -69,10 +69,10 @@ class ProfileHeader: UICollectionReusableView {
     ///Кнопка "Follow\Unfollow"
     private lazy var followAndUnfollowButton: UIButton = {
         let button = UIButton(type: .roundedRect)
-        let gs = UITapGestureRecognizer(target: self, action: #selector(followAndUnfollowButtonTapped))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(followAndUnfollowButtonTapped))
         
         button.isUserInteractionEnabled = true
-        button.addGestureRecognizer(gs)
+        button.addGestureRecognizer(tap)
         button.backgroundColor = .init(red: 0, green: 150, blue: 255, alpha: 1)
         button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         button.layer.opacity = 0
@@ -82,7 +82,7 @@ class ProfileHeader: UICollectionReusableView {
     
     //MARK: - Configuring header
     
-    var isCurrent = true
+    var isCurrent = false
     
     var data: User? {
         didSet {

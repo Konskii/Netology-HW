@@ -21,13 +21,13 @@ class FeedCell: UICollectionViewCell {
     ///Изображение поста
     private lazy var postImageView: UIImageView = {
         let view = UIImageView()
-        let gs = UITapGestureRecognizer(target: self, action: #selector(postImageTapped))
-        gs.numberOfTapsRequired = 2
+        let tap = UITapGestureRecognizer(target: self, action: #selector(postImageTapped))
+        tap.numberOfTapsRequired = 2
         
         view.adjustsImageSizeForAccessibilityContentSizeCategory = true
         view.contentMode = .scaleAspectFit
         view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(gs)
+        view.addGestureRecognizer(tap)
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -36,10 +36,10 @@ class FeedCell: UICollectionViewCell {
     ///Аватар автора поста
     private lazy var authorImageView: UIImageView = {
         let view = UIImageView()
-        let gs = UITapGestureRecognizer(target: self, action: #selector(authorAvatarTapped))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(authorAvatarTapped))
         
         view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(gs)
+        view.addGestureRecognizer(tap)
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -66,10 +66,10 @@ class FeedCell: UICollectionViewCell {
     ///Текст с количеством лайков на публикации
     private lazy var likesCountLabel: UILabel = {
         let label = UILabel()
-        let gs = UITapGestureRecognizer(target: self, action: #selector(likesLabelTapped))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(likesLabelTapped))
         
         label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(gs)
+        label.addGestureRecognizer(tap)
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.tintColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -80,10 +80,10 @@ class FeedCell: UICollectionViewCell {
     ///Кнопка лайка под изображением поста
     private lazy var smallLikeButton: UIButton = {
         let button = UIButton()
-        let gs = UITapGestureRecognizer(target: self, action: #selector(smallLikeButtonTapped))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(smallLikeButtonTapped))
         
         button.isUserInteractionEnabled = true
-        button.addGestureRecognizer(gs)
+        button.addGestureRecognizer(tap)
         button.setImage(UIImage(named: "like"), for: .normal)
         button.tintColor = .lightGray
         button.translatesAutoresizingMaskIntoConstraints = false

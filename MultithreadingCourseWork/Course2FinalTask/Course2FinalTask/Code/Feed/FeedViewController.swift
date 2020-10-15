@@ -64,9 +64,9 @@ class FeedViewController: UIViewController {
     
     ///Установка констрейнтов
     private func setupConstraints() {
-        guard let tb = tabBarController else { fatalError("Not embbed with tabBarController") }
+        guard let unwrappedTabBarController = tabBarController else { fatalError("Not embbed with tabBarController") }
         view.addSubview(collectionView)
-        tb.view.addSubview(blockView)
+        unwrappedTabBarController.view.addSubview(blockView)
         
         let constraints = [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -74,10 +74,10 @@ class FeedViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            blockView.topAnchor.constraint(equalTo: tb.view.topAnchor),
-            blockView.leadingAnchor.constraint(equalTo: tb.view.leadingAnchor),
-            blockView.trailingAnchor.constraint(equalTo: tb.view.trailingAnchor),
-            blockView.bottomAnchor.constraint(equalTo: tb.view.bottomAnchor)
+            blockView.topAnchor.constraint(equalTo: unwrappedTabBarController.view.topAnchor),
+            blockView.leadingAnchor.constraint(equalTo: unwrappedTabBarController.view.leadingAnchor),
+            blockView.trailingAnchor.constraint(equalTo: unwrappedTabBarController.view.trailingAnchor),
+            blockView.bottomAnchor.constraint(equalTo: unwrappedTabBarController.view.bottomAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -88,7 +88,7 @@ class FeedViewController: UIViewController {
         if hide {
             blockView.show()
         }
-        posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: { (optionalPosts) in
+        posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: { [unowned self] (optionalPosts) in
             guard let unwrappedPosts = optionalPosts else { Alert.showBasic(vc: self); return }
             self.isUpdated = true
             DispatchQueue.main.async {
@@ -129,7 +129,7 @@ extension FeedViewController: cellPrototol {
     }
 
     func like(postIdTolike id: Post.Identifier) {
-        posts.likePost(with: id, queue: DispatchQueue.global()) { (post) in
+        posts.likePost(with: id, queue: DispatchQueue.global()) { [unowned self] (post) in
             if post != nil {
                 print("succes Like to \(String(describing: post?.id))")
             } else {
@@ -140,7 +140,7 @@ extension FeedViewController: cellPrototol {
 
     func likeDislike(postId id: Post.Identifier) {
         blockView.show()
-        posts.post(with: id, queue: DispatchQueue.global()) { (post) in
+        posts.post(with: id, queue: DispatchQueue.global()) { [unowned self] (post) in
             guard let unwrappedPost = post else {  Alert.showBasic(vc: self); return  }
             if unwrappedPost.currentUserLikesThisPost {
                 self.posts.unlikePost(with: unwrappedPost.id, queue: DispatchQueue.global()) { (post) in
@@ -172,7 +172,7 @@ extension FeedViewController: cellPrototol {
 
     func showVC(data: dataToShowVC?, post: Post.Identifier?) {
         guard let postID = post, data == nil else { return }
-        posts.usersLikedPost(with: postID, queue: DispatchQueue.global()) { (users) in
+        posts.usersLikedPost(with: postID, queue: DispatchQueue.global()) { [unowned self] (users) in
             guard let unwrappedUsers = users else {  Alert.showBasic(vc: self); return  }
             DispatchQueue.main.async {
                 let vc = UsersListTableView()

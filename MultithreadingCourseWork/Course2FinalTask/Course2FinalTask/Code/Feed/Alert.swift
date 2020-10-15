@@ -9,7 +9,7 @@
 import UIKit
 
 class Alert: UIAlertController {
-    /// - Parameters
+    /// - Parameters:
     /// - vc: vc с которого он будет показываться(обычно self)
     class func showBasic(vc: UIViewController) {
         let alert = UIAlertController(title: "Unknown error!", message: "Please, try again later.", preferredStyle: .alert)
