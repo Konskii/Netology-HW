@@ -104,8 +104,9 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     private func getData() {
         blockView.show()
         if let customUserID = userID {
-            users.user(with: customUserID, queue: DispatchQueue.global()) { (user) in
-                guard let customUser = user else {  Alert.showBasic(vc: self); return  }
+            users.user(with: customUserID, queue: DispatchQueue.global()) { [weak self] (user) in
+                guard let self = self else { return }
+                guard let customUser = user else {  Alert.showBasic(vc: self); return }
                 
                 self.getUserPosts(id: customUser.id)
                 self.isUpdated = true
@@ -116,10 +117,10 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
                     self.collectionView.reloadData()
                     self.blockView.hide()
                 }
-                print("customData added")
             }
         } else {
-            users.currentUser(queue: DispatchQueue.global()) { (user) in
+            users.currentUser(queue: DispatchQueue.global()) { [weak self] (user) in
+                guard let self = self else { return }
                 guard let currentUser = user else {  Alert.showBasic(vc: self); return  }
                 
                 self.getUserPosts(id: currentUser.id)
@@ -131,7 +132,6 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
                     self.collectionView.reloadData()
                     self.blockView.hide()
                 }
-                print("currentData added")
             }
         }
     }
@@ -140,7 +140,8 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     /// - Parameters
     /// - id: id пользователя посты которого нужно получить и доабваить в массив с ними
     func getUserPosts(id: User.Identifier) {
-        posts.findPosts(by: id, queue: DispatchQueue.global()) { (posts) in
+        posts.findPosts(by: id, queue: DispatchQueue.global()) { [weak self] (posts) in
+            guard let self = self else { return }
             guard let unwrappedPosts = posts else {  Alert.showBasic(vc: self); return  }
             self.images = unwrappedPosts.map({$0.image})
             DispatchQueue.main.async {
@@ -152,7 +153,8 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     ///Функция присваивающая значение переменной currentUserID
     private func getCurrentUserId() {
         if isCurrent {
-            users.currentUser(queue: DispatchQueue.global()) { (user) in
+            users.currentUser(queue: DispatchQueue.global()) { [weak self] (user) in
+                guard let self = self else { return }
                 guard let currentUser = user else {  Alert.showBasic(vc: self); return  }
                 self.currentUserID = currentUser.id
             }
@@ -206,7 +208,8 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
 
 extension ProfileViewController: headerProtocol {
     func follow(id: User.Identifier) {
-        users.follow(id, queue: DispatchQueue.global()) { (user) in
+        users.follow(id, queue: DispatchQueue.global()) { [weak self] (user) in
+            guard let self = self else { return }
             guard user != nil else {  Alert.showBasic(vc: self); return  }
             DispatchQueue.main.async {
                 self.getData()
@@ -215,7 +218,8 @@ extension ProfileViewController: headerProtocol {
     }
     
     func unfollow(id: User.Identifier) {
-        users.unfollow(id, queue: DispatchQueue.global()) { (user) in
+        users.unfollow(id, queue: DispatchQueue.global()) { [weak self] (user) in
+            guard let self = self else { return }
             guard user != nil else {  Alert.showBasic(vc: self); return  }
             DispatchQueue.main.async {
                 self.getData()
@@ -234,7 +238,8 @@ extension ProfileViewController: headerProtocol {
         
         switch info.followersOrNot {
         case true:
-            users.usersFollowingUser(with: info.user.id, queue: DispatchQueue.global()) { (users) in
+            users.usersFollowingUser(with: info.user.id, queue: DispatchQueue.global()) { [weak self] (users) in
+                guard let self = self else { return }
                 guard let followers = users else {  Alert.showBasic(vc: self); return  }
                 vc.usersArray = followers
                 
@@ -244,7 +249,8 @@ extension ProfileViewController: headerProtocol {
                 }
             }
         case false:
-            users.usersFollowedByUser(with: info.user.id, queue: DispatchQueue.global()) { (users) in
+            users.usersFollowedByUser(with: info.user.id, queue: DispatchQueue.global()) { [weak self] (users) in
+                guard let self = self else { return }
                 guard let following = users else {  Alert.showBasic(vc: self); return  }
                 vc.usersArray = following
                 

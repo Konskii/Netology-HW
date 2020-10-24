@@ -101,6 +101,8 @@ class ProfileHeader: UICollectionReusableView {
             
             userAvatarImage.layer.borderWidth = 0
             if isCurrent == true {
+                followAndUnfollowButton.layer.opacity = 0
+            } else {
                 followAndUnfollowButton.layer.opacity = 1
             }
         }

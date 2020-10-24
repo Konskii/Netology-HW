@@ -88,7 +88,8 @@ class FeedViewController: UIViewController {
         if hide {
             blockView.show()
         }
-        posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: { [unowned self] (optionalPosts) in
+        posts.feed(queue: DispatchQueue.global(qos: .userInitiated), handler: { [weak self] (optionalPosts) in
+            guard let self = self else { return }
             guard let unwrappedPosts = optionalPosts else { Alert.showBasic(vc: self); return }
             self.isUpdated = true
             DispatchQueue.main.async {
@@ -129,7 +130,8 @@ extension FeedViewController: cellPrototol {
     }
 
     func like(postIdTolike id: Post.Identifier) {
-        posts.likePost(with: id, queue: DispatchQueue.global()) { [unowned self] (post) in
+        posts.likePost(with: id, queue: DispatchQueue.global()) { [weak self] (post) in
+            guard let self = self else { return }
             if post != nil {
                 print("succes Like to \(String(describing: post?.id))")
             } else {
@@ -140,10 +142,12 @@ extension FeedViewController: cellPrototol {
 
     func likeDislike(postId id: Post.Identifier) {
         blockView.show()
-        posts.post(with: id, queue: DispatchQueue.global()) { [unowned self] (post) in
+        posts.post(with: id, queue: DispatchQueue.global()) { [weak self] (post) in
+            guard let self = self else { return }
             guard let unwrappedPost = post else {  Alert.showBasic(vc: self); return  }
             if unwrappedPost.currentUserLikesThisPost {
-                self.posts.unlikePost(with: unwrappedPost.id, queue: DispatchQueue.global()) { (post) in
+                self.posts.unlikePost(with: unwrappedPost.id, queue: DispatchQueue.global()) { [weak self] (post) in
+                    guard let self = self else { return }
                     if post != nil {
                         print("succes Unlike to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
@@ -155,7 +159,8 @@ extension FeedViewController: cellPrototol {
                     }
                 }
             } else {
-                self.posts.likePost(with: unwrappedPost.id, queue: DispatchQueue.global()) { (post) in
+                self.posts.likePost(with: unwrappedPost.id, queue: DispatchQueue.global()) { [weak self] (post) in
+                    guard let self = self else { return }
                     if post != nil {
                         print("succes like to \(String(describing: post?.id))")
                         DispatchQueue.main.async {
@@ -172,7 +177,8 @@ extension FeedViewController: cellPrototol {
 
     func showVC(data: dataToShowVC?, post: Post.Identifier?) {
         guard let postID = post, data == nil else { return }
-        posts.usersLikedPost(with: postID, queue: DispatchQueue.global()) { [unowned self] (users) in
+        posts.usersLikedPost(with: postID, queue: DispatchQueue.global()) { [weak self] (users) in
+            guard let self = self else { return }
             guard let unwrappedUsers = users else {  Alert.showBasic(vc: self); return  }
             DispatchQueue.main.async {
                 let vc = UsersListTableView()

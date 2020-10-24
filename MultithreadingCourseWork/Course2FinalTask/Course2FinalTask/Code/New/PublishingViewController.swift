@@ -106,7 +106,8 @@ class PublishingViewController: UIViewController {
     @objc func nextFunc() {
         guard let image = imageView.image else { Alert.showBasic(vc: self); return }
         blockView.show()
-        DataProviders.shared.postsDataProvider.newPost(with: image, description: descriptionTextField.text!, queue: DispatchQueue.global()) { (post) in
+        DataProviders.shared.postsDataProvider.newPost(with: image, description: descriptionTextField.text!, queue: DispatchQueue.global()) { [weak self] (post) in
+            guard let self = self else { return }
             guard post != nil else { Alert.showBasic(vc: self); return }
             DispatchQueue.main.async {
                 self.blockView.hide()

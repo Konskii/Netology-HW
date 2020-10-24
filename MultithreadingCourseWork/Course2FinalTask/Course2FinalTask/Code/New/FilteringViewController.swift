@@ -105,7 +105,7 @@ class FilteringViewController: UIViewController, UICollectionViewDelegate, UICol
             let operation = FilterImageOperation(image: thumbnailImage, filterName: filter)
             
             operation.completionBlock = {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { 
                     self.filterdPhotos.remove(at: index)
                     self.filterdPhotos.insert(operation.outputImage, at: index)
                     self.collectionView.reloadData()
