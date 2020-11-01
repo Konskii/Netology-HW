@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC13804A254F4C4D007A51C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC138048254F4C4D007A51C8 /* ViewController.swift */; };
+		AC13804B254F4C4D007A51C8 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC138049254F4C4D007A51C8 /* NavigationController.swift */; };
 		AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC68F2B525442571004A1025 /* AppDelegate.swift */; };
 		AC68F2BD25442571004A1025 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2BB25442571004A1025 /* Main.storyboard */; };
 		AC68F2BF25442572004A1025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2BE25442572004A1025 /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* Begin PBXFileReference section */
 		3E17D073951896D1E7242645 /* libPods-networkFirstTask.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-networkFirstTask.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4211B1BAA01605602B674539 /* Pods-networkFirstTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-networkFirstTask.release.xcconfig"; path = "Target Support Files/Pods-networkFirstTask/Pods-networkFirstTask.release.xcconfig"; sourceTree = "<group>"; };
+		AC138048254F4C4D007A51C8 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AC138049254F4C4D007A51C8 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		AC68F2B225442571004A1025 /* networkFirstTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networkFirstTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC68F2B525442571004A1025 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC68F2BC25442571004A1025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 			children = (
 				AC68F2B525442571004A1025 /* AppDelegate.swift */,
 				AC68F2BB25442571004A1025 /* Main.storyboard */,
+				AC138049254F4C4D007A51C8 /* NavigationController.swift */,
+				AC138048254F4C4D007A51C8 /* ViewController.swift */,
 				AC68F2BE25442572004A1025 /* Assets.xcassets */,
 				AC68F2C025442572004A1025 /* LaunchScreen.storyboard */,
 				AC68F2C325442572004A1025 /* Info.plist */,
@@ -182,6 +188,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC13804A254F4C4D007A51C8 /* ViewController.swift in Sources */,
+				AC13804B254F4C4D007A51C8 /* NavigationController.swift in Sources */,
 				AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
