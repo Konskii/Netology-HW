@@ -1,0 +1,6 @@
+module Pods_networkFirstTask {
+  umbrella header "Pods-networkFirstTask-umbrella.h"
+
+  export *
+  module * { export * }
+}
