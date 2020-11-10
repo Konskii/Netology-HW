@@ -22,7 +22,6 @@ class ThirdViewController: UIViewController {
     private lazy var repoCountLabel: UILabel = {
         let view = UILabel()
         view.contentMode = .scaleToFill
-//        view.font = UIFont.boldSystemFont(ofSize: 25)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
