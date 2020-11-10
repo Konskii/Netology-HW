@@ -97,7 +97,9 @@ class SecondViewController: UIViewController {
     }
     
     @objc func search() {
-        networkManager.search(repoName: repoNameTextField.text!, language: languageNameTextField.text!)
+        guard let name = repoNameTextField.text else { return }
+        guard let language = languageNameTextField.text else { return }
+        networkManager.search(repoName: name, language: language)
     }
     
     
