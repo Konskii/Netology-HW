@@ -97,7 +97,18 @@ class SecondViewController: UIViewController {
     }
     
     @objc func search() {
-        networkManager.search(repoName: repoNameTextField.text!, language: languageNameTextField.text!)
+        networkManager.search(repoName: repoNameTextField.text!, language: languageNameTextField.text!) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+                return
+            case .success(let response):
+                guard let repos = response.repositories else { return }
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(ThirdViewController(reposToShow: repos, count: response.totalCount ?? 0), animated: true)
+                }
+            }
+        }
     }
     
     
