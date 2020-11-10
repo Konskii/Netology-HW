@@ -48,8 +48,7 @@ class ViewController: UIViewController {
         view.tintColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 15
-        let tap = UITapGestureRecognizer(target: self, action: #selector(logInTapped))
-        view.addGestureRecognizer(tap)
+        view.addTarget(self, action: #selector(logInTapped), for: .touchUpInside)
         return view
     }()
     
@@ -90,7 +89,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func logInTapped() {
-        
+        navigationController?.pushViewController(SecondViewController(), animated: true)
     }
 }
 

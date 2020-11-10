@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC137013254F3C2B0018896E /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC137012254F3C2B0018896E /* SecondViewController.swift */; };
+		AC137018254F41C10018896E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC137017254F41C10018896E /* NetworkManager.swift */; };
 		AC57916C25442906007276C7 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC57916B25442906007276C7 /* NavigationController.swift */; };
 		AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC68F2B525442571004A1025 /* AppDelegate.swift */; };
 		AC68F2BA25442571004A1025 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC68F2B925442571004A1025 /* ViewController.swift */; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileReference section */
 		3E17D073951896D1E7242645 /* libPods-networkFirstTask.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-networkFirstTask.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4211B1BAA01605602B674539 /* Pods-networkFirstTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-networkFirstTask.release.xcconfig"; path = "Target Support Files/Pods-networkFirstTask/Pods-networkFirstTask.release.xcconfig"; sourceTree = "<group>"; };
+		AC137012254F3C2B0018896E /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		AC137017254F41C10018896E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		AC57916B25442906007276C7 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		AC68F2B225442571004A1025 /* networkFirstTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networkFirstTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC68F2B525442571004A1025 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +55,42 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		AC137014254F41850018896E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AC137015254F41920018896E /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				AC137017254F41C10018896E /* NetworkManager.swift */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		AC137016254F419E0018896E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AC57916B25442906007276C7 /* NavigationController.swift */,
+				AC68F2B925442571004A1025 /* ViewController.swift */,
+				AC137012254F3C2B0018896E /* SecondViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AC13701B254F46ED0018896E /* Supported */ = {
+			isa = PBXGroup;
+			children = (
+				AC68F2B525442571004A1025 /* AppDelegate.swift */,
+				AC68F2BB25442571004A1025 /* Main.storyboard */,
+				AC68F2BE25442572004A1025 /* Assets.xcassets */,
+				AC68F2C025442572004A1025 /* LaunchScreen.storyboard */,
+			);
+			path = Supported;
+			sourceTree = "<group>";
+		};
 		AC68F2A925442571004A1025 = {
 			isa = PBXGroup;
 			children = (
@@ -72,12 +112,10 @@
 		AC68F2B425442571004A1025 /* networkFirstTask */ = {
 			isa = PBXGroup;
 			children = (
-				AC68F2B525442571004A1025 /* AppDelegate.swift */,
-				AC57916B25442906007276C7 /* NavigationController.swift */,
-				AC68F2B925442571004A1025 /* ViewController.swift */,
-				AC68F2BB25442571004A1025 /* Main.storyboard */,
-				AC68F2BE25442572004A1025 /* Assets.xcassets */,
-				AC68F2C025442572004A1025 /* LaunchScreen.storyboard */,
+				AC137016254F419E0018896E /* Controllers */,
+				AC137015254F41920018896E /* NetworkManager */,
+				AC137014254F41850018896E /* Model */,
+				AC13701B254F46ED0018896E /* Supported */,
 				AC68F2C325442572004A1025 /* Info.plist */,
 			);
 			path = networkFirstTask;
@@ -188,7 +226,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC137013254F3C2B0018896E /* SecondViewController.swift in Sources */,
 				AC68F2BA25442571004A1025 /* ViewController.swift in Sources */,
+				AC137018254F41C10018896E /* NetworkManager.swift in Sources */,
 				AC57916C25442906007276C7 /* NavigationController.swift in Sources */,
 				AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */,
 			);
