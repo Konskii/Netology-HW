@@ -11,7 +11,6 @@ import Kingfisher
 
 class ViewController: UIViewController {
     
-    
     private lazy var logoImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -48,8 +47,6 @@ class ViewController: UIViewController {
         view.tintColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 15
-        let tap = UITapGestureRecognizer(target: self, action: #selector(logInTapped))
-        view.addGestureRecognizer(tap)
         return view
     }()
     
@@ -87,10 +84,6 @@ class ViewController: UIViewController {
         ]
         
         NSLayoutConstraint.activate(constraints)
-    }
-    
-    @objc private func logInTapped() {
-        
     }
 }
 
