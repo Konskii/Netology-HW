@@ -16,6 +16,12 @@ class NetworkManager {
         "Accept" : "application/vnd.github.v3+json"
     ]
     
+    private enum SearchErrors: Error {
+        case noData
+        case decoding
+        case badResponseCode(Int)
+    }
+    
     private let sharedSession = URLSession.shared
     
     private func createSearchRequest(repoName: String, language: String) -> URLRequest? {
@@ -32,33 +38,26 @@ class NetworkManager {
         
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = defaultHeaders
+        print(url)
         
         return request
     }
     
-    public func search(repoName: String, language: String) {
+    public func search(repoName: String, language: String, completion: @escaping(Result<GitSearchResponse, Error>) -> Void) {
         guard let request = createSearchRequest(repoName: repoName, language: language) else { return }
-        let task = sharedSession.dataTask(with: request) { (data, response, error) in
+        sharedSession.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                print(error.localizedDescription)
-                return
+                completion(.failure(error))
+            } else {
+                if let httpResponse = response as? HTTPURLResponse {
+                    guard httpResponse.statusCode == 200 else { completion(.failure(SearchErrors.badResponseCode(httpResponse.statusCode))); return }
+                    
+                    guard let data = data else { completion(.failure(SearchErrors.noData)); return }
+                    let decoder = JSONDecoder()
+                    guard let decoded = try? decoder.decode(GitSearchResponse.self, from: data) else { completion(.failure(SearchErrors.decoding)); return }
+                    completion(.success(decoded))
+                }
             }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                print("http status code: \(httpResponse.statusCode)")
-            }
-            
-            guard let data = data else {
-                print("no data received")
-                return
-            }
-            
-            guard let text = String(data: data, encoding: .utf8) else {
-                print("data encoding failed")
-                return
-            }
-            print("received data: \(text)")
-        }
-        task.resume()
+        }.resume()
     }
 }
