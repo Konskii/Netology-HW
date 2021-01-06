@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  SearchRepositoriesViewController.swift
 //  networkFirstTask
 //
 //  Created by Артём Скрипкин on 01.11.2020.
@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class SecondViewController: UIViewController {
+class SearchRepositoriesViewController: UIViewController {
     
     private let networkManager = NetworkManager()
     
@@ -71,10 +71,11 @@ class SecondViewController: UIViewController {
         view.addSubview(repoNameTextField)
         view.addSubview(languageNameTextField)
         view.addSubview(searchButton)
+        view.addSubview(usernameLabel)
         
         let constraints = [
             userAvatarImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            userAvatarImageView.heightAnchor.constraint(equalToConstant: 100),
+            userAvatarImageView.widthAnchor.constraint(equalToConstant: 100),
             userAvatarImageView.heightAnchor.constraint(equalToConstant: 100),
             userAvatarImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 40),
             
@@ -90,7 +91,10 @@ class SecondViewController: UIViewController {
             
             searchButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             searchButton.topAnchor.constraint(equalTo: languageNameTextField.bottomAnchor, constant: 45),
-            searchButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2)
+            searchButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
+            
+            usernameLabel.centerXAnchor.constraint(equalTo: userAvatarImageView.centerXAnchor),
+            usernameLabel.topAnchor.constraint(equalTo: userAvatarImageView.bottomAnchor, constant: 40)
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -99,20 +103,27 @@ class SecondViewController: UIViewController {
     @objc func search() {
         guard let repoName = repoNameTextField.text else { return }
         guard let language = languageNameTextField.text else { return }
-        networkManager.search(repoName: repoName, language: language) { (result) in
+        let vc = RepositoriesListViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        networkManager.search(repoName: repoName, language: language) {[weak self] (result) in
+            guard let self = self else { return }
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
+                Alert.showAlert(viewController: self, type: .error, message: "\(error)")
+                self.navigationController?.popViewController(animated: true)
                 return
             case .success(let response):
                 guard let repos = response.repositories else { return }
                 DispatchQueue.main.async {
-                    let vc = ThirdViewController(reposToShow: repos, count: response.totalCount ?? 0)
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    vc.setRepos(repos: repos, count: response.totalCount ?? 00)
                 }
             }
         }
     }
     
-    
+    convenience init(userName: String, userImageUrl: URL) {
+        self.init()
+        usernameLabel.text = "Hello, \(userName)"
+        userAvatarImageView.kf.setImage(with: userImageUrl)
+    }
 }

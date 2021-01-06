@@ -1,5 +1,5 @@
 //
-//  ThirdViewControllerTableViewCell.swift
+//  RepositoriesListCell.swift
 //  networkFirstTask
 //
 //  Created by Артём Скрипкин on 10.11.2020.
@@ -8,20 +8,23 @@
 
 import UIKit
 
-class ThirdViewControllerTableViewCell: UITableViewCell {
+class RepositoriesListCell: UITableViewCell {
+    //MARK: - Properties
+    static let reusedID = "RepositoriesListCell"
     
-    static let reusedID = "RepoCell"
-    
-    //MARK: - Inits
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupConstraints()
+    public var repoData: Repository? {
+        didSet {
+            guard let data = repoData else { return }
+            self.repoName.text = data.name
+            self.repoOwnerName.text = data.owner?.login
+            repoOwnerName.sizeToFit()
+            self.repoDescription.text = data.description
+            guard let imageUrl = data.owner?.avatarURL else { return }
+            self.repoImage.kf.setImage(with: imageUrl)
+        }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+    //MARK: - UI Elements
     private lazy var repoImage: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -48,18 +51,7 @@ class ThirdViewControllerTableViewCell: UITableViewCell {
         return view
     }()
     
-    public var repoData: Repository? {
-        didSet {
-            guard let data = repoData else { return }
-            self.repoName.text = data.name
-            self.repoOwnerName.text = data.owner?.login
-            repoOwnerName.sizeToFit()
-            self.repoDescription.text = data.description
-            guard let imageUrl = URL(string: data.owner?.avatarURL ?? "") else { return }
-            self.repoImage.kf.setImage(with: imageUrl)
-        }
-    }
-    
+    //MARK: - Methods
     private func setupConstraints() {
         addSubview(repoName)
         addSubview(repoDescription)
@@ -67,8 +59,6 @@ class ThirdViewControllerTableViewCell: UITableViewCell {
         addSubview(repoImage)
         
         let constraints = [
-            heightAnchor.constraint(equalToConstant: 100),
-            
             repoName.topAnchor.constraint(equalTo: topAnchor),
             repoName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 2),
             repoName.trailingAnchor.constraint(equalTo: repoOwnerName.leadingAnchor, constant: -5),
@@ -88,6 +78,16 @@ class ThirdViewControllerTableViewCell: UITableViewCell {
         ]
         
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    //MARK: - Inits
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
 }

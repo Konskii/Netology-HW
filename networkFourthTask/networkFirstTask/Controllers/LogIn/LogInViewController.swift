@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LogInViewController.swift
 //  networkFirstTask
 //
 //  Created by Артём Скрипкин on 24.10.2020.
@@ -9,9 +9,13 @@
 import UIKit
 import Kingfisher
 
-class ViewController: UIViewController {
+class LogInViewController: UIViewController {
+    //MARK: - Properties
+    private let networkManager = NetworkManager()
     
+    private var navController: NavigationController?
     
+    //MARK: - UI ELements
     private lazy var logoImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -33,7 +37,9 @@ class ViewController: UIViewController {
     
     private lazy var userPassworTextField: UITextField = {
         let view = UITextField()
-        view.placeholder = " password"
+        view.placeholder = " OAuth token"
+        view.textContentType = .password
+        view.isSecureTextEntry = true
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 2
         view.layer.borderColor = UIColor.systemBlue.cgColor
@@ -52,12 +58,16 @@ class ViewController: UIViewController {
         return view
     }()
     
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
+        guard let navigator = navigationController as? NavigationController else { return }
+        navController = navigator
         view.backgroundColor = .white
     }
     
+    //MARK: - Methods
     private func setupConstraints() {
         view.addSubview(userNameTextField)
         view.addSubview(userPassworTextField)
@@ -88,8 +98,26 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
     
+    //MARK: - UserIneraction Methods
     @objc private func logInTapped() {
-        navigationController?.pushViewController(SecondViewController(), animated: true)
+        navController?.startAnimating()
+        guard let token = userPassworTextField.text else { return }
+        networkManager.getUser(token: token) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.navController?.stopAnimating()
+                }
+                Alert.showAlert(viewController: self, type: .error, message: "\(error)")
+            case .success(let owner):
+                DispatchQueue.main.async {
+                    self.navController?.stopAnimating()
+                    let vc = SearchRepositoriesViewController(userName: owner.login, userImageUrl: owner.avatarURL)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+        }
     }
 }
 

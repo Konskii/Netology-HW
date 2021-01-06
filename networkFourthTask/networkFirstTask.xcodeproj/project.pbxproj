@@ -7,38 +7,44 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC137013254F3C2B0018896E /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC137012254F3C2B0018896E /* SecondViewController.swift */; };
-		AC137018254F41C10018896E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC137017254F41C10018896E /* NetworkManager.swift */; };
-		AC13804D254F4E47007A51C8 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13804C254F4E47007A51C8 /* ThirdViewController.swift */; };
-		AC4B58872574C5DD005FF8C4 /* GitSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4B58862574C5DD005FF8C4 /* GitSearchResponse.swift */; };
-		AC4B588B2574C5FB005FF8C4 /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4B588A2574C5FB005FF8C4 /* RepositoryModel.swift */; };
-		AC57916C25442906007276C7 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC57916B25442906007276C7 /* NavigationController.swift */; };
+		AC407F4C25A5EA0F003160BC /* RepoWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F3E25A5EA0F003160BC /* RepoWebViewController.swift */; };
+		AC407F4D25A5EA0F003160BC /* RepositoriesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4025A5EA0F003160BC /* RepositoriesListCell.swift */; };
+		AC407F4E25A5EA0F003160BC /* RepositoriesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4125A5EA0F003160BC /* RepositoriesListViewController.swift */; };
+		AC407F4F25A5EA0F003160BC /* SearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4325A5EA0F003160BC /* SearchRepositoriesViewController.swift */; };
+		AC407F5025A5EA0F003160BC /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4425A5EA0F003160BC /* NavigationController.swift */; };
+		AC407F5125A5EA0F003160BC /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4625A5EA0F003160BC /* LogInViewController.swift */; };
+		AC407F5225A5EA0F003160BC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4825A5EA0F003160BC /* NetworkManager.swift */; };
+		AC407F5325A5EA0F003160BC /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4A25A5EA0F003160BC /* RepositoryModel.swift */; };
+		AC407F5425A5EA0F003160BC /* GitSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4B25A5EA0F003160BC /* GitSearchResponse.swift */; };
+		AC407F5C25A5F371003160BC /* Owner(user)Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F5B25A5F371003160BC /* Owner(user)Model.swift */; };
+		AC407F5F25A5FF4B003160BC /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F5E25A5FF4B003160BC /* Alert.swift */; };
 		AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC68F2B525442571004A1025 /* AppDelegate.swift */; };
-		AC68F2BA25442571004A1025 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC68F2B925442571004A1025 /* ViewController.swift */; };
 		AC68F2BD25442571004A1025 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2BB25442571004A1025 /* Main.storyboard */; };
 		AC68F2BF25442572004A1025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2BE25442572004A1025 /* Assets.xcassets */; };
 		AC68F2C225442572004A1025 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2C025442572004A1025 /* LaunchScreen.storyboard */; };
-		AC992745255B07B70018CA6B /* ThirdViewControllerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC992744255B07B70018CA6B /* ThirdViewControllerTableViewCell.swift */; };
 		F5A8A4BFE5A3D73053990980 /* libPods-networkFirstTask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26818C913626FCE097C186AD /* libPods-networkFirstTask.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		26818C913626FCE097C186AD /* libPods-networkFirstTask.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-networkFirstTask.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A00118038FDB977B195508C /* Pods-networkFirstTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-networkFirstTask.debug.xcconfig"; path = "Target Support Files/Pods-networkFirstTask/Pods-networkFirstTask.debug.xcconfig"; sourceTree = "<group>"; };
-		AC137012254F3C2B0018896E /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
-		AC137017254F41C10018896E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		AC13804C254F4E47007A51C8 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
-		AC4B58862574C5DD005FF8C4 /* GitSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitSearchResponse.swift; sourceTree = "<group>"; };
-		AC4B588A2574C5FB005FF8C4 /* RepositoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryModel.swift; sourceTree = "<group>"; };
-		AC57916B25442906007276C7 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		AC407F3E25A5EA0F003160BC /* RepoWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoWebViewController.swift; sourceTree = "<group>"; };
+		AC407F4025A5EA0F003160BC /* RepositoriesListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesListCell.swift; sourceTree = "<group>"; };
+		AC407F4125A5EA0F003160BC /* RepositoriesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesListViewController.swift; sourceTree = "<group>"; };
+		AC407F4325A5EA0F003160BC /* SearchRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesViewController.swift; sourceTree = "<group>"; };
+		AC407F4425A5EA0F003160BC /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		AC407F4625A5EA0F003160BC /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		AC407F4825A5EA0F003160BC /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		AC407F4A25A5EA0F003160BC /* RepositoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryModel.swift; sourceTree = "<group>"; };
+		AC407F4B25A5EA0F003160BC /* GitSearchResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitSearchResponse.swift; sourceTree = "<group>"; };
+		AC407F5B25A5F371003160BC /* Owner(user)Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Owner(user)Model.swift"; sourceTree = "<group>"; };
+		AC407F5E25A5FF4B003160BC /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		AC68F2B225442571004A1025 /* networkFirstTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networkFirstTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC68F2B525442571004A1025 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AC68F2B925442571004A1025 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AC68F2BC25442571004A1025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AC68F2BE25442572004A1025 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC68F2C125442572004A1025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC68F2C325442572004A1025 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AC992744255B07B70018CA6B /* ThirdViewControllerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewControllerTableViewCell.swift; sourceTree = "<group>"; };
 		B846A82B93CE10A6A7927222 /* Pods-networkFirstTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-networkFirstTask.release.xcconfig"; path = "Target Support Files/Pods-networkFirstTask/Pods-networkFirstTask.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,27 +69,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		AC137015254F41920018896E /* NetworkManager */ = {
-			isa = PBXGroup;
-			children = (
-				AC4B58852574C5CD005FF8C4 /* Models */,
-				AC137017254F41C10018896E /* NetworkManager.swift */,
-			);
-			path = NetworkManager;
-			sourceTree = "<group>";
-		};
-		AC137016254F419E0018896E /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				AC57916B25442906007276C7 /* NavigationController.swift */,
-				AC68F2B925442571004A1025 /* ViewController.swift */,
-				AC137012254F3C2B0018896E /* SecondViewController.swift */,
-				AC13804C254F4E47007A51C8 /* ThirdViewController.swift */,
-				AC992744255B07B70018CA6B /* ThirdViewControllerTableViewCell.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		AC13701B254F46ED0018896E /* Supported */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,15 +76,71 @@
 				AC68F2BB25442571004A1025 /* Main.storyboard */,
 				AC68F2BE25442572004A1025 /* Assets.xcassets */,
 				AC68F2C025442572004A1025 /* LaunchScreen.storyboard */,
+				AC407F5E25A5FF4B003160BC /* Alert.swift */,
 			);
 			path = Supported;
 			sourceTree = "<group>";
 		};
-		AC4B58852574C5CD005FF8C4 /* Models */ = {
+		AC407F3C25A5EA0F003160BC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AC4B58862574C5DD005FF8C4 /* GitSearchResponse.swift */,
-				AC4B588A2574C5FB005FF8C4 /* RepositoryModel.swift */,
+				AC407F4425A5EA0F003160BC /* NavigationController.swift */,
+				AC407F4525A5EA0F003160BC /* LogIn */,
+				AC407F4225A5EA0F003160BC /* Search */,
+				AC407F3F25A5EA0F003160BC /* RepoList */,
+				AC407F3D25A5EA0F003160BC /* RepoWebView */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AC407F3D25A5EA0F003160BC /* RepoWebView */ = {
+			isa = PBXGroup;
+			children = (
+				AC407F3E25A5EA0F003160BC /* RepoWebViewController.swift */,
+			);
+			path = RepoWebView;
+			sourceTree = "<group>";
+		};
+		AC407F3F25A5EA0F003160BC /* RepoList */ = {
+			isa = PBXGroup;
+			children = (
+				AC407F4025A5EA0F003160BC /* RepositoriesListCell.swift */,
+				AC407F4125A5EA0F003160BC /* RepositoriesListViewController.swift */,
+			);
+			path = RepoList;
+			sourceTree = "<group>";
+		};
+		AC407F4225A5EA0F003160BC /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				AC407F4325A5EA0F003160BC /* SearchRepositoriesViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		AC407F4525A5EA0F003160BC /* LogIn */ = {
+			isa = PBXGroup;
+			children = (
+				AC407F4625A5EA0F003160BC /* LogInViewController.swift */,
+			);
+			path = LogIn;
+			sourceTree = "<group>";
+		};
+		AC407F4725A5EA0F003160BC /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				AC407F4825A5EA0F003160BC /* NetworkManager.swift */,
+				AC407F4925A5EA0F003160BC /* Models */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		AC407F4925A5EA0F003160BC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AC407F4A25A5EA0F003160BC /* RepositoryModel.swift */,
+				AC407F4B25A5EA0F003160BC /* GitSearchResponse.swift */,
+				AC407F5B25A5F371003160BC /* Owner(user)Model.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -125,8 +166,8 @@
 		AC68F2B425442571004A1025 /* networkFirstTask */ = {
 			isa = PBXGroup;
 			children = (
-				AC137016254F419E0018896E /* Controllers */,
-				AC137015254F41920018896E /* NetworkManager */,
+				AC407F3C25A5EA0F003160BC /* Controllers */,
+				AC407F4725A5EA0F003160BC /* NetworkManager */,
 				AC13701B254F46ED0018896E /* Supported */,
 				AC68F2C325442572004A1025 /* Info.plist */,
 			);
@@ -238,15 +279,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC137013254F3C2B0018896E /* SecondViewController.swift in Sources */,
-				AC68F2BA25442571004A1025 /* ViewController.swift in Sources */,
-				AC137018254F41C10018896E /* NetworkManager.swift in Sources */,
-				AC57916C25442906007276C7 /* NavigationController.swift in Sources */,
-				AC13804D254F4E47007A51C8 /* ThirdViewController.swift in Sources */,
-				AC992745255B07B70018CA6B /* ThirdViewControllerTableViewCell.swift in Sources */,
-				AC4B58872574C5DD005FF8C4 /* GitSearchResponse.swift in Sources */,
+				AC407F4D25A5EA0F003160BC /* RepositoriesListCell.swift in Sources */,
+				AC407F5025A5EA0F003160BC /* NavigationController.swift in Sources */,
 				AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */,
-				AC4B588B2574C5FB005FF8C4 /* RepositoryModel.swift in Sources */,
+				AC407F5425A5EA0F003160BC /* GitSearchResponse.swift in Sources */,
+				AC407F5C25A5F371003160BC /* Owner(user)Model.swift in Sources */,
+				AC407F5325A5EA0F003160BC /* RepositoryModel.swift in Sources */,
+				AC407F5F25A5FF4B003160BC /* Alert.swift in Sources */,
+				AC407F5125A5EA0F003160BC /* LogInViewController.swift in Sources */,
+				AC407F5225A5EA0F003160BC /* NetworkManager.swift in Sources */,
+				AC407F4E25A5EA0F003160BC /* RepositoriesListViewController.swift in Sources */,
+				AC407F4F25A5EA0F003160BC /* SearchRepositoriesViewController.swift in Sources */,
+				AC407F4C25A5EA0F003160BC /* RepoWebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
