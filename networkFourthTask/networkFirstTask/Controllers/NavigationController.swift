@@ -9,17 +9,14 @@
 import UIKit
 class NavigationController: UINavigationController {
     
+    //MARK: - UI Elements
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(style: .gray)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        viewControllers.append(LogInViewController())
-    }
-    
+    //MARKL: - Methods
     public func startAnimating() {
         navigationItem.titleView?.isHidden = true
         navigationBar.addSubview(activityIndicator)
@@ -32,5 +29,11 @@ class NavigationController: UINavigationController {
         activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
         navigationItem.titleView?.isHidden = false
+    }
+    
+    //MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewControllers.append(LogInViewController())
     }
 }

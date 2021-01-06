@@ -10,17 +10,17 @@ import UIKit
 
 class RepositoriesListViewController: UIViewController {
     
+    //MARK: - Properties
     private var repos: [Repository]? {
         didSet {
             tableView.reloadData()
             navController?.stopAnimating()
-            guard let count = repos?.count else { return }
-            navController?.navigationBar.topItem?.title = "Репозиториев найдено: \(count)"
         }
     }
     
     private var navController: NavigationController?
     
+    //MARK: - UI Elements
     private lazy var repoCountLabel: UILabel = {
         let view = UILabel()
         view.contentMode = .scaleToFill
@@ -37,16 +37,9 @@ class RepositoriesListViewController: UIViewController {
         return view
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupConstraints()
-        view.backgroundColor = .white
-        guard let navigator = navigationController as? NavigationController else { return }
-        navController = navigator
-        navController?.startAnimating()
-    }
-    
-    public func setRepos(repos: [Repository]) {
+    //MARK: - Methods
+    public func setRepos(repos: [Repository], count: Int) {
+        navController?.navigationBar.topItem?.title = "Репозиториев найдено: \(count)"
         self.repos = repos
     }
     
@@ -67,8 +60,19 @@ class RepositoriesListViewController: UIViewController {
         
         NSLayoutConstraint.activate(constraints)
     }
+    
+    //MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupConstraints()
+        view.backgroundColor = .white
+        guard let navigator = navigationController as? NavigationController else { return }
+        navController = navigator
+        navController?.startAnimating()
+    }
 }
 
+//MARK: - UITableViewDataSource, UITableViewDelegate
 extension RepositoriesListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

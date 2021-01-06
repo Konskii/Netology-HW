@@ -16,6 +16,8 @@
 		AC407F5225A5EA0F003160BC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4825A5EA0F003160BC /* NetworkManager.swift */; };
 		AC407F5325A5EA0F003160BC /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4A25A5EA0F003160BC /* RepositoryModel.swift */; };
 		AC407F5425A5EA0F003160BC /* GitSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4B25A5EA0F003160BC /* GitSearchResponse.swift */; };
+		AC407F5C25A5F371003160BC /* Owner(user)Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F5B25A5F371003160BC /* Owner(user)Model.swift */; };
+		AC407F5F25A5FF4B003160BC /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F5E25A5FF4B003160BC /* Alert.swift */; };
 		AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC68F2B525442571004A1025 /* AppDelegate.swift */; };
 		AC68F2BD25442571004A1025 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2BB25442571004A1025 /* Main.storyboard */; };
 		AC68F2BF25442572004A1025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2BE25442572004A1025 /* Assets.xcassets */; };
@@ -35,6 +37,8 @@
 		AC407F4825A5EA0F003160BC /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		AC407F4A25A5EA0F003160BC /* RepositoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryModel.swift; sourceTree = "<group>"; };
 		AC407F4B25A5EA0F003160BC /* GitSearchResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitSearchResponse.swift; sourceTree = "<group>"; };
+		AC407F5B25A5F371003160BC /* Owner(user)Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Owner(user)Model.swift"; sourceTree = "<group>"; };
+		AC407F5E25A5FF4B003160BC /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		AC68F2B225442571004A1025 /* networkFirstTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networkFirstTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC68F2B525442571004A1025 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC68F2BC25442571004A1025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -72,6 +76,7 @@
 				AC68F2BB25442571004A1025 /* Main.storyboard */,
 				AC68F2BE25442572004A1025 /* Assets.xcassets */,
 				AC68F2C025442572004A1025 /* LaunchScreen.storyboard */,
+				AC407F5E25A5FF4B003160BC /* Alert.swift */,
 			);
 			path = Supported;
 			sourceTree = "<group>";
@@ -79,11 +84,11 @@
 		AC407F3C25A5EA0F003160BC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AC407F3D25A5EA0F003160BC /* RepoWebView */,
-				AC407F3F25A5EA0F003160BC /* RepoList */,
-				AC407F4225A5EA0F003160BC /* Search */,
 				AC407F4425A5EA0F003160BC /* NavigationController.swift */,
 				AC407F4525A5EA0F003160BC /* LogIn */,
+				AC407F4225A5EA0F003160BC /* Search */,
+				AC407F3F25A5EA0F003160BC /* RepoList */,
+				AC407F3D25A5EA0F003160BC /* RepoWebView */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -135,6 +140,7 @@
 			children = (
 				AC407F4A25A5EA0F003160BC /* RepositoryModel.swift */,
 				AC407F4B25A5EA0F003160BC /* GitSearchResponse.swift */,
+				AC407F5B25A5F371003160BC /* Owner(user)Model.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -277,7 +283,9 @@
 				AC407F5025A5EA0F003160BC /* NavigationController.swift in Sources */,
 				AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */,
 				AC407F5425A5EA0F003160BC /* GitSearchResponse.swift in Sources */,
+				AC407F5C25A5F371003160BC /* Owner(user)Model.swift in Sources */,
 				AC407F5325A5EA0F003160BC /* RepositoryModel.swift in Sources */,
+				AC407F5F25A5FF4B003160BC /* Alert.swift in Sources */,
 				AC407F5125A5EA0F003160BC /* LogInViewController.swift in Sources */,
 				AC407F5225A5EA0F003160BC /* NetworkManager.swift in Sources */,
 				AC407F4E25A5EA0F003160BC /* RepositoriesListViewController.swift in Sources */,

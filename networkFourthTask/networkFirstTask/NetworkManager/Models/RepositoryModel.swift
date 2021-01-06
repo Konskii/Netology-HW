@@ -17,14 +17,4 @@ struct Repository: Codable {
         case name, description, owner
         case url = "html_url"
     }
-
-    struct Owner: Codable {
-        var login: String
-        var avatarURL: String
-
-        private enum CodingKeys: String, CodingKey {
-            case login
-            case avatarURL = "avatar_url"
-        }
-    }
 }
