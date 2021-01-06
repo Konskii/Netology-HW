@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  SearchRepositoriesViewController.swift
 //  networkFirstTask
 //
 //  Created by Артём Скрипкин on 01.11.2020.
@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class SecondViewController: UIViewController {
+class SearchRepositoriesViewController: UIViewController {
     
     private let networkManager = NetworkManager()
     
@@ -99,6 +99,8 @@ class SecondViewController: UIViewController {
     @objc func search() {
         guard let repoName = repoNameTextField.text else { return }
         guard let language = languageNameTextField.text else { return }
+        let vc = RepositoriesListViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
         networkManager.search(repoName: repoName, language: language) { (result) in
             switch result {
             case .failure(let error):
@@ -107,8 +109,7 @@ class SecondViewController: UIViewController {
             case .success(let response):
                 guard let repos = response.repositories else { return }
                 DispatchQueue.main.async {
-                    let vc = ThirdViewController(reposToShow: repos, count: response.totalCount ?? 0)
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    vc.setRepos(repos: repos)
                 }
             }
         }

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LogInViewController.swift
 //  networkFirstTask
 //
 //  Created by Артём Скрипкин on 24.10.2020.
@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class ViewController: UIViewController {
+class LogInViewController: UIViewController {
     
     
     private lazy var logoImageView: UIImageView = {
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func logInTapped() {
-        navigationController?.pushViewController(SecondViewController(), animated: true)
+        navigationController?.pushViewController(SearchRepositoriesViewController(), animated: true)
     }
 }
 

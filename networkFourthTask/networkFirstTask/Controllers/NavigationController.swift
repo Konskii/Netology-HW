@@ -8,8 +8,29 @@
 
 import UIKit
 class NavigationController: UINavigationController {
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .gray)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewControllers.append(ViewController())
+        viewControllers.append(LogInViewController())
+    }
+    
+    public func startAnimating() {
+        navigationItem.titleView?.isHidden = true
+        navigationBar.addSubview(activityIndicator)
+        activityIndicator.centerYAnchor.constraint(equalTo: navigationBar.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: navigationBar.centerXAnchor).isActive = true
+        activityIndicator.startAnimating()
+    }
+    
+    public func stopAnimating() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
+        navigationItem.titleView?.isHidden = false
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ThirdViewControllerTableViewCell.swift
+//  RepositoriesListCell.swift
 //  networkFirstTask
 //
 //  Created by Артём Скрипкин on 10.11.2020.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ThirdViewControllerTableViewCell: UITableViewCell {
+class RepositoriesListCell: UITableViewCell {
     
-    static let reusedID = "RepoCell"
+    static let reusedID = "RepositoriesListCell"
     
     //MARK: - Inits
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -67,8 +67,6 @@ class ThirdViewControllerTableViewCell: UITableViewCell {
         addSubview(repoImage)
         
         let constraints = [
-            heightAnchor.constraint(equalToConstant: 100),
-            
             repoName.topAnchor.constraint(equalTo: topAnchor),
             repoName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 2),
             repoName.trailingAnchor.constraint(equalTo: repoOwnerName.leadingAnchor, constant: -5),
