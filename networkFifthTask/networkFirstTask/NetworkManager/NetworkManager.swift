@@ -40,7 +40,6 @@ class NetworkManager {
         
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = defaultHeaders
-        print(url)
         
         return request
     }

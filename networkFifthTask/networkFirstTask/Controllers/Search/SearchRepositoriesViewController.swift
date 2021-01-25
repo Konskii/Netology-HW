@@ -13,7 +13,6 @@ class SearchRepositoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         setupConstraints()
     }
     
@@ -40,7 +39,7 @@ class SearchRepositoriesViewController: UIViewController {
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 2
         view.layer.borderColor = UIColor.systemBlue.cgColor
-        view.placeholder = " repository name"
+        view.attributedPlaceholder = .init(string: " repository name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -50,7 +49,7 @@ class SearchRepositoriesViewController: UIViewController {
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 2
         view.layer.borderColor = UIColor.systemBlue.cgColor
-        view.placeholder = " language"
+        view.attributedPlaceholder = .init(string: " language", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -125,5 +124,18 @@ class SearchRepositoriesViewController: UIViewController {
         self.init()
         usernameLabel.text = "Hello, \(userName)"
         userAvatarImageView.kf.setImage(with: userImageUrl)
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        if #available(iOS 13, *) {
+            view.backgroundColor = .systemBackground
+        } else {
+            view.backgroundColor = .white
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
