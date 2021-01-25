@@ -13,6 +13,8 @@ class LogInViewController: UIViewController {
     //MARK: - Properties
     private let networkManager = NetworkManager()
     
+    private let securityManager = SecurityManager()
+    
     private var navController: NavigationController?
     
     //MARK: - UI ELements
@@ -27,7 +29,8 @@ class LogInViewController: UIViewController {
     
     private lazy var userNameTextField: UITextField = {
         let view = UITextField()
-        view.placeholder = " username"
+        view.attributedPlaceholder = .init(string: " username", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
+        
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 2
         view.layer.borderColor = UIColor.systemBlue.cgColor
@@ -37,7 +40,7 @@ class LogInViewController: UIViewController {
     
     private lazy var userPassworTextField: UITextField = {
         let view = UITextField()
-        view.placeholder = " OAuth token"
+        view.attributedPlaceholder = .init(string: " OAuth Token", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         view.textContentType = .password
         view.isSecureTextEntry = true
         view.layer.borderWidth = 1
@@ -64,7 +67,6 @@ class LogInViewController: UIViewController {
         setupConstraints()
         guard let navigator = navigationController as? NavigationController else { return }
         navController = navigator
-        view.backgroundColor = .white
     }
     
     //MARK: - Methods
@@ -98,17 +100,28 @@ class LogInViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
     
+    private func authentificate() {
+        securityManager.authentificateUser() {[weak self] credentials in
+            guard let self = self else { return }
+            guard let credentials = credentials else { return }
+            DispatchQueue.main.async {
+                self.userNameTextField.text = credentials.username
+                self.userPassworTextField.text = credentials.password
+                self.logInTapped()
+            }
+        }
+    }
+    
     //MARK: - UserIneraction Methods
     @objc private func logInTapped() {
         navController?.startAnimating()
-        guard let token = userPassworTextField.text else { return }
-        networkManager.getUser(token: token) { [weak self] result in
+        guard let password = userPassworTextField.text else { return }
+        guard let account = userNameTextField.text else { return }
+        networkManager.getUser(token: password) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self.navController?.stopAnimating()
-                }
+                DispatchQueue.main.async { self.navController?.stopAnimating() }
                 Alert.showAlert(viewController: self, type: .error, message: "\(error)")
             case .success(let owner):
                 DispatchQueue.main.async {
@@ -118,6 +131,21 @@ class LogInViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    //MARK: - Inits
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        if #available(iOS 13, *) {
+            view.backgroundColor = .systemBackground
+        } else {
+            view.backgroundColor = .white
+        }
+        authentificate()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

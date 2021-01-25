@@ -18,10 +18,14 @@
 		AC407F5425A5EA0F003160BC /* GitSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F4B25A5EA0F003160BC /* GitSearchResponse.swift */; };
 		AC407F5C25A5F371003160BC /* Owner(user)Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F5B25A5F371003160BC /* Owner(user)Model.swift */; };
 		AC407F5F25A5FF4B003160BC /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC407F5E25A5FF4B003160BC /* Alert.swift */; };
+		AC4C983E25BEAD490066E234 /* BiometricAuthentificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C983D25BEAD490066E234 /* BiometricAuthentificationManager.swift */; };
+		AC4C984525BEC5F50066E234 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C984425BEC5F50066E234 /* KeychainManager.swift */; };
+		AC4C984925BECE440066E234 /* CredentialsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C984825BECE440066E234 /* CredentialsModel.swift */; };
 		AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC68F2B525442571004A1025 /* AppDelegate.swift */; };
 		AC68F2BD25442571004A1025 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2BB25442571004A1025 /* Main.storyboard */; };
 		AC68F2BF25442572004A1025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2BE25442572004A1025 /* Assets.xcassets */; };
 		AC68F2C225442572004A1025 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC68F2C025442572004A1025 /* LaunchScreen.storyboard */; };
+		ACDC252825BED95C0075A862 /* SecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDC252725BED95C0075A862 /* SecurityManager.swift */; };
 		F5A8A4BFE5A3D73053990980 /* libPods-networkFirstTask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26818C913626FCE097C186AD /* libPods-networkFirstTask.a */; };
 /* End PBXBuildFile section */
 
@@ -39,12 +43,16 @@
 		AC407F4B25A5EA0F003160BC /* GitSearchResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitSearchResponse.swift; sourceTree = "<group>"; };
 		AC407F5B25A5F371003160BC /* Owner(user)Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Owner(user)Model.swift"; sourceTree = "<group>"; };
 		AC407F5E25A5FF4B003160BC /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		AC4C983D25BEAD490066E234 /* BiometricAuthentificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthentificationManager.swift; sourceTree = "<group>"; };
+		AC4C984425BEC5F50066E234 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		AC4C984825BECE440066E234 /* CredentialsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsModel.swift; sourceTree = "<group>"; };
 		AC68F2B225442571004A1025 /* networkFirstTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networkFirstTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC68F2B525442571004A1025 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC68F2BC25442571004A1025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AC68F2BE25442572004A1025 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC68F2C125442572004A1025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC68F2C325442572004A1025 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ACDC252725BED95C0075A862 /* SecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityManager.swift; sourceTree = "<group>"; };
 		B846A82B93CE10A6A7927222 /* Pods-networkFirstTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-networkFirstTask.release.xcconfig"; path = "Target Support Files/Pods-networkFirstTask/Pods-networkFirstTask.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,8 +112,8 @@
 		AC407F3F25A5EA0F003160BC /* RepoList */ = {
 			isa = PBXGroup;
 			children = (
-				AC407F4025A5EA0F003160BC /* RepositoriesListCell.swift */,
 				AC407F4125A5EA0F003160BC /* RepositoriesListViewController.swift */,
+				AC407F4025A5EA0F003160BC /* RepositoriesListCell.swift */,
 			);
 			path = RepoList;
 			sourceTree = "<group>";
@@ -145,6 +153,33 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		AC4C983C25BEAD350066E234 /* SecurityManager */ = {
+			isa = PBXGroup;
+			children = (
+				ACDC252725BED95C0075A862 /* SecurityManager.swift */,
+				AC4C984F25BED88F0066E234 /* Services */,
+				AC4C985025BED89C0066E234 /* Models */,
+			);
+			path = SecurityManager;
+			sourceTree = "<group>";
+		};
+		AC4C984F25BED88F0066E234 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AC4C983D25BEAD490066E234 /* BiometricAuthentificationManager.swift */,
+				AC4C984425BEC5F50066E234 /* KeychainManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AC4C985025BED89C0066E234 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AC4C984825BECE440066E234 /* CredentialsModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		AC68F2A925442571004A1025 = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +201,7 @@
 		AC68F2B425442571004A1025 /* networkFirstTask */ = {
 			isa = PBXGroup;
 			children = (
+				AC4C983C25BEAD350066E234 /* SecurityManager */,
 				AC407F3C25A5EA0F003160BC /* Controllers */,
 				AC407F4725A5EA0F003160BC /* NetworkManager */,
 				AC13701B254F46ED0018896E /* Supported */,
@@ -279,12 +315,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC4C984925BECE440066E234 /* CredentialsModel.swift in Sources */,
 				AC407F4D25A5EA0F003160BC /* RepositoriesListCell.swift in Sources */,
 				AC407F5025A5EA0F003160BC /* NavigationController.swift in Sources */,
+				ACDC252825BED95C0075A862 /* SecurityManager.swift in Sources */,
 				AC68F2B625442571004A1025 /* AppDelegate.swift in Sources */,
 				AC407F5425A5EA0F003160BC /* GitSearchResponse.swift in Sources */,
 				AC407F5C25A5F371003160BC /* Owner(user)Model.swift in Sources */,
+				AC4C984525BEC5F50066E234 /* KeychainManager.swift in Sources */,
 				AC407F5325A5EA0F003160BC /* RepositoryModel.swift in Sources */,
+				AC4C983E25BEAD490066E234 /* BiometricAuthentificationManager.swift in Sources */,
 				AC407F5F25A5FF4B003160BC /* Alert.swift in Sources */,
 				AC407F5125A5EA0F003160BC /* LogInViewController.swift in Sources */,
 				AC407F5225A5EA0F003160BC /* NetworkManager.swift in Sources */,
@@ -436,13 +476,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 627VX4YTF5;
 				INFOPLIST_FILE = networkFirstTask/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = myTest.networkFirstTask;
+				PRODUCT_BUNDLE_IDENTIFIER = myTest.networkFifthTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -455,13 +496,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 627VX4YTF5;
 				INFOPLIST_FILE = networkFirstTask/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = myTest.networkFirstTask;
+				PRODUCT_BUNDLE_IDENTIFIER = myTest.networkFifthTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
