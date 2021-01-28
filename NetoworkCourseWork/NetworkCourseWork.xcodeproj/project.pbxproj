@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,6 +27,12 @@
 		AC1E321125C0553000BF80F2 /* CredentialsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1E321025C0553000BF80F2 /* CredentialsModel.swift */; };
 		AC1E321425C05F3400BF80F2 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1E321325C05F3400BF80F2 /* TokenModel.swift */; };
 		AC95FF4E25C06F7A002C30DB /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC95FF4D25C06F7A002C30DB /* AlertViewController.swift */; };
+		ACC0550225C1A211005C7866 /* BlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC0550125C1A211005C7866 /* BlockView.swift */; };
+		ACF60C8D25C150B700164B7F /* UserIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF60C8C25C150B700164B7F /* UserIdModel.swift */; };
+		ACF60C9025C1538C00164B7F /* PostIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF60C8F25C1538C00164B7F /* PostIdModel.swift */; };
+		ACF60C9325C154F700164B7F /* PostCreateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF60C9225C154F700164B7F /* PostCreateModel.swift */; };
+		ACF60CA425C169AF00164B7F /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF60CA225C169AF00164B7F /* PostTableViewCell.swift */; };
+		ACF60CA525C169AF00164B7F /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACF60CA325C169AF00164B7F /* PostTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +60,12 @@
 		AC1E321025C0553000BF80F2 /* CredentialsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsModel.swift; sourceTree = "<group>"; };
 		AC1E321325C05F3400BF80F2 /* TokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
 		AC95FF4D25C06F7A002C30DB /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		ACC0550125C1A211005C7866 /* BlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockView.swift; sourceTree = "<group>"; };
+		ACF60C8C25C150B700164B7F /* UserIdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdModel.swift; sourceTree = "<group>"; };
+		ACF60C8F25C1538C00164B7F /* PostIdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostIdModel.swift; sourceTree = "<group>"; };
+		ACF60C9225C154F700164B7F /* PostCreateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCreateModel.swift; sourceTree = "<group>"; };
+		ACF60CA225C169AF00164B7F /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		ACF60CA325C169AF00164B7F /* PostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +86,6 @@
 				92DA188535EFC04D3F61492A /* Pods-NetworkCourseWork.debug.xcconfig */,
 				31AE50FEAB91B9C75E19D0C9 /* Pods-NetworkCourseWork.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -114,6 +125,7 @@
 				AC1E31DE25C03A4A00BF80F2 /* Network */,
 				AC1E31DF25C03A4F00BF80F2 /* Models */,
 				AC95FF4C25C06F65002C30DB /* Extensions */,
+				ACF60CA125C1698B00164B7F /* Cells */,
 				AC1E31E025C03A5500BF80F2 /* Supported */,
 				AC1E31F425C040A000BF80F2 /* RootViewController.swift */,
 				AC1E31F725C040C000BF80F2 /* MainTabBarController.swift */,
@@ -162,6 +174,9 @@
 				AC1E320425C0493600BF80F2 /* PostModel.swift */,
 				AC1E321025C0553000BF80F2 /* CredentialsModel.swift */,
 				AC1E321325C05F3400BF80F2 /* TokenModel.swift */,
+				ACF60C8C25C150B700164B7F /* UserIdModel.swift */,
+				ACF60C8F25C1538C00164B7F /* PostIdModel.swift */,
+				ACF60C9225C154F700164B7F /* PostCreateModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -174,6 +189,7 @@
 				AC1E31C625C0395300BF80F2 /* Assets.xcassets */,
 				AC1E31C825C0395300BF80F2 /* LaunchScreen.storyboard */,
 				AC1E31CB25C0395300BF80F2 /* Info.plist */,
+				ACC0550125C1A211005C7866 /* BlockView.swift */,
 			);
 			path = Supported;
 			sourceTree = "<group>";
@@ -193,6 +209,15 @@
 				AC95FF4D25C06F7A002C30DB /* AlertViewController.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		ACF60CA125C1698B00164B7F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				ACF60CA225C169AF00164B7F /* PostTableViewCell.swift */,
+				ACF60CA325C169AF00164B7F /* PostTableViewCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC1E31F225C03E4600BF80F2 /* LogInViewController.xib in Resources */,
+				ACF60CA525C169AF00164B7F /* PostTableViewCell.xib in Resources */,
 				AC1E31CA25C0395300BF80F2 /* LaunchScreen.storyboard in Resources */,
 				AC1E31C725C0395300BF80F2 /* Assets.xcassets in Resources */,
 				AC1E31C525C0395300BF80F2 /* Main.storyboard in Resources */,
@@ -315,16 +341,21 @@
 				AC95FF4E25C06F7A002C30DB /* AlertViewController.swift in Sources */,
 				AC1E31BE25C0395300BF80F2 /* AppDelegate.swift in Sources */,
 				AC1E321125C0553000BF80F2 /* CredentialsModel.swift in Sources */,
+				ACF60CA425C169AF00164B7F /* PostTableViewCell.swift in Sources */,
 				AC1E31F525C040A000BF80F2 /* RootViewController.swift in Sources */,
 				AC1E31F825C040C000BF80F2 /* MainTabBarController.swift in Sources */,
+				ACF60C9025C1538C00164B7F /* PostIdModel.swift in Sources */,
 				AC1E320825C04EF000BF80F2 /* Paths.swift in Sources */,
 				AC1E31FE25C0483B00BF80F2 /* NetworkManager.swift in Sources */,
+				ACF60C8D25C150B700164B7F /* UserIdModel.swift in Sources */,
 				AC1E31E425C03AE800BF80F2 /* NewPostViewController.swift in Sources */,
 				AC1E321425C05F3400BF80F2 /* TokenModel.swift in Sources */,
 				AC1E31F125C03E4600BF80F2 /* LogInViewController.swift in Sources */,
 				AC1E320B25C0522100BF80F2 /* ErrorsHandler.swift in Sources */,
+				ACC0550225C1A211005C7866 /* BlockView.swift in Sources */,
 				AC1E320225C048C300BF80F2 /* UserModel.swift in Sources */,
 				AC1E31D925C03A0D00BF80F2 /* FeedViewController.swift in Sources */,
+				ACF60C9325C154F700164B7F /* PostCreateModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

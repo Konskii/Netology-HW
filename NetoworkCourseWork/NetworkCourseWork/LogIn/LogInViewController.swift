@@ -45,7 +45,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                     self.showAlert(title: "Error!", message: "\(error)")
                 }
             case .success(let token):
-                print(token.token)
+                NetworkManager.setToken(token: token.token)
+                DispatchQueue.main.async {
+                    AppDelegate.shared.rootViewController.showMainTabBarScreen()
+                }
             }
         }
     }
@@ -65,5 +68,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.autocorrectionType = .no
         passwordTextField.isSecureTextEntry = true
         setToolbarItems([.init(title: "Send", style: .done, target: self, action: #selector(signInTapped))], animated: true)
+        loginTextField.text = "user"
+        passwordTextField.text = "qwerty"
     }
 }

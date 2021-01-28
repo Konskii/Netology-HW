@@ -17,4 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 }
-
+extension AppDelegate {
+    static var shared: AppDelegate {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError() }
+        return appDelegate
+    }
+    
+    var rootViewController: RootViewController {
+        guard let rootVC = window?.rootViewController as? RootViewController else { fatalError() }
+        return rootVC
+    }
+}
