@@ -129,9 +129,7 @@ class ChoosingFilterViewController: UIViewController {
         let operation = FilterImageOperation(image: fullIMage, filterName: filter)
         operation.completionBlock = {
             completion(operation.outputImage)
-            DispatchQueue.main.async {
-                BlockView.hide()
-            }
+            BlockView.hide()
         }
         queue.addOperation(operation)
     }

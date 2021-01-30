@@ -68,17 +68,52 @@ extension FeedViewController {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
+                BlockView.hide()
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self.showAlert(title: "Error!", message: "\(error)")
-                }
+                BlockView.hide()
+                self.showAlert(title: "Error!", message: "\(error)")
             }
-            BlockView.hide()
         }
     }
 }
 
 extension FeedViewController: PostCellProtocol {
+    func showAuthor(id: String) {
+        BlockView.show()
+        networkManager.user(userId: id) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let user):
+                DispatchQueue.main.async {
+                    let vc = ProfileViewController(userId: user.id)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                BlockView.hide()
+            case .failure(let error):
+                BlockView.hide()
+                self.showAlert(title: "Error!", message: "\(error)")
+            }
+        }
+    }
+    
+    func showLikes(id: String) {
+        BlockView.show()
+        networkManager.likes(postId: id) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let likes):
+                DispatchQueue.main.async {
+                    let vc = UsersList(users: likes)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                BlockView.hide()
+            case .failure(let error):
+                BlockView.hide()
+                self.showAlert(title: "Error!", message: "\(error)")
+            }
+        }
+    }
+    
     func like(id: String) {
         BlockView.show()
         networkManager.like(postIdToLike: id) { [weak self] result in
@@ -90,18 +125,17 @@ extension FeedViewController: PostCellProtocol {
                         self.posts.remove(at: index)
                         self.posts.insert(updatedPost, at: index)
                         DispatchQueue.main.async {
-                            
                             self.tableView.reloadData()
                         }
                     }
                 }
+                BlockView.hide()
             case .failure(let error):
+                BlockView.hide()
                 DispatchQueue.main.async {
                     self.showAlert(title: "Error!", message: "\(error)")
-                    
                 }
             }
-            BlockView.hide()
         }
     }
     
@@ -116,18 +150,17 @@ extension FeedViewController: PostCellProtocol {
                         self.posts.remove(at: index)
                         self.posts.insert(updatedPost, at: index)
                         DispatchQueue.main.async {
-                            
                             self.tableView.reloadData()
                         }
                     }
+                    BlockView.hide()
                 }
             case .failure(let error):
+                BlockView.hide()
                 DispatchQueue.main.async {
                     self.showAlert(title: "Error!", message: "\(error)")
-                    
                 }
             }
-            BlockView.hide()
         }
     }
 }

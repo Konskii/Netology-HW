@@ -46,13 +46,13 @@ class NetworkManager{
     private func dataTask<T: Codable>(request: URLRequest,
                                       completion: @escaping (Result<T, Error>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error { completion(.failure(error)) }
+            if error != nil { completion(.failure(ErrorHandler().handleError())) }
             guard let response = response as? HTTPURLResponse else { return }
             guard response.statusCode == 200 else {
                 completion(.failure(ErrorHandler().handleError(withHttpCode: response.statusCode)))
                 return
             }
-            guard let data = data else { completion(.failure(ErrorHandler().handleError())); print(1); return }
+            guard let data = data else { completion(.failure(ErrorHandler().handleError())); return }
             guard let parsedData = try? JSONDecoder().decode(T.self, from: data) else {
                 completion(.failure(ErrorHandler().handleError()))
                 return

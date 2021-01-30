@@ -11,6 +11,8 @@ import Kingfisher
 protocol PostCellProtocol: class {
     func like(id: String)
     func dislike(id: String)
+    func showAuthor(id: String)
+    func showLikes(id: String)
 }
 
 class PostTableViewCell: UITableViewCell {
@@ -18,7 +20,7 @@ class PostTableViewCell: UITableViewCell {
     static let reuseIdentifier = "PostTableViewCell"
 
     @IBOutlet weak var avatar: UIImageView!
-    @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var fullName: UILabel!
     @IBOutlet weak var createdTime: UILabel!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var likesCount: UILabel!
@@ -41,6 +43,16 @@ class PostTableViewCell: UITableViewCell {
             guard let self = self else { return }
             self.delegate?.like(id: id)
         }
+    }
+    
+    @objc private func likesTapped() {
+        guard let id = post?.id else { return }
+        delegate?.showLikes(id: id)
+    }
+    
+    @objc private func userTapped() {
+        guard let id = post?.author else { return }
+        delegate?.showAuthor(id: id)
     }
     
     @IBAction func likeTapped() {
@@ -80,7 +92,7 @@ class PostTableViewCell: UITableViewCell {
         didSet {
             guard let post = post else { return }
             avatar.kf.setImage(with: post.authorAvatar)
-            username.text = post.authorUsername
+            fullName.text = post.authorUsername
             postImage.kf.setImage(with: post.image)
             setLikes(count: post.likedByCount)
             postDescription.text = post.description
@@ -97,10 +109,20 @@ class PostTableViewCell: UITableViewCell {
             df.timeStyle = .short
             createdTime.text = df.string(from: date)
             
-            let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
-            tap.numberOfTapsRequired = 2
-            postImage.isUserInteractionEnabled = true
-            postImage.addGestureRecognizer(tap)
+            let imageViewTap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+            imageViewTap.numberOfTapsRequired = 2
+            postImage.addGestureRecognizer(imageViewTap)
+            
+            let likesTap = UITapGestureRecognizer(target: self, action: #selector(likesTapped))
+            likesCount.addGestureRecognizer(likesTap)
+            
+            let userTap = UITapGestureRecognizer(target: self, action: #selector(userTapped))
+            //TODO: - Разобраться почему для аватарки нужен отдельный gestureRecognizer
+            let anotherUserTap = UITapGestureRecognizer(target: self, action: #selector(userTapped))
+            avatar.isUserInteractionEnabled = true
+            avatar.addGestureRecognizer(anotherUserTap)
+            fullName.addGestureRecognizer(userTap)
+            
             postImage.addSubview(bigLike)
             bigLike.centerYAnchor.constraint(equalTo: postImage.centerYAnchor).isActive = true
             bigLike.centerXAnchor.constraint(equalTo: postImage.centerXAnchor).isActive = true

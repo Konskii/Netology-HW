@@ -24,9 +24,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nEu-Ic-lXQ">
-                    <rect key="frame" x="16" y="74" width="382" height="40"/>
+                    <rect key="frame" x="16" y="74" width="382" height="52"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="WCB-f0-Qhe"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Aoh-PU-Glc"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
@@ -35,7 +35,10 @@
                     </connections>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KHs-sw-cal">
-                    <rect key="frame" x="16" y="122" width="382" height="34"/>
+                    <rect key="frame" x="16" y="134" width="382" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="EeT-cr-kNS"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
@@ -43,8 +46,11 @@
                     </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGW-Sf-BeZ">
-                    <rect key="frame" x="16" y="256" width="382" height="30"/>
+                    <rect key="frame" x="16" y="278" width="382" height="44"/>
                     <color key="backgroundColor" name="AccentColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="3my-QT-ehb"/>
+                    </constraints>
                     <color key="tintColor" name="AccentColor"/>
                     <state key="normal" title="Sign In">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

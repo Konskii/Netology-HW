@@ -94,9 +94,7 @@ class CreateNewPostViewController: UIViewController {
             guard let self = self else { return }
             switch result {
             case .success(_):
-                DispatchQueue.main.async {
-                    self.showAlert(title: "Success!", message: "Post created successfully.")
-                }
+                self.showAlert(title: "Success!", message: "Post created successfully.")
             case .failure(let error):
                 self.showAlert(title: "Error!", message: "\(error)")
             }

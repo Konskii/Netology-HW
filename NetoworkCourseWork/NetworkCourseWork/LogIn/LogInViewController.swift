@@ -21,8 +21,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             deactivateButton()
             return
         }
-        print(login)
-        print(password)
         activateButton()
     }
     

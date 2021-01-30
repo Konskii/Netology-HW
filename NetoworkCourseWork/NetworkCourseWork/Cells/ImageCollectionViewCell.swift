@@ -25,6 +25,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)
+        
     }
     
     required init?(coder: NSCoder) {

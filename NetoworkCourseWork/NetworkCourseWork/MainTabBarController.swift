@@ -20,7 +20,7 @@ class MainTabBarController: UITabBarController {
         newPostVC.tabBarItem.title = "New"
         newPostVC.tabBarItem.image = UIImage(named: "plus")
         
-        let profileVC = ProfileViewController()
+        let profileVC = ProfileViewController(userId: nil)
         let profileVCNavigation = UINavigationController(rootViewController: profileVC)
         profileVC.tabBarItem.title = "Profile"
         profileVC.tabBarItem.image = UIImage(named: "profile")
