@@ -12,16 +12,11 @@ class FeedViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let view = UITableView(frame: self.view.frame)
         view.dataSource = self
-        view.rowHeight = 600
+        view.rowHeight = UITableView.automaticDimension
         view.estimatedRowHeight = 600
         view.register(UINib(nibName: "PostTableViewCell", bundle: nil),
                       forCellReuseIdentifier: PostTableViewCell.reuseIdentifier)
         view.allowsSelection = false
-        return view
-    }()
-    
-    private lazy var blockView: BlockView = {
-        let view = BlockView()
         return view
     }()
     
@@ -36,7 +31,6 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(tableView)
         view.backgroundColor = .white
-        setupConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,16 +39,6 @@ class FeedViewController: UIViewController {
     }
     
     //MARK: - Methods
-    private func setupConstraints() {
-        guard let tabBarController = navigationController else { fatalError("Not embbed with TabBarController") }
-        tabBarController.view.addSubview(blockView)
-        NSLayoutConstraint.activate([
-            blockView.topAnchor.constraint(equalTo: tabBarController.view.topAnchor),
-            blockView.leadingAnchor.constraint(equalTo: tabBarController.view.leadingAnchor),
-            blockView.bottomAnchor.constraint(equalTo: tabBarController.view.bottomAnchor),
-            blockView.trailingAnchor.constraint(equalTo: tabBarController.view.trailingAnchor),
-        ])
-    }
 }
 
 extension FeedViewController: UITableViewDataSource {
@@ -64,7 +48,8 @@ extension FeedViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: PostTableViewCell.reuseIdentifier) as? PostTableViewCell else { fatalError() }
+                withIdentifier: PostTableViewCell.reuseIdentifier) as?
+                PostTableViewCell else { fatalError() }
         cell.post = posts[indexPath.row]
         cell.layoutIfNeeded()
         cell.delegate = self
@@ -74,6 +59,7 @@ extension FeedViewController: UITableViewDataSource {
 
 extension FeedViewController {
     private func updateFeed() {
+        BlockView.show()
         networkManager.feed() { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -87,13 +73,14 @@ extension FeedViewController {
                     self.showAlert(title: "Error!", message: "\(error)")
                 }
             }
+            BlockView.hide()
         }
     }
 }
 
 extension FeedViewController: PostCellProtocol {
     func like(id: String) {
-        blockView.show()
+        BlockView.show()
         networkManager.like(postIdToLike: id) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -103,7 +90,7 @@ extension FeedViewController: PostCellProtocol {
                         self.posts.remove(at: index)
                         self.posts.insert(updatedPost, at: index)
                         DispatchQueue.main.async {
-                            self.blockView.hide()
+                            
                             self.tableView.reloadData()
                         }
                     }
@@ -111,14 +98,15 @@ extension FeedViewController: PostCellProtocol {
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.showAlert(title: "Error!", message: "\(error)")
-                    self.blockView.hide()
+                    
                 }
             }
+            BlockView.hide()
         }
     }
     
     func dislike(id: String) {
-        blockView.show()
+        BlockView.show()
         networkManager.unlike(postIdToUnlike: id) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -128,7 +116,7 @@ extension FeedViewController: PostCellProtocol {
                         self.posts.remove(at: index)
                         self.posts.insert(updatedPost, at: index)
                         DispatchQueue.main.async {
-                            self.blockView.hide()
+                            
                             self.tableView.reloadData()
                         }
                     }
@@ -136,9 +124,10 @@ extension FeedViewController: PostCellProtocol {
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.showAlert(title: "Error!", message: "\(error)")
-                    self.blockView.hide()
+                    
                 }
             }
+            BlockView.hide()
         }
     }
 }

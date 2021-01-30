@@ -15,7 +15,7 @@ class MainTabBarController: UITabBarController {
         feedVC.tabBarItem.title = "Feed"
         feedVC.tabBarItem.image = UIImage(named: "feed")
         
-        let newPostVC = NewPostViewController()
+        let newPostVC = ChoosingPhotoForNewPostViewController()
         let newPostVCNavigation = UINavigationController(rootViewController: newPostVC)
         newPostVC.tabBarItem.title = "New"
         newPostVC.tabBarItem.image = UIImage(named: "plus")
@@ -27,4 +27,13 @@ class MainTabBarController: UITabBarController {
         
         viewControllers = [feedVCNavigation, newPostVCNavigation, profileVCNavigation]
     }
+    
+    static var shared : MainTabBarController {
+        return MainTabBarController()
+    }
+    
+    func showFeed() {
+        selectedIndex = 0
+    }
+    
 }

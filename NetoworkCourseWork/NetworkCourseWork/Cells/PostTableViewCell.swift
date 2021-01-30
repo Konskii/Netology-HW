@@ -81,7 +81,6 @@ class PostTableViewCell: UITableViewCell {
             guard let post = post else { return }
             avatar.kf.setImage(with: post.authorAvatar)
             username.text = post.authorUsername
-            createdTime.text = post.createdTime
             postImage.kf.setImage(with: post.image)
             setLikes(count: post.likedByCount)
             postDescription.text = post.description
@@ -90,6 +89,13 @@ class PostTableViewCell: UITableViewCell {
             } else {
                 likeButton.tintColor = .lightGray
             }
+            
+            let df = DateFormatter()
+            df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+            guard let date = df.date(from: post.createdTime) else { return }
+            df.dateStyle = .medium
+            df.timeStyle = .short
+            createdTime.text = df.string(from: date)
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
             tap.numberOfTapsRequired = 2
