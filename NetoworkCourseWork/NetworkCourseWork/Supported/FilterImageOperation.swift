@@ -9,12 +9,14 @@ import UIKit
 
 class FilterImageOperation: Operation {
 
+    //MARK: - Init
     convenience init(image: UIImage?, filterName: String) {
         self.init()
         self.originalImage = image
         self.filterName = filterName
     }
 
+    //MARK: - Properties
     private(set) var outputImage: UIImage?
 
     private var originalImage: UIImage?

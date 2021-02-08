@@ -11,7 +11,7 @@ class BlockView: UIView {
     
     static var activityIndicator = UIActivityIndicatorView(frame: UIScreen.main.bounds)
     
-    static func show() {
+    static public func show() {
         DispatchQueue.main.async {
             setup()
             activityIndicator.startAnimating()
@@ -19,7 +19,7 @@ class BlockView: UIView {
         }
     }
     
-    static func hide() {
+    static public func hide() {
         DispatchQueue.main.async {
             activityIndicator.stopAnimating()
             activityIndicator.removeFromSuperview()

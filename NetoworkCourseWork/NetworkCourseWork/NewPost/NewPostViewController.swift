@@ -9,8 +9,17 @@ import UIKit
 
 class ChoosingPhotoForNewPostViewController: UIViewController {
     
-    private var images: [UIImage?] = [UIImage(named: "new1"), UIImage(named: "new2"), UIImage(named: "new3"), UIImage(named: "new4"), UIImage(named: "new5"), UIImage(named: "new6"), UIImage(named: "new7"), UIImage(named: "new8")]
+    //MARK: - Properties
+    private var images: [UIImage?] = [UIImage(named: "new1"),
+                                      UIImage(named: "new2"),
+                                      UIImage(named: "new3"),
+                                      UIImage(named: "new4"),
+                                      UIImage(named: "new5"),
+                                      UIImage(named: "new6"),
+                                      UIImage(named: "new7"),
+                                      UIImage(named: "new8")]
     
+    //MARK: - UI Elemetns
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let size = self.view.bounds.width / 3
@@ -26,6 +35,7 @@ class ChoosingPhotoForNewPostViewController: UIViewController {
         return view
     }()
     
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
@@ -34,6 +44,7 @@ class ChoosingPhotoForNewPostViewController: UIViewController {
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension ChoosingPhotoForNewPostViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         images.count
@@ -49,6 +60,7 @@ extension ChoosingPhotoForNewPostViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: - UICollectionViewDelegate
 extension ChoosingPhotoForNewPostViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let image = images.getElement(at: indexPath.item) else { return }

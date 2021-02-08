@@ -9,12 +9,18 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "ImageCollectionViewCell"
+    //MARK: - Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.addSubview(imageView)
+    }
     
-    private lazy var imageView: UIImageView = {
-        let view = UIImageView(frame: self.contentView.frame)
-        return view
-    }()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Properties
+    static let reuseIdentifier = "ImageCollectionViewCell"
     
     var data: UIImage? {
         didSet {
@@ -22,13 +28,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        contentView.addSubview(imageView)
-        
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    //MARK: - UI Elemetns
+    private lazy var imageView: UIImageView = {
+        let view = UIImageView(frame: self.contentView.frame)
+        return view
+    }()
 }

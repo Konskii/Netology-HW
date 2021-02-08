@@ -8,11 +8,31 @@
 import UIKit
 class ImageAndLabelCollectionViewCell: UICollectionViewCell {
     
+    //MARK: - Inits
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Properties
     static let reuseIdentifier = "ImageAndLabelCollectionViewCell"
     
-    //MARK: - UI Elements
+    var data: (UIImage?, String)? {
+        didSet {
+            guard let unwrappedData = data else { return }
+            imageView.image = unwrappedData.0
+            filterNameLabel.text = unwrappedData.1
+            layoutIfNeeded()
+            sizeToFit()
+        }
+    }
     
-    ///Отфильтрованная картинка
+    //MARK: - UI Elements
+    ///Картинка
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
@@ -20,7 +40,7 @@ class ImageAndLabelCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    ///Название фильтра
+    ///Label для текста
     private lazy var filterNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17)
@@ -31,31 +51,12 @@ class ImageAndLabelCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    //MARK: - Configuring cell data
-    
-    var data: FilteredImage? {
-        didSet {
-            guard let unwrappedData = data else { return }
-            imageView.image = unwrappedData.image
-            filterNameLabel.text = unwrappedData.filterName
-            layoutIfNeeded()
-            sizeToFit()
-        }
+    //MARK: - Public methods
+    func highlite() {
+        contentView.tintColor = .green
     }
     
-    //MARK: - Inits
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    //MARK: - Methods
-    
+    //MARK: - Private methods
     private func setupConstraints() {
         contentView.addSubview(imageView)
         contentView.addSubview(filterNameLabel)
@@ -73,9 +74,5 @@ class ImageAndLabelCollectionViewCell: UICollectionViewCell {
         ]
         
         NSLayoutConstraint.activate(constraints)
-    }
-    
-    func highlite() {
-        contentView.tintColor = .green
     }
 }

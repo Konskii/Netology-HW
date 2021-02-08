@@ -8,6 +8,12 @@
 import UIKit
 
 class FeedViewController: UIViewController {
+    
+    //MARK: - Properties
+    private var posts: [Post] = []
+    
+    private let networkManager = NetworkManager()
+    
     //MARK: - UI Elements
     private lazy var tableView: UITableView = {
         let view = UITableView(frame: self.view.frame)
@@ -20,44 +26,7 @@ class FeedViewController: UIViewController {
         return view
     }()
     
-    //MARK: - Properties
-    private var posts: [Post] = []
-    
-    //MARK: - Services
-    private let networkManager = NetworkManager()
-    
-    //MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.addSubview(tableView)
-        view.backgroundColor = .white
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateFeed()
-    }
-    
-    //MARK: - Methods
-}
-
-extension FeedViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: PostTableViewCell.reuseIdentifier) as?
-                PostTableViewCell else { fatalError() }
-        cell.post = posts[indexPath.row]
-        cell.layoutIfNeeded()
-        cell.delegate = self
-        return cell
-    }
-}
-
-extension FeedViewController {
+    //MARK: - Private methods
     private func updateFeed() {
         BlockView.show()
         networkManager.feed() { [weak self] result in
@@ -75,8 +44,38 @@ extension FeedViewController {
             }
         }
     }
+    
+    //MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(tableView)
+        view.backgroundColor = .white
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateFeed()
+    }
 }
 
+//MARK: - UITableViewDataSource
+extension FeedViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: PostTableViewCell.reuseIdentifier) as?
+                PostTableViewCell else { fatalError() }
+        cell.post = posts[indexPath.row]
+        cell.layoutIfNeeded()
+        cell.delegate = self
+        return cell
+    }
+}
+
+//MARK: - PostCellProtocol
 extension FeedViewController: PostCellProtocol {
     func showAuthor(id: String) {
         BlockView.show()

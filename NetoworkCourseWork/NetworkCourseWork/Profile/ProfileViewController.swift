@@ -10,46 +10,7 @@ import Kingfisher
 
 class ProfileViewController: UIViewController {
     
-    private var user: User? {
-        didSet {
-            loadPhotos()
-        }
-    }
-    
-    private var posts: [Post] = [] {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.collectionView.reloadData()
-            }
-        }
-    }
-    
-    private let networkManager = NetworkManager()
-    
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let size = self.view.bounds.width / 3
-        layout.itemSize = CGSize(width: size, height: size)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        layout.headerReferenceSize.height = 86
-        
-        let view = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        view.register(ImageCollectionViewCell.self,
-                      forCellWithReuseIdentifier: ImageCollectionViewCell.reuseIdentifier)
-        view.register(UINib(nibName: "ProfileHeaderCollectionReusableView", bundle: nil),
-                      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                      withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier)
-        view.dataSource = self
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = .systemBackground
-        } else {
-            view.backgroundColor = .white
-        }
-        return view
-    }()
-    
+    //MARK: - Init
     convenience init(userId: String?) {
         self.init()
         if let userId = userId {
@@ -75,6 +36,49 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    //MARK: - Properties
+    private var user: User? {
+        didSet {
+            loadPhotos()
+        }
+    }
+    
+    private var posts: [Post] = [] {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    private let networkManager = NetworkManager()
+    
+    //MARK: - UI Elements
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let size = self.view.bounds.width / 3
+        layout.itemSize = CGSize(width: size, height: size)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.headerReferenceSize.height = 86
+        
+        let view = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        view.register(ImageCollectionViewCell.self,
+                      forCellWithReuseIdentifier: ImageCollectionViewCell.reuseIdentifier)
+        view.register(UINib(nibName: "ProfileHeaderCollectionReusableView", bundle: nil),
+                      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                      withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier)
+        view.dataSource = self
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .systemBackground
+        } else {
+            view.backgroundColor = .white
+        }
+        return view
+    }()
+    
+    //MARK: - Private methods
     private func loadPhotos() {
         guard let userId = user?.id else { return }
         networkManager.posts(userId: userId) { [weak self] result in
@@ -88,9 +92,34 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private func configureNavigationBar() {
+        navigationItem.setRightBarButton(UIBarButtonItem(title: "Log out",
+                                                         style: .plain,
+                                                         target: self,
+                                                         action: #selector(logoutTapped)),
+                                         animated: true)
+    }
+    
+    //MARK: - Private objc methods
+    @objc private func logoutTapped() {
+        networkManager.deauthorize() { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    AppDelegate.shared.rootViewController.showStartScreen()
+                }
+            case .failure(let error):
+                self.showAlert(title: "Возникла ошибка", message: "\(error)")
+            }
+        }
+    }
+    
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
+        configureNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +128,7 @@ class ProfileViewController: UIViewController {
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension ProfileViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         posts.count
@@ -138,6 +168,7 @@ extension ProfileViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: - ProfileHeaderProtocol
 extension ProfileViewController: ProfileHeaderProtocol {
     func showFollowers() {
         BlockView.show()

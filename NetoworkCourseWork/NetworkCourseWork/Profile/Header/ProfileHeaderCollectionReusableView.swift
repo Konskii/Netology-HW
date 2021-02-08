@@ -15,16 +15,19 @@ protocol ProfileHeaderProtocol: class {
 
 class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     
+    //MARK: - Properties
     static let reuseIdentifier = "ProfileHeaderCollectionReusableView"
     
+    weak var delegate: ProfileHeaderProtocol?
+    
+    //MARK: - UI Outlets
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var followersLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
     
-    weak var delegate: ProfileHeaderProtocol?
-    
-    func setup(user: User) {
+    //MARK: - Public methods
+    public func setup(user: User) {
         fullNameLabel.text = user.fullName
         setFollowers(count: user.followedByCount)
         setFollowing(count: user.followsCount)
@@ -41,6 +44,7 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         imageView.layer.cornerRadius = imageView.bounds.height / 2
     }
     
+    //MARK: - Private methods
     private func setFollowers(count: Int) {
         followersLabel.text = "Followers: \(count)"
     }
@@ -49,6 +53,7 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         followingLabel.text = "Following: \(count)"
     }
     
+    //MARK: - Private objc methods
     @objc private func followersTapped() {
         delegate?.showFollowers()
     }

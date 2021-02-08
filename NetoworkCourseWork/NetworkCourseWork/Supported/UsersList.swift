@@ -10,23 +10,7 @@ import Kingfisher
 
 class UsersList: UIViewController {
     
-    lazy var tableView: UITableView = {
-        let view = UITableView(frame: self.view.frame)
-        view.dataSource = self
-        view.delegate = self
-        view.rowHeight = 44
-        view.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
-        return view
-    }()
-    
-    private var users: [(User, UIImage?)] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
+    //MARK: - Init
     convenience init(users: [User]) {
         self.init()
         for user in users {
@@ -43,6 +27,26 @@ class UsersList: UIViewController {
         }
     }
     
+    //MARK: - Properties
+    private var users: [(User, UIImage?)] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    //MARK: - UI Elemetns
+    private lazy var tableView: UITableView = {
+        let view = UITableView(frame: self.view.frame)
+        view.dataSource = self
+        view.delegate = self
+        view.rowHeight = 44
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
+        return view
+    }()
+    
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -50,6 +54,7 @@ class UsersList: UIViewController {
     }
 }
 
+//MARK: - UITableViewDataSource
 extension UsersList: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         users.count
@@ -72,6 +77,7 @@ extension UsersList: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension UsersList: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let user = users.getElement(at: indexPath.row) else { return }

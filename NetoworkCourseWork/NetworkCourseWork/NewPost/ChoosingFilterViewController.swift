@@ -9,6 +9,48 @@ import UIKit
 
 class ChoosingFilterViewController: UIViewController {
     
+    //MARK: - Init
+    convenience init(image: UIImage?) {
+        self.init()
+        setupConstraints()
+        configureNavigationBar()
+        view.backgroundColor = .white
+        setup(image: image)
+    }
+    
+    //MARK: - Properties
+    private let filtersNames = ["CIPhotoEffectChrome",
+                                "CIPhotoEffectFade",
+                                "CIPhotoEffectNoir",
+                                "CIPhotoEffectProcess",
+                                "CIPhotoEffectTonal",
+                                "CIPhotoEffectTransfer",
+                                "CISepiaTone"]
+    
+    ///Изображение в уменьшенном размере
+    private var thumbnailImage: UIImage?
+    
+    ///Оригинал изображения
+    private var fullIMage: UIImage? {
+        didSet {
+            imageView.image = fullIMage
+        }
+    }
+    
+    ///Отфильтрованные уменьшенные изображения
+    private var filteredImages: [UIImage?] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
+    ///Выбранный индекс
+    private var selected: IndexPath?
+    
+    ///queue в которую добавляются операции по фильтрам
+    private let queue = OperationQueue()
+    
+    //MARK: - UI Elemetns
     ///Большое изображение
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -37,27 +79,8 @@ class ChoosingFilterViewController: UIViewController {
         
         return view
     }()
-
-    private let filtersNames = ["CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone"]
     
-    private var thumbnailImage: UIImage?
-    
-    private var fullIMage: UIImage? {
-        didSet {
-            imageView.image = fullIMage
-        }
-    }
-    
-    private var filteredImages: [UIImage?] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
-    private var selected: IndexPath?
-    
-    private let queue = OperationQueue()
-    
+    //MARK: - Private methods
     private func setup(image: UIImage?) {
         fullIMage = image
         guard let imageData = image?.jpegData(compressionQuality: 0.5) else { return }
@@ -71,19 +94,6 @@ class ChoosingFilterViewController: UIViewController {
                                                   style: .plain,
                                                   target: self,
                                                   action: #selector(nextTapped))
-    }
-    
-    @objc private func nextTapped() {
-        let vc = CreateNewPostViewController(image: imageView.image)
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    convenience init(image: UIImage?) {
-        self.init()
-        setupConstraints()
-        configureNavigationBar()
-        view.backgroundColor = .white
-        setup(image: image)
     }
     
     private func filterImage() {
@@ -133,8 +143,15 @@ class ChoosingFilterViewController: UIViewController {
         }
         queue.addOperation(operation)
     }
+    
+    //MARK: - Private objc methods
+    @objc private func nextTapped() {
+        let vc = CreateNewPostViewController(image: imageView.image)
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
+//MARK: - UICollectionViewDataSource
 extension ChoosingFilterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         filteredImages.count
@@ -146,11 +163,12 @@ extension ChoosingFilterViewController: UICollectionViewDataSource {
                 for: indexPath) as? ImageAndLabelCollectionViewCell else { fatalError() }
         guard let filteredImage = filteredImages.getElement(at: indexPath.item) else { return cell }
         guard let filterName = filtersNames.getElement(at: indexPath.item) else { return cell }
-        cell.data = FilteredImage(image: filteredImage, filterName: filterName)
+        cell.data = (filteredImage, filterName)
         return cell
     }
 }
 
+//MARK: - UICollectionViewDelegate
 extension ChoosingFilterViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let filterName = filtersNames.getElement(at: indexPath.item) else { return }

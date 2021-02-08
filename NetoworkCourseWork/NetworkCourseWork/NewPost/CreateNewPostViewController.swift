@@ -8,6 +8,17 @@
 import UIKit
 
 class CreateNewPostViewController: UIViewController {
+    
+    //MARK: - Init
+    convenience init(image: UIImage?) {
+        self.init()
+        imageView.image = image
+    }
+    
+    //MARK: - Properties
+    private let networkManager = NetworkManager()
+    
+    //MARK: - UI Elemetns
     ///Предпросмотр с картинкой которая будет в посте
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -36,10 +47,7 @@ class CreateNewPostViewController: UIViewController {
         return field
     }()
     
-    private let networkManager = NetworkManager()
-    
-    //MARK: - Methods
-    
+    //MARK: - Private methods
     private func setupConstraints() {
         
         view.addSubview(imageView)
@@ -63,30 +71,7 @@ class CreateNewPostViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
     
-    //MARK: - Life Cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setupConstraints()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(shareTapped))
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
-        view.addGestureRecognizer(tap)
-        navigationItem.title = "Create post"
-    }
-    
-    convenience init(image: UIImage?) {
-        self.init()
-        imageView.image = image
-    }
-    
-    
-    //MARK: - User Interaction
-    
-    @objc func tapHandler() {
-        view.endEditing(true)
-    }
-    
+    //MARK: - Private objc methods
     @objc func shareTapped() {
         guard let stringImage = imageView.image?.jpegData(compressionQuality: 1)?.base64EncodedString() else { return }
         guard let description = descriptionTextField.text else { return }
@@ -99,5 +84,20 @@ class CreateNewPostViewController: UIViewController {
                 self.showAlert(title: "Error!", message: "\(error)")
             }
         }
+    }
+    
+    @objc func tapHandler() {
+        view.endEditing(true)
+    }
+    
+    //MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setupConstraints()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(shareTapped))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
+        view.addGestureRecognizer(tap)
+        navigationItem.title = "Create post"
     }
 }

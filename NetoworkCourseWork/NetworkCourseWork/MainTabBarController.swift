@@ -8,6 +8,18 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
+    
+    //MARK: - Properties
+    static var shared : MainTabBarController {
+        return MainTabBarController()
+    }
+    
+    //MARK: - Public methods
+    public func showFeed() {
+        selectedIndex = 0
+    }
+    
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         let feedVC = FeedViewController()
@@ -27,13 +39,4 @@ class MainTabBarController: UITabBarController {
         
         viewControllers = [feedVCNavigation, newPostVCNavigation, profileVCNavigation]
     }
-    
-    static var shared : MainTabBarController {
-        return MainTabBarController()
-    }
-    
-    func showFeed() {
-        selectedIndex = 0
-    }
-    
 }

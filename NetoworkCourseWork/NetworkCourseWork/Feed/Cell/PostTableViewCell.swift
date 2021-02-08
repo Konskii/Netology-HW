@@ -17,76 +17,10 @@ protocol PostCellProtocol: class {
 
 class PostTableViewCell: UITableViewCell {
     
+    //MARK: - Properties
     static let reuseIdentifier = "PostTableViewCell"
-
-    @IBOutlet weak var avatar: UIImageView!
-    @IBOutlet weak var fullName: UILabel!
-    @IBOutlet weak var createdTime: UILabel!
-    @IBOutlet weak var postImage: UIImageView!
-    @IBOutlet weak var likesCount: UILabel!
-    @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var postDescription: UILabel!
-    
-    private lazy var bigLike: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "bigLike"))
-        view.layer.opacity = 0
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     weak var delegate: PostCellProtocol?
-    
-    @objc func imageTapped() {
-        guard let id = post?.id else { return }
-        guard let status = post?.currentUserLikesThisPost, !status else { return }
-        animateBigLike() {[weak self] _ in
-            guard let self = self else { return }
-            self.delegate?.like(id: id)
-        }
-    }
-    
-    @objc private func likesTapped() {
-        guard let id = post?.id else { return }
-        delegate?.showLikes(id: id)
-    }
-    
-    @objc private func userTapped() {
-        guard let id = post?.author else { return }
-        delegate?.showAuthor(id: id)
-    }
-    
-    @IBAction func likeTapped() {
-        guard let status = post?.currentUserLikesThisPost else { return }
-        guard let id = post?.id else { return }
-        print(status)
-        if status {
-            delegate?.dislike(id: id)
-        } else {
-            animateBigLike(){ [weak self] _ in
-                guard let self = self else { return }
-                self.delegate?.like(id: id)
-            }
-        }
-    }
-    
-    private func setLikes(count: Int) {
-        likesCount.text = "Likes: \(count)"
-    }
-    
-    private func animateBigLike(completion: @escaping (Bool) -> Void) {
-        UIView.animateKeyframes(withDuration: 0.6, delay: 0, options: .calculationModeLinear, animations: { [weak self] in
-            guard let self = self else { return }
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.1, animations: {
-                self.bigLike.layer.opacity = 1
-            })
-            UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.2, animations: {
-                self.bigLike.layer.opacity = 1
-            })
-            UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.3, animations: {
-                self.bigLike.layer.opacity = 0
-            })
-        }, completion: completion)
-    }
     
     var post: Post? {
         didSet {
@@ -126,6 +60,76 @@ class PostTableViewCell: UITableViewCell {
             postImage.addSubview(bigLike)
             bigLike.centerYAnchor.constraint(equalTo: postImage.centerYAnchor).isActive = true
             bigLike.centerXAnchor.constraint(equalTo: postImage.centerXAnchor).isActive = true
+        }
+    }
+
+    //MARK: - UI Outlets
+    @IBOutlet weak var avatar: UIImageView!
+    @IBOutlet weak var fullName: UILabel!
+    @IBOutlet weak var createdTime: UILabel!
+    @IBOutlet weak var postImage: UIImageView!
+    @IBOutlet weak var likesCount: UILabel!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var postDescription: UILabel!
+    
+    //MARK: - UI Elemetns
+    private lazy var bigLike: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "bigLike"))
+        view.layer.opacity = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    //MARK: - Private methods
+    private func setLikes(count: Int) {
+        likesCount.text = "Likes: \(count)"
+    }
+    
+    private func animateBigLike(completion: @escaping (Bool) -> Void) {
+        UIView.animateKeyframes(withDuration: 0.6, delay: 0, options: .calculationModeLinear, animations: { [weak self] in
+            guard let self = self else { return }
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.1, animations: {
+                self.bigLike.layer.opacity = 1
+            })
+            UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.2, animations: {
+                self.bigLike.layer.opacity = 1
+            })
+            UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.3, animations: {
+                self.bigLike.layer.opacity = 0
+            })
+        }, completion: completion)
+    }
+    
+    //MARK: - Private objc methods
+    @objc private func imageTapped() {
+        guard let id = post?.id else { return }
+        guard let status = post?.currentUserLikesThisPost, !status else { return }
+        animateBigLike() {[weak self] _ in
+            guard let self = self else { return }
+            self.delegate?.like(id: id)
+        }
+    }
+    
+    @objc private func likesTapped() {
+        guard let id = post?.id else { return }
+        delegate?.showLikes(id: id)
+    }
+    
+    @objc private func userTapped() {
+        guard let id = post?.author else { return }
+        delegate?.showAuthor(id: id)
+    }
+    
+    @IBAction private func likeTapped() {
+        guard let status = post?.currentUserLikesThisPost else { return }
+        guard let id = post?.id else { return }
+        if status {
+            delegate?.dislike(id: id)
+        } else {
+            animateBigLike(){ [weak self] _ in
+                guard let self = self else { return }
+                self.delegate?.like(id: id)
+            }
         }
     }
 }

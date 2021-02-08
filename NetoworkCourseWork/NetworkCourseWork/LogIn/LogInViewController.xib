@@ -29,7 +29,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Aoh-PU-Glc"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="TaA-0s-PIt"/>
                     </connections>
@@ -40,7 +40,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="EeT-cr-kNS"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="kfy-Gs-XfA"/>
                     </connections>
