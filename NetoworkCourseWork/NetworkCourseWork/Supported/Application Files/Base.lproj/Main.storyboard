@@ -12,7 +12,7 @@
         <!--New-->
         <scene sceneID="kyr-F2-m1D">
             <objects>
-                <viewController id="RJa-jI-LgQ" customClass="NewPostViewController" customModule="NetworkCourseWork" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="RJa-jI-LgQ" customClass="ChoosingPhotoForNewPostViewController" customModule="NetworkCourseWork" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0mm-4Q-qFf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct Post: Decodable {
-    var id, description, author, authorUserName, createdTime: String
+struct Post: Codable {
+    var id, description, author, authorUsername, createdTime: String
     var image, authorAvatar: URL
     var likedByCount: Int
+    var currentUserLikesThisPost: Bool
 }

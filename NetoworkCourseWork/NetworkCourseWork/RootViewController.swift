@@ -8,26 +8,32 @@
 import UIKit
 
 class RootViewController: UIViewController {
-    private var current: UIViewController
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        addChild(current)
-        current.view.frame = view.bounds
-        view.addSubview(current.view)
-        current.didMove(toParent: self)
+    //MARK: - Init
+    init() {
+        self.current = UINavigationController(rootViewController: LogInViewController())
+        super.init(nibName: nil, bundle: nil)
     }
     
-    func showMainTabBarScreen() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Properties
+    private var current: UIViewController
+    
+    //MARK: - Public methods
+    public func showMainTabBarScreen() {
         let new = MainTabBarController()
         animateTransition(to: new)
     }
     
-    func showStartScreen() {
+    public func showStartScreen() {
         let new = UINavigationController(rootViewController: LogInViewController())
         animateTransition(to: new)
     }
     
+    //MARK: - Private methods
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
         current.willMove(toParent: nil)
         addChild(new)
@@ -55,12 +61,12 @@ class RootViewController: UIViewController {
         }
     }
     
-    init() {
-        self.current = UINavigationController(rootViewController: LogInViewController())
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    //MARK: - Life cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addChild(current)
+        current.view.frame = view.bounds
+        view.addSubview(current.view)
+        current.didMove(toParent: self)
     }
 }

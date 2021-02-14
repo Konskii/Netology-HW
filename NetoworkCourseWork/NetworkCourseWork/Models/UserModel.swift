@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Decodable {
+struct User: Codable {
     var id, username, fullName: String
     var currentUserFollowsThisUser, currentUserIsFollowedByThisUser: Bool
     var followsCount, followedByCount: Int
